@@ -1,0 +1,123 @@
+db.businessView.updateOne(
+  { _id: ObjectId("699effce3c748eb01b128424") },
+  {
+    $set: {
+      businessView: "MaterialUpdateSubmitBV",
+      "ruleId" : "",
+    
+
+	"fieldMapping" : {
+
+		"collectionName" : "MaterialMasterV2",
+
+		"sourceSchema" : {
+
+		},
+
+		"targetSchema" : {
+
+		}
+
+	},
+
+match: {
+  materialId: "{{payload.section_MaterialDetails.materialId}}"
+},
+
+set: {
+  "$set": {
+    materialCode: "{{payload.section_MaterialDetails.materialCode}}",
+    materialName: "{{payload.section_MaterialDetails.materialName}}",
+    materialType: "{{payload.section_MaterialDetails.materialType}}",
+    description: "{{payload.section_MaterialDetails.description}}",
+    plant: "{{payload.section_MaterialDetails.plant}}",
+    storageLocation: "{{payload.section_MaterialDetails.storageLocation}}",
+    status: "{{payload.section_MaterialDetails.status}}",
+    UpdatedOn: "{{currentDate}}",
+    UpdatedBy: "{{payload.headers.loggedInUser}}"
+  }
+},
+"filter" : {
+
+	},
+  	"createdBy" : "",
+
+	"createdAt" : ""
+      }
+    }
+
+)
+
+
+
+///update BV reponse  currentDate
+db.businessView.updateOne({ _id: ObjectId("699effce3c748eb01b128424") }, {
+    $set: {
+        "businessView": "MaterialUpdateSubmitBV",
+        "aggregation": [
+            {
+                "($)match": {
+                    "materialId": "{{filter.materialId}}"
+                }
+            },
+            {
+                "($)project": {
+                    "_id": 0,
+                    "materialId": 1,
+                    "materialCode": 1,
+                    "materialName": 1,
+                    "materialType": 1,
+                    "description": 1,
+                    "plant": 1,
+                    "storageLocation": 1,
+                    "status": 1
+                }
+            }
+        ],
+        "businessViewType": "update",
+        "collectionName": "MaterialMasterV2",
+        "responseMapping": {
+            "section_MaterialDetails": {
+                "materialId": "materialId",
+                "materialCode": "materialCode",
+                "materialName": "materialName",
+                "materialType": "materialType",
+                "description": "description",
+                "plant": "plant",
+                "storageLocation": "storageLocation",
+                "status": "status"
+            }
+        },
+        "match": {
+            "materialId": "{{payload.section_MaterialDetails.materialId}}"
+        },
+        "set": {
+            "$set": {
+                "materialCode": "{{payload.section_MaterialDetails.materialCode}}",
+                "materialName": "{{payload.section_MaterialDetails.materialName}}",
+                "materialType": "{{payload.section_MaterialDetails.materialType}}",
+                "description": "{{payload.section_MaterialDetails.description}}",
+                "plant": "{{payload.section_MaterialDetails.plant}}",
+                "storageLocation": "{{payload.section_MaterialDetails.storageLocation}}",
+                "status": "{{payload.section_MaterialDetails.status}}",
+                "UpdatedOn": "{{currentDate}}",
+                "UpdatedBy": "{{payload.headers.loggedInUser}}"
+            }
+        },
+        "fieldMapping": {
+            "collectionName": "MaterialMasterV2",
+            "sourceSchema": {
+
+            },
+            "targetSchema": {
+
+            }
+        },
+        "createdAt": "",
+        "createdBy": "",
+        "filter": {
+
+        },
+        "ruleId": ""
+    }
+})

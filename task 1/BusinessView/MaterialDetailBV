@@ -1,0 +1,46 @@
+{
+	"_id" : ObjectId("699ebe7daab69ae9caccaf34"),
+	"businessView" : "MaterialDetailBV",
+	"aggregation" : [
+		{
+			"($)match" : {
+				"materialId" : "{{inputParams.materialId}}"
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)project" : {
+							"_id" : 0,
+							"materialId" : "$materialId",
+							"materialCode" : "$materialCode",
+							"materialName" : "$materialName",
+							"materialType" : "$materialType",
+							"description" : "$description",
+							"plant" : "$plant",
+							"storageLocation" : "$storageLocation",
+							"status" : "$status"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "MaterialMasterV2",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"searchTermFields" : [ ],
+	"totalCount" : [
+		{
+			"($)count" : "count"
+		}
+	]
+}

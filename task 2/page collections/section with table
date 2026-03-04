@@ -1,0 +1,333 @@
+ {
+		 "_id": ObjectId("69a035a0182fb8d5f31271bf"),
+        "pageName": "InsertPage_SectionWith_MaterialMaster",
+        "version": "Grid",
+        "rows": [
+            {
+                "columns": [
+                    {
+                        "components": [
+                            {
+                                "type": "section",
+                                "componentId": "MaterialMasterSection",
+                                "title": "Material Master",
+                                "description": "Create Material Header and Line Items",
+                                "icon": "inventory-icon",
+                                "sectionBody": {
+                                    "style": "style1",
+                                    "rows": [
+                                        {
+                                            "columns": [
+                                                {
+                                                    "width": "33%",
+                                                    "components": [
+                                                        {
+                                                            "label": "Material Code",
+                                                            "type": "select",
+                                                            "componentId": "materialCode",
+                                                            "dbColumnName": "materialCode",
+                                                            "formcontrol": "materialCode",
+                                                            "dataSourceName": "MaterialDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "mandatory": true,
+                                                            "options": [
+                                                                {
+                                                                    "label": "RM-STEEL-001",
+                                                                    "value": "RM-STEEL-001"
+                                                                },
+                                                                {
+                                                                    "label": "RM-AL-002",
+                                                                    "value": "RM-AL-002"
+                                                                },
+                                                                {
+                                                                    "label": "FG-ITEM-003",
+                                                                    "value": "FG-ITEM-003"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "label": "Material Name",
+                                                            "type": "inputString",
+                                                            "formcontrol": "materialName",
+                                                            "dbColumnName": "materialName",
+                                                            "mandatory": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "width": "33%",
+                                                    "components": [
+                                                        {
+                                                            "label": "Material Type",
+                                                            "type": "select",
+                                                            "formcontrol": "materialType",
+                                                            "dbColumnName": "materialType",
+                                                            "mandatory": true,
+                                                            "options": [
+                                                                {
+                                                                    "label": "Raw Material",
+                                                                    "value": "Raw Material"
+                                                                },
+                                                                {
+                                                                    "label": "Finished Goods",
+                                                                    "value": "Finished Goods"
+                                                                },
+                                                                {
+                                                                    "label": "Semi Finished",
+                                                                    "value": "Semi Finished"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "label": "Plant",
+                                                            "type": "inputString",
+                                                            "formcontrol": "plant",
+                                                            "dbColumnName": "plant"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "width": "33%",
+                                                    "components": [
+                                                        {
+                                                            "label": "Storage Location",
+                                                            "type": "inputString",
+                                                            "formcontrol": "storageLocation",
+                                                            "dbColumnName": "storageLocation"
+                                                        },
+                                                        {
+                                                            "type": "radioButton",
+                                                            "label": "Status",
+                                                            "formcontrol": "status",
+                                                            "dbColumnName": "status",
+                                                            "radioButtons": [
+                                                                {
+                                                                    "label": "Active",
+                                                                    "value": "Active"
+                                                                },
+                                                                {
+                                                                    "label": "Inactive",
+                                                                    "value": "Inactive"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "columns": [
+                    {
+                        "components": [
+                            {
+                                "componentId": "materialdeliverynoteInformation",
+                                "type": "table",
+                                "title": "Delivery details",
+                                "dataSourceName": "MaterialLineDS",
+                                "tableConfig": {
+                                    "enableEntityCreation": true,
+                                    "checkbox": true,
+                                    "rowActions":true,
+                                    "localPagination": true,
+                                    "entityCreationDetails": {
+                                        "addTableRow": true
+                                    }
+                                },
+                                "tableColumns": {
+                                    "SNO": {
+                                        "type": "uiRowIndex"
+                                    },
+                                    "Delivery Note Number": {
+                                        "type": "inputString",
+                                        "formcontrol": "deliveryNumber",
+                                        "dbColumnName": "deliveryNumber",
+                                        "mandatory": true
+                                    },
+                                    "Delivery Date": {
+                                        "type": "inputDate",
+                                        "formcontrol": "deliveryDate",
+                                        "dbColumnName": "deliveryDate"
+                                    },
+                                    "Ship To Number": {
+                                        "type": "inputString",
+                                        "dbColumnName": "shipto",
+                                        "formcontrol": "shipto"
+                                    },
+                                    "Ship To Name": {
+                                        "type": "inputString",
+                                        "dbColumnName": "shiptoDesc",
+                                        "formcontrol": "shiptoDesc"
+                                    },
+                                    "Material Number": {
+                                        "type": "inputString",
+                                        "dbColumnName": "material",
+                                        "formcontrol": "material",
+                                        "mandatory": true
+                                    },
+                                    "Material Description": {
+                                        "type": "inputString",
+                                        "dbColumnName": "materialDesc",
+                                        "formcontrol": "materialDesc"
+                                    },
+                                    "Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "deleteRow"
+											}
+										]
+									}
+								}
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+
+        ],
+        "executePageActions": [
+            {
+                "ID": 1,
+                "Rule": "pageAction",
+                "WHEN": "'{{payload.pageActionPerformed}}' == 'submit'",
+                "THEN": ["performAction"],
+                "Actions": [
+                    {
+                        "id": "MapDeliveryDetails",
+                        "actionName": "MapDeliveryDetails",
+                        "actionType": "mapFields",
+                        "actionDetails": {
+                            "sourceSchema": "{{payload.selectedRows.materialdeliverynoteInformation.selectedRows}}",
+                            "targetSchema": {
+                                "deliveryNumber": {
+                                    "type": "string",
+                                    "relatedField": "['Delivery Note Number'].text"
+                                },
+                                "deliveryDate": {
+                                    "type": "string",
+                                    "relatedField": "['Delivery Date'].text"
+                                },
+                                "shipto": {
+                                    "type": "string",
+                                    "relatedField": "['Ship To Number'].text"
+                                },
+                                "shiptoDesc": {
+                                    "type": "string",
+                                    "relatedField": "['Ship To Name'].text"
+                                },
+                                "Material Number": {
+                                    "type": "string",
+                                    "relatedField": "['Material Number'].text"
+                                },
+                                "Material Description": {
+                                    "type": "string",
+                                    "relatedField": "['Material Description'].text"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "MaterialInsert",
+                        "actionName": "MaterialInsert",
+                        "actionType": "insertData",
+                        "actionDetails": {
+                            "database_details": {
+                                "database": "{{payload.headers.dbName}}",
+                                "collection": "MaterialMasterV2"
+                            },
+                            "primaryKey": {
+                                "fieldName": "materialId",
+                                "prefix": "MAT-"
+                            },
+                            "payload": {
+                                "materialCode": "{{payload.section_MaterialMasterSection.materialCode}}",
+                                "materialName": "{{payload.section_MaterialMasterSection.materialName}}",
+                                "materialType": "{{payload.section_MaterialMasterSection.materialType}}",
+                                "plant": "{{payload.section_MaterialMasterSection.plant}}",
+                                "storageLocation": "{{payload.section_MaterialMasterSection.storageLocation}}",
+                                "status": "{{payload.section_MaterialMasterSection.status}}",
+                                "deliveryDetails": "{{actionsResponse.MapDeliveryDetails}}"
+                            }
+                        }
+                    },
+                    {
+                        "id": "RequestComplete",
+                        "actionName": "RequestComplete",
+                        "actionType": "completed",
+                        "actionDetails": {
+
+                        }
+                    }
+                ],
+                "Output": {
+                    "message": "Material Created Successfully",
+                    "redirect": {
+                        "routerLink": "/page/MaterialList",
+                        "params": {
+                            "materialId": "{{actionsResponse.MaterialInsert.materialId}}"
+                        }
+                    }
+                }
+            }
+        ],
+        "createdBy": "PGLADMIN",
+        "epic": "MaterialMasters-Onboarding",
+        "fileDestination": "azure",
+        "pageBanner": {
+            "pageBannerButtons": [],
+            "Business_Comp_Name": "InsertPage_SectionWith_MaterialMaster",
+            "Title": "InsertPage_SectionWith_MaterialMaster",
+            "Description": "Create New Material",
+            "Images": [],
+            "Screen_Name": "InsertPage_SectionWith_MaterialMaster"
+        },
+        "showPageBanner": true,
+        "tenant": "100",
+        "pageActions": [
+            {
+                "text": "Submit",
+                "type": "submit",
+                "showLabel": true,
+                "style": "style2",
+                "disableFormValidation": false,
+                "onClick": [
+                    {
+                        "actions": [
+                            {
+                                "action": "executePageAction",
+                                "actionPerformed": "submit"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "dataSource": [
+            {
+                "dataSourceName": "MaterialLineDS",
+                "dataSourceDetails": {
+
+                }
+            }
+        ],
+        "dataSourceDetails": {
+            "businessView": "MaterialDetailBV",
+            "filter": {
+                "materialId": "{{params.materialId}}"
+            }
+        }
+    }
+})

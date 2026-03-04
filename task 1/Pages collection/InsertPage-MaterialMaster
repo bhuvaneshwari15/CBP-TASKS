@@ -1,0 +1,294 @@
+{
+	"_id" : ObjectId("69995ecbfcd21e5f88ff5268"),
+	"tenant" : "100",
+	"epic" : "MaterialMaster-Onboarding",
+	"pageName" : "InsertPage-MaterialMaster",
+	"version" : "Grid",
+	"createdBy" : "PGLADMIN",
+	"fileDestination" : "azure",
+	"showPageBanner" : true,
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "MaterialMaster",
+		"Title" : "Material Master",
+		"Description" : "Create New Material",
+		"Images" : [ ],
+		"Screen_Name" : "MaterialMaster"
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "MaterialDetails",
+							"title" : "Material Details",
+							"description" : "Enter the Material Details below",
+							"dataSourceName" : "",
+							"icon" : "inventory-icon",
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material Code",
+														"type" : "select",
+														"componentId" : "materialCode",
+														"dbColumnName" : "materialCode",
+														"formcontrol" : "materialCode",
+														"dataSourceName" : "MaterialDetails",
+														"displayStyle" : "verticalKeyValue",
+														"mandatory" : true,
+														"options" : [
+															{
+																"label" : "RM-STEEL-001",
+																"value" : "RM-STEEL-001"
+															},
+															{
+																"label" : "RM-AL-002",
+																"value" : "RM-AL-002"
+															},
+															{
+																"label" : "FG-ITEM-003",
+																"value" : "FG-ITEM-003"
+															}
+														]
+													},
+													{
+														"label" : "Material Name",
+														"type" : "inputString",
+														"dbColumnName" : "materialName",
+														"formcontrol" : "materialName",
+														"dataSourceName" : "MaterialDetails",
+														"displayStyle" : "verticalKeyValue",
+														"mandatory" : true
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material Type",
+														"type" : "select",
+														"componentId" : "materialType",
+														"dbColumnName" : "materialType",
+														"formcontrol" : "materialType",
+														"dataSourceName" : "MaterialDetails",
+														"displayStyle" : "verticalKeyValue",
+														"mandatory" : true,
+														"options" : [
+															{
+																"label" : "Raw Material",
+																"value" : "Raw Material"
+															},
+															{
+																"label" : "Finished Goods",
+																"value" : "Finished Goods"
+															},
+															{
+																"label" : "Semi Finished",
+																"value" : "Semi Finished"
+															}
+														]
+													},
+													{
+														"label" : "Description",
+														"type" : "inputString",
+														"dbColumnName" : "description",
+														"formcontrol" : "description",
+														"dataSourceName" : "MaterialDetails",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Plant",
+														"type" : "inputString",
+														"dbColumnName" : "plant",
+														"formcontrol" : "plant",
+														"dataSourceName" : "MaterialDetails",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Storage Location",
+														"type" : "inputString",
+														"dbColumnName" : "storageLocation",
+														"formcontrol" : "storageLocation",
+														"dataSourceName" : "MaterialDetails",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"type" : "radioButton",
+														"style" : "style1",
+														"formcontrol" : "status",
+														"label" : "Status",
+														"dbColumnName" : "status",
+														"displayStyle" : "verticalKeyValue",
+														"dataSourceName" : "MaterialDetails",
+														"radioButtons" : [
+															{
+																"label" : "Active",
+																"value" : "Active"
+															},
+															{
+																"label" : "Inactive",
+																"value" : "Inactive"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "",
+			"dataSourceDetails" : {
+				"businessView" : ""
+			}
+		}
+	],
+	"executePageActions" : [
+		{
+			"ID" : 1,
+			"Rule" : "pageAction",
+			"enableLogs" : true,
+			"WHEN" : "'{{payload.pageActionPerformed}}' == 'submit'",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : 2000,
+					"actionName" : "MaterialInsert",
+					"actionType" : "insertData",
+					"actionDetails" : {
+						"database_details" : {
+							"database" : "{{payload.headers.dbName}}",
+							"collection" : "MaterialMasterV2"
+						},
+						"primaryKey" : {
+							"fieldName" : "materialId",
+							"prefix" : "MAT-"
+						},
+						"payload" : {
+							"materialId" : "{{actionsResponse.MaterialInsert.materialId}}",
+							"materialCode" : "{{payload.section_MaterialDetails.materialCode}}",
+							"materialName" : "{{payload.section_MaterialDetails.materialName}}",
+							"materialType" : "{{payload.section_MaterialDetails.materialType}}",
+							"description" : "{{payload.section_MaterialDetails.description}}",
+							"plant" : "{{payload.section_MaterialDetails.plant}}",
+							"storageLocation" : "{{payload.section_MaterialDetails.storageLocation}}",
+							"status" : "{{payload.section_MaterialDetails.status}}"
+						}
+					}
+				},
+				{
+					"id" : 2001,
+					"actionName" : "RequestComplete",
+					"actionType" : "completed",
+					"actionDetails" : {
+						
+					}
+				}
+			],
+			"Output" : {
+				"message" : "Material Created Successfully",
+				"routerLink" : "/page/MaterialList",
+				"redirect" : {
+					"routerLink" : "/page/MaterialList",
+					"params" : {
+						
+					}
+				}
+			}
+		}
+	],
+	"pageActions" : [
+		{
+			"text" : "Submit",
+			"type" : "submit",
+			"showLabel" : true,
+			"style" : "style2",
+			"disableFormValidation" : false,
+			"onClick" : [
+				{
+					"actions" : [
+						{
+							"action" : "executePageAction",
+							"actionPerformed" : "submit"
+						}
+					]
+				}
+			]
+		}
+	],
+	"executePageActionsbkp" : [
+		{
+			"ID" : 1,
+			"Rule" : "pageAction",
+			"enableLogs" : true,
+			"WHEN" : "'{{payload.pageActionPerformed}}' == 'submit'",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : 2000,
+					"actionName" : "MaterialInsert",
+					"actionType" : "insertData",
+					"actionDetails" : {
+						"database_details" : {
+							"database" : "{{payload.headers.dbName}}",
+							"collection" : "MaterialMaster"
+						},
+						"primaryKey" : {
+							"fieldName" : "materialId",
+							"prefix" : "MAT-"
+						},
+						"payload" : {
+							"materialId" : "{{actionsResponse.MaterialInsert.materialId}}",
+							"materialCode" : "{{payload.section_MaterialDetails.materialCode}}",
+							"materialName" : "{{payload.section_MaterialDetails.materialName}}",
+							"materialType" : "{{payload.section_MaterialDetails.materialType}}",
+							"description" : "{{payload.section_MaterialDetails.description}}",
+							"plant" : "{{payload.section_MaterialDetails.plant}}",
+							"storageLocation" : "{{payload.section_MaterialDetails.storageLocation}}",
+							"status" : "{{payload.section_MaterialDetails.status}}"
+						}
+					}
+				},
+				{
+					"id" : 2001,
+					"actionName" : "RequestComplete",
+					"actionType" : "completed"
+				}
+			],
+			"Output" : {
+				"message" : "Material Created Successfully",
+				"routerLink" : "/page/MaterialList",
+				"redirect" : {
+					"routerLink" : "/page/MaterialList",
+					"params" : {
+						
+					}
+				}
+			}
+		}
+	]
+}

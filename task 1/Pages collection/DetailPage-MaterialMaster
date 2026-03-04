@@ -1,0 +1,151 @@
+{
+	"_id" : ObjectId("699ea696ee1883314ab47b47"),
+	"pageName" : "DetailPage-MaterialMaster",
+	"tenant" : "100",
+	"createdBy" : "PGLADMIN",
+	"epic" : "MaterialMaster-Onboarding",
+	"version" : "Grid",
+	"showPageBanner" : true,
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "MaterialMaster",
+		"Title" : "Material Details",
+		"Description" : "View Material Details",
+		"Images" : [ ],
+		"Screen_Name" : "MaterialMaster"
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "MaterialDetails",
+							"title" : "Material Details",
+							"description" : "Material Information",
+							"dataSourceName" : "MaterialMaster",
+							"icon" : "inventory-icon",
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material ID",
+														"type" : "inputString",
+														"componentId" : "materialId",
+														"dbColumnName" : "materialId",
+														"formcontrol" : "materialId",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													},
+													{
+														"label" : "Material Code",
+														"type" : "inputString",
+														"componentId" : "materialCode",
+														"dbColumnName" : "materialCode",
+														"formcontrol" : "materialCode",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material Name",
+														"type" : "inputString",
+														"componentId" : "materialName",
+														"dbColumnName" : "materialName",
+														"formcontrol" : "materialName",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													},
+													{
+														"label" : "Material Type",
+														"type" : "inputString",
+														"componentId" : "materialType",
+														"dbColumnName" : "materialType",
+														"formcontrol" : "materialType",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Description",
+														"type" : "inputString",
+														"componentId" : "description",
+														"dbColumnName" : "description",
+														"formcontrol" : "description",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													},
+													{
+														"label" : "Plant",
+														"type" : "inputString",
+														"componentId" : "plant",
+														"dbColumnName" : "plant",
+														"formcontrol" : "plant",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													},
+													{
+														"label" : "Storage Location",
+														"type" : "inputString",
+														"componentId" : "storageLocation",
+														"dbColumnName" : "storageLocation",
+														"formcontrol" : "storageLocation",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													},
+													{
+														"label" : "Status",
+														"type" : "inputString",
+														"componentId" : "status",
+														"dbColumnName" : "status",
+														"formcontrol" : "status",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "MaterialMaster",
+			"dataSourceDetails" : {
+				"businessView" : "MaterialDetailBV"
+			}
+		}
+	],
+	"pageActions" : [ ]
+}

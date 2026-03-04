@@ -1,0 +1,257 @@
+{
+	"_id" : ObjectId("699eaac3ee1883314ab47b48"),
+	"pageName" : "UpdatePage-MaterialMaster",
+	"businessComponent" : "MaterialMaster",
+	"businessComponentInstance" : "{{inputParams.materialId}}",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "MaterialDetailsBV",
+			"loadOnInit" : true,
+			"dataSourceDetails" : {
+				"businessView" : "MaterialDetailBV",
+				"collection" : "MaterialMasterV2",
+				"filter" : {
+					"materialId" : "{{businessComponentInstance}}"
+				}
+			}
+		}
+	],
+	"epic" : "MaterialMaster-Onboarding",
+	"executePageActions" : [
+		{
+			"ID" : 1,
+			"Rule" : "pageAction",
+			"enableLogs" : true,
+			"storeChangeLog" : true,
+			"RuleGroup" : "",
+			"WHEN" : "'{{payload.pageActionPerformed}}' == 'submit'",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : "updateMaterialDetails",
+					"actionName" : "updateMaterialDetails",
+					"actionType" : "updateBusinessView",
+					"storeActionResponse" : true,
+					"actionDetails" : {
+						"database" : "{{payload.headers.dbName}}",
+						"businessView" : "MaterialUpdateSubmitBV",
+						"sourceData" : {
+							
+						},
+						"targetSchema" : {
+							
+						}
+					}
+				},
+				{
+					"id" : 10000,
+					"actionName" : "RequestComplete",
+					"actionType" : "completed",
+					"actionDetails" : {
+						
+					}
+				}
+			],
+			"Output" : {
+				"message" : "Material details updated Successfully",
+				"routerLink" : "/page/MaterialList",
+				"redirect" : {
+					"routerLink" : "/page/MaterialList",
+					"params" : {
+						
+					}
+				}
+			}
+		}
+	],
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "MaterialMaster",
+		"Title" : "Update Material",
+		"Description" : "Modify Existing Material",
+		"Images" : [ ],
+		"Screen_Name" : "MaterialMaster"
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "MaterialDetails",
+							"title" : "Material Details",
+							"description" : "Update the Material Details below",
+							"dataSourceName" : "MaterialDetailsBV",
+							"icon" : "inventory-icon",
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material ID",
+														"type" : "inputString",
+														"dbColumnName" : "materialId",
+														"formcontrol" : "materialId",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : true
+													},
+													{
+														"label" : "Material Code",
+														"type" : "select",
+														"dbColumnName" : "materialCode",
+														"formcontrol" : "materialCode",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue",
+														"mandatory" : true,
+														"options" : [
+															{
+																"label" : "RM-STEEL-001",
+																"value" : "RM-STEEL-001"
+															},
+															{
+																"label" : "RM-AL-002",
+																"value" : "RM-AL-002"
+															},
+															{
+																"label" : "FG-ITEM-003",
+																"value" : "FG-ITEM-003"
+															}
+														]
+													},
+													{
+														"label" : "Material Name",
+														"type" : "inputString",
+														"dbColumnName" : "materialName",
+														"formcontrol" : "materialName",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue",
+														"mandatory" : true
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material Type",
+														"type" : "select",
+														"dbColumnName" : "materialType",
+														"formcontrol" : "materialType",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue",
+														"mandatory" : true,
+														"options" : [
+															{
+																"label" : "Raw Material",
+																"value" : "Raw Material"
+															},
+															{
+																"label" : "Finished Goods",
+																"value" : "Finished Goods"
+															},
+															{
+																"label" : "Semi Finished",
+																"value" : "Semi Finished"
+															}
+														]
+													},
+													{
+														"label" : "Description",
+														"type" : "inputString",
+														"dbColumnName" : "description",
+														"formcontrol" : "description",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Plant",
+														"type" : "inputString",
+														"dbColumnName" : "plant",
+														"formcontrol" : "plant",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Storage Location",
+														"type" : "inputString",
+														"dbColumnName" : "storageLocation",
+														"formcontrol" : "storageLocation",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Status",
+														"type" : "radioButton",
+														"dbColumnName" : "status",
+														"formcontrol" : "status",
+														"dataSourceName" : "MaterialDetailsBV",
+														"displayStyle" : "verticalKeyValue",
+														"radioButtons" : [
+															{
+																"label" : "Active",
+																"value" : "Active"
+															},
+															{
+																"label" : "Inactive",
+																"value" : "Inactive"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"pageActions" : [
+		{
+			"text" : "Update",
+			"type" : "submit",
+			"showLabel" : true,
+			"style" : "style2",
+			"disableFormValidation" : false,
+			"onClick" : [
+				{
+					"actions" : [
+						{
+							"action" : "executePageAction",
+							"actionPerformed" : "submit",
+							"changeLogEnabled" : true,
+							"pageActionType" : "U",
+							"actionDetails" : {
+								"payload" : {
+									"selectedRowWithFlag" : true
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"changeLogVersion" : "{{dataSource.MaterialDetailsBV[0].version}}"
+}

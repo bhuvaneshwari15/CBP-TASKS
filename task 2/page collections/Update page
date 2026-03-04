@@ -1,0 +1,347 @@
+{
+	"_id" : ObjectId("699eaac3ee1883314ab47b48"),
+	"pageName" : "UpdatePage-MaterialMaster",
+	"businessComponent" : "MaterialMaster",
+	"businessComponentInstance" : "{{inputParams.materialId}}",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "MaterialMaster",
+			"dataSourceDetails" : {
+				"businessView" : "MaterialDetailBV"
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "MaterialDetailBV",
+			"dataSourceDetails" : {
+				"businessView" : "MaterialDetailBV"
+			}
+		}
+	],
+	"epic" : "MaterialMaster-Onboarding",
+	"executePageActions" : [
+		{
+			"ID" : 1,
+			"Rule" : "pageAction",
+			"enableLogs" : true,
+			"storeChangeLog" : true,
+			"RuleGroup" : "",
+			"WHEN" : "'{{payload.pageActionPerformed}}' == 'submit'",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : 1000,
+					"actionName" : "mapMaterialDeliveryDetails",
+					"actionType" : "mapFields",
+					"storeActionResponse" : true,
+					"actionDetails" : {
+						"sourceSchema" : "{{payload.selectedRows.DeliveryDetailsTable.unSelectedRows}}",
+						"targetSchema" : {
+							"deliveryNumber" : {
+								"type" : "string",
+								"relatedField" : "['Delivery Note Number'].text",
+								"convertToDataType" : false
+							},
+							"deliveryDate" : {
+								"type" : "string",
+								"relatedField" : "['Delivery Date'].text",
+								"convertToDataType" : false
+							},
+							"materialDesc" : {
+								"type" : "string",
+								"relatedField" : "['Material Description'].text",
+								"convertToDataType" : false
+							},
+							"material" : {
+								"type" : "string",
+								"relatedField" : "['Material Number'].text",
+								"convertToDataType" : false
+							},
+							"shiptoDesc" : {
+								"type" : "string",
+								"relatedField" : "['Ship To Name'].text",
+								"convertToDataType" : false
+							},
+							"shipto" : {
+								"type" : "string",
+								"relatedField" : "['Ship To Number'].text",
+								"convertToDataType" : false
+							}
+						}
+					}
+				},
+				{
+					"id" : 1001,
+					"actionName" : "test",
+					"actionType" : "updateBusinessView",
+					"actionDetails" : {
+						"businessView" : "MaterialUpdateSubmitBV",
+						"database" : "{{payload.headers.dbName}}"
+					}
+				}
+			],
+			"Output" : {
+				"message" : "Material details updated Successfully",
+				"routerLink" : "/page/MaterialList",
+				"redirect" : {
+					"routerLink" : "/page/MaterialList",
+					"params" : {
+						
+					}
+				}
+			}
+		}
+	],
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "MaterialMaster",
+		"Title" : "Material Details",
+		"Description" : "View Material Details",
+		"Images" : [ ],
+		"Screen_Name" : "MaterialMaster"
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "MaterialDetails",
+							"title" : "Material Details",
+							"hidden" : false,
+							"description" : "Material Information",
+							"dataSourceName" : "MaterialMaster",
+							"icon" : "inventory-icon",
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material ID",
+														"type" : "inputString",
+														"componentId" : "materialId",
+														"dbColumnName" : "materialId",
+														"formcontrol" : "materialId",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													},
+													{
+														"label" : "Material Code",
+														"type" : "inputString",
+														"componentId" : "materialCode",
+														"dbColumnName" : "materialCode",
+														"formcontrol" : "materialCode",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Material Name",
+														"type" : "inputString",
+														"componentId" : "materialName",
+														"dbColumnName" : "materialName",
+														"formcontrol" : "materialName",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													},
+													{
+														"label" : "Material Type",
+														"type" : "inputString",
+														"componentId" : "materialType",
+														"dbColumnName" : "materialType",
+														"formcontrol" : "materialType",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Description",
+														"type" : "inputString",
+														"componentId" : "description",
+														"dbColumnName" : "description",
+														"formcontrol" : "description",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													},
+													{
+														"label" : "Plant",
+														"type" : "inputString",
+														"componentId" : "plant",
+														"dbColumnName" : "plant",
+														"formcontrol" : "plant",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													},
+													{
+														"label" : "Storage Location",
+														"type" : "inputString",
+														"componentId" : "storageLocation",
+														"dbColumnName" : "storageLocation",
+														"formcontrol" : "storageLocation",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													},
+													{
+														"label" : "Status",
+														"type" : "inputString",
+														"componentId" : "status",
+														"dbColumnName" : "status",
+														"formcontrol" : "status",
+														"dataSourceName" : "MaterialMaster",
+														"displayStyle" : "verticalKeyValue",
+														"readOnly" : false
+													}
+												]
+											}
+										]
+									},
+									{
+										"columns" : [
+											{
+												"width" : "100%",
+												"components" : [
+													{
+														"componentId" : "DeliveryDetailsTable",
+														"type" : "table",
+														"formcontrol" : "DeliveryDetailsTable",
+														"title" : "Delivery Details",
+														"description" : "Delivery Information",
+														"dataSourceName" : "MaterialDetailBV",
+														"icon" : "material-icon",
+														"tableConfig" : {
+															"businessComponent" : "SCRAB_WEIGH",
+															"layoutIcon" : false,
+															"downloadIcon" : true,
+															"columnFilterIcon" : true,
+															"rowFilterIcon" : true,
+															"fullscreenIcon" : true,
+															"aggregationFooter" : false,
+															"localPagination" : true,
+															"checkBox" : false,
+															"headerActions" : [ ],
+															"downloadActions" : [
+																{
+																	"action" : "excelDownload",
+																	"downloadAsPerUI" : true
+																}
+															],
+															"enableEntityCreation" : true,
+															"entityCreationDetails" : {
+																"addTableRow" : true
+															}
+														},
+														"tableColumns" : {
+															"Delivery Note Number" : {
+																"type" : "inputString",
+																"readOnly" : false,
+																"dbColumnName" : "deliveryNumber"
+															},
+															"Delivery Date" : {
+																"type" : "inputString",
+																"readOnly" : false,
+																"dbColumnName" : "deliveryDate"
+															},
+															"Ship To Number" : {
+																"type" : "inputString",
+																"readOnly" : false,
+																"dbColumnName" : "shipto"
+															},
+															"Ship To Name" : {
+																"type" : "inputString",
+																"readOnly" : false,
+																"dbColumnName" : "shiptoDesc"
+															},
+															"Material Number" : {
+																"type" : "inputString",
+																"readOnly" : false,
+																"dbColumnName" : "material"
+															},
+															"Material Description" : {
+																"type" : "inputString",
+																"readOnly" : false,
+																"dbColumnName" : "materialDesc"
+															},
+															"Delete" : {
+																"type" : "menu",
+																"dbColumnName" : "menu",
+																"menuDetails" : {
+																	"menuIcon" : "feather icon-more-vertical",
+																	"menuItems" : [
+																		{
+																			"text" : "Delete",
+																			"icon" : "feather icon-trash-2",
+																			"action" : "deleteRow"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"pageActions" : [
+		{
+			"text" : "Update",
+			"type" : "submit",
+			"showLabel" : true,
+			"style" : "style2",
+			"disableFormValidation" : false,
+			"onClick" : [
+				{
+					"actions" : [
+						{
+							"action" : "executePageAction",
+							"actionPerformed" : "submit",
+							"changeLogEnabled" : true,
+							"pageActionType" : "U",
+							"actionDetails" : {
+								"payload" : {
+									"selectedRowWithFlag" : true
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"changeLogVersion" : "{{dataSource.MaterialDetailsBV[0].version}}",
+	"showWorkflowActions" : false
+}

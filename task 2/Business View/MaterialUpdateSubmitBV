@@ -1,0 +1,25 @@
+{
+    _id: ObjectId("69a7d72744dabb404b0192d7")
+  businessView: "MaterialUpdateSubmitBV",
+    "fieldMapping": {
+        "collectionName": "MaterialMasterV2",
+        "sourceSchema": {},
+        "targetSchema": {}
+    },
+    "match": {
+        "materialId": "{{payload.section_MaterialDetails.materialId}}"
+    },
+    "set": {
+        "($)set": {
+            "status": "{{payload.section_MaterialDetails.status}}",
+            "storageLocation": "{{payload.section_MaterialDetails.storageLocation}}",
+            "description": "{{payload.section_MaterialDetails.description}}",
+            "materialType": "{{payload.section_MaterialDetails.materialType}}",
+            "materialName": "{{payload.section_MaterialDetails.materialName}}",
+            "materialCode": "{{payload.section_MaterialDetails.materialCode}}",
+            "plant": "{{payload.section_MaterialDetails.plant}}",
+            "deliveryDetails": "{{actionsResponse.mapMaterialDeliveryDetails }}"
+        }
+    },
+    "filter": {},
+}

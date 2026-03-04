@@ -1,0 +1,230 @@
+{
+	"_id" : ObjectId("699d7a8b1aa7911603d72c7f"),
+	"pageName" : "MaterialList",
+	"createdBy" : "PGLADMIN",
+	"epic" : "MaterialMaster-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"Business_Comp_Name" : "MaterialList",
+		"Title" : "Material Master",
+		"Description" : "List of Created Materials",
+		"Images" : [ ],
+		"Screen_Name" : "MaterialList"
+	},
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "materialMasterBV",
+			"dataSourceDetails" : {
+				"businessView" : "materialMasterBV"
+			}
+		}
+	],
+	"popups" : {
+		"deleteMaterial" : {
+			"type" : "inline",
+			"inlineJson" : {
+				"type" : "form",
+				"header" : {
+					"heading" : "Delete Confirmation"
+				},
+				"body" : {
+					"title" : "Are you sure you want to delete this material?"
+				},
+				"footer" : {
+					"button" : [
+						{
+							"text" : "No",
+							"type" : "button",
+							"action" : "close"
+						},
+						{
+							"text" : "Yes",
+							"type" : "submit",
+							"action" : "submit",
+							"onClick" : [
+								{
+									"actions" : [
+										{
+											"action" : "executePopupAction"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			"executePopUpAction" : [
+				{
+					"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
+					"THEN" : [ "performActions" ],
+					"Actions" : [
+						{
+							"actionName" : "deleteMaterial",
+							"actionType" : "deleteDocument",
+							"actionDetails" : {
+								"database_details" : {
+									"database" : "{{payload.headers.dbName}}",
+									"collection" : "MaterialMasterV2"
+								},
+								"matchCondition" : {
+									"materialId" : "{{payload.selectedRow.materialId}}"
+								}
+							}
+						}
+					],
+					"Output" : {
+						"message" : "Material Deleted Successfully",
+						"refresh" : true
+					}
+				}
+			]
+		}
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "ListMaterial",
+							"type" : "table",
+							"title" : "Material List",
+							"description" : "List of all materials",
+							"dataSourceName" : "materialMasterBV",
+							"tableConfig" : {
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"fullscreenIcon" : true,
+								"showPagination" : true,
+								"localPagination" : false,
+								"checkbox" : true,
+								"headerActions" : [
+									{
+										"text" : "Add Material",
+										"showLabel" : true,
+										"icon" : "feather icon-plus",
+										"style" : "style5",
+										"onClick" : [
+											{
+												"actions" : [
+													{
+														"action" : "redirect",
+														"actionDetails" : {
+															"routerLink" : "/page/InsertPage-MaterialMaster"
+														}
+													}
+												]
+											}
+										]
+									}
+								],
+								"downloadActions" : [
+									{
+										"action" : "excelDownload",
+										"downloadPopupTitle" : "Downloading Excel"
+									},
+									{
+										"action" : "pdfDownload",
+										"downloadPopupTitle" : "Downloading Pdf"
+									}
+								],
+								"DataDownload" : {
+									"downloadColumnName" : [
+										{
+											"label" : "Material ID",
+											"property" : "Material ID",
+											"dbColumnName" : "materialId"
+										},
+										{
+											"label" : "Material Code",
+											"property" : "Material Code",
+											"dbColumnName" : "materialCode"
+										},
+										{
+											"label" : "material Name",
+											"property" : "material Name",
+											"dbColumnName" : "materialName"
+										}
+									]
+								}
+							},
+							"tableColumns" : {
+								"Material ID" : {
+									"type" : "text",
+									"openInNewTab" : true,
+									"value" : {
+										"routerLink" : "/page/DetailPage-MaterialMaster",
+										"text" : "{{materialId}}",
+										"params" : {
+											"materialId" : "{{materialId}}"
+										}
+									}
+								},
+								"Material Code" : {
+									"type" : "text",
+									"dbColumnName" : "materialCode"
+								},
+								"material Name" : {
+									"type" : "text",
+									"dbColumnName" : "materialName"
+								},
+								"material Type" : {
+									"type" : "text",
+									"dbColumnName" : "materialType"
+								},
+								"plant" : {
+									"type" : "text",
+									"dbColumnName" : "plant"
+								},
+								"storageLocation" : {
+									"type" : "text",
+									"dbColumnName" : "storageLocation"
+								},
+								"status" : {
+									"type" : "status",
+									"dbColumnName" : "status"
+								},
+								"Action" : {
+									"type" : "icon",
+									"icon" : "feather icon-edit",
+									"value" : {
+										"routerLink" : "/page/UpdatePage-MaterialMaster",
+										"params" : {
+											"materialId" : "{{materialId}}"
+										},
+										"enabled" : true,
+										"text" : "Edit"
+									}
+								},
+								"Delete" : {
+									"type" : "menu",
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "showPopup",
+												"actionDetails" : {
+													"popupName" : "deleteMaterial",
+													"tableRefresh" : true
+												}
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
