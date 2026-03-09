@@ -1,0 +1,31 @@
+db.businessView.updateOne(
+{ _id: ObjectId("69ae7cc205207bd5cdb69cf6") },
+{
+  $set: {
+    businessView: "SupplierUpdateSubmitBV",
+
+    fieldMapping: {
+      collectionName: "MaterialMasterV2",
+      sourceSchema: {},
+      targetSchema: {}
+    },
+
+    match: {
+      supplierId: "{{payload.section_SupplierDetails.supplierId}}"
+    },
+
+    set: {
+      $set: {
+        supplierName: "{{payload.section_SupplierDetails.supplierName}}",
+        phone: "{{payload.section_SupplierDetails.ContactNumber}}",
+        email: "{{payload.section_SupplierDetails.email}}",
+        country: "{{payload.section_SupplierDetails.country}}",
+        state: "{{payload.section_SupplierDetails.state}}",
+        city: "{{payload.section_SupplierDetails.city}}"
+      }
+    },
+
+    filter: {}
+  }
+}
+)

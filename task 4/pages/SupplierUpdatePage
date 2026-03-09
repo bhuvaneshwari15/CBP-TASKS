@@ -1,0 +1,376 @@
+db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
+    $set: {
+        "pageName": "SupplierUpdatePage",
+        "tenant" : "100",
+	"createdBy" : "PGLADMIN",
+	"epic" : "Supplier-Onboarding",
+	"version" : "Grid",
+	"showPageBanner" : true,
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "SupplierMaster",
+		"Title" : "Supplier Details",
+		"Description" : "View Supplier Details",
+		"Images" : [ ],
+		"Screen_Name" : "SupplierMaster"
+	},
+        "rows": [
+            {
+                "columns": [
+                    {
+                        "components": [
+                            {
+                                "type": "section",
+                                "componentId": "SupplierDetails",
+                                "title": "Supplier Information",
+                                "description": "Supplier Basic Details",
+                                "icon": "user-icon",
+                                "dataSourceName": "SupplierDetails",
+
+                                "sectionBody": {
+                                    "style": "style1",
+                                    "rows": [
+                                        {
+                                            "columns": [
+                                                {
+                                                    "width": "50%",
+                                                    "components": [
+
+                                                        {
+                                                            "label": "Supplier ID",
+                                                            "type": "inputString",
+                                                            "componentId": "supplierId",
+                                                            "formcontrol": "supplierId",
+                                                            "dbColumnName": "supplierId",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        },
+
+                                                        {
+                                                            "label": "Supplier Name",
+                                                            "type": "inputString",
+                                                            "componentId": "supplierName",
+                                                            "formcontrol": "supplierName",
+                                                            "dbColumnName": "supplierName",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": false
+                                                        },
+
+                                                        {
+                                                            "label": "Contact Number",
+                                                            "type": "inputPhoneNumber",
+                                                            "componentId": "ContactNumber",
+                                                            "formcontrol": "ContactNumber",
+                                                            "dbColumnName": "phone",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": false
+                                                        }
+
+                                                    ]
+                                                },
+
+                                                {
+                                                    "width": "50%",
+                                                    "components": [
+
+                                                        {
+                                                            "label": "Email",
+                                                            "type": "inputEmail",
+                                                            "componentId": "email",
+                                                            "formcontrol": "email",
+                                                            "dbColumnName": "email",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": false
+                                                        },
+
+                                                         {
+                                                            "label": "Country",
+                                                            "type": "select",
+                                                            "placeholder": "Country",
+                                                            "dbColumnName": "country",
+                                                            "formcontrol": "country",
+                                                            "componentId": "country",
+                                                            "dataSourceName": "DetailPageRFQTable",
+                                                            "mandatory": true,
+                                                            "option": true,
+                                                            "filter": true,
+                                                            "readOnly":false,
+                                                            "onChangeGetData": true,
+                                                            "closeOnSelect": true,
+                                                            "style": "style1",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "sendValueAsObject": true,
+                                                            "sendAllFieldsInSelectedValueAsObject": false,
+                                                            "dataSource": {
+                                                                "method": "POST",
+                                                                "body": {
+                                                                    "businessView": "countryBV"
+                                                                },
+                                                                "url": "/lowcode-service/executeBVData",
+                                                                "optionArrayKey": "data",
+                                                                "dropDownKey": "description",
+                                                                "dropDownValue": "code"
+                                                            },
+                                                            "onChange": [
+                                                                {
+                                                                    "actions": [
+                                                                        {
+                                                                            "action": "setComponentValue",
+                                                                            "actionDetails": {
+                                                                                "targetComponent": ["section_1.state"],
+                                                                                "url": "/lowcode-service/executeBVData",
+                                                                                "method": "POST"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "action": "loadFieldDataSource",
+                                                                            "actionDetails": {
+                                                                                "targetSection": ["section_1"],
+                                                                                "targetFormControl": ["state", "contactNumber"],
+                                                                                "setTargetDataSourceParameters": {
+                                                                                    "payload": {
+                                                                                        "country": "{{currentFieldValue}}"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "action": "changeComponentProperty",
+                                                                            "actionDetails": {
+                                                                                "targetSectionComponentId": "SupplierSection",
+                                                                                "targetComponentId": "ContactNumber",
+                                                                                "setProperty": {
+                                                                                    "countryCode": {
+                                                                                        "valueof": {
+                                                                                            "type": "currentComponent"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "checkCondition": [
+                                                                                {
+                                                                                    "sourceType": "sectionComponent",
+                                                                                    "sourceSectionComponentId": 1,
+                                                                                    "sourceComponentId": "country",
+                                                                                    "operation": "NE",
+                                                                                    "valueof": {
+                                                                                        "value": "AE"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "action": "changeComponentProperty",
+                                                                            "actionDetails": {
+                                                                                "targetSectionComponentId": 2,
+                                                                                "targetComponentId": ["ICVCert", "ICVcertificate", "ICVwaivercertificate"],
+                                                                                "setProperty": {
+                                                                                    "hidden": true,
+                                                                                    "mandatory": false
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "checkCondition": [
+                                                                                {
+                                                                                    "sourceType": "sectionComponent",
+                                                                                    "sourceSectionComponentId": 1,
+                                                                                    "sourceComponentId": "country",
+                                                                                    "operation": "EQ",
+                                                                                    "valueof": {
+                                                                                        "value": "AE"
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "action": "changeComponentProperty",
+                                                                            "actionDetails": {
+                                                                                "targetSectionComponentId": 2,
+                                                                                "targetComponentId": ["ICVCert"],
+                                                                                "setProperty": {
+                                                                                    "hidden": false,
+                                                                                    "mandatory": true
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "label": "State / Emirate / Province (Region)",
+                                                            "type": "select",
+                                                            "placeholder": "State",
+                                                            "dataSourceName": "DetailPageRFQTable",
+                                                            "dbColumnName": "state",
+                                                            "formcontrol": "state",
+                                                            "componentId": "state",
+                                                            "mandatory": false,
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "option": true,
+                                                            "readOnly":false,
+                                                            "filter": true,
+                                                            "closeOnSelect": true,
+                                                            "onChangeGetData": true,
+                                                            "style": "style1",
+                                                            "sendValueAsObject": true,
+                                                            "sendAllFieldsInSelectedValueAsObject": false,
+                                                            "dataSource": {
+                                                                "method": "POST",
+                                                                "params": {
+
+                                                                },
+                                                                "body": {
+                                                                    "businessView": "stateCodeBV",
+                                                                    "country": "AE"
+                                                                },
+                                                                "url": "/lowcode-service/executeBVData",
+                                                                "optionArrayKey": "data",
+                                                                "dropDownKey": "state_name",
+                                                                "sendAllFieldsInSelectedValueAsObject": false,
+                                                                "dropDownValue": "state_code"
+                                                            },
+                                                            "color": "#f00",
+                                                            "onChange": [
+                                                                {
+                                                                    "actions": [
+                                                                        {
+                                                                            "action": "loadFieldDataSource",
+                                                                            "actionDetails": {
+                                                                                "targetSection": ["section_1"],
+                                                                                "targetFormControl": ["city"],
+                                                                                "setTargetDataSourceParameters": {
+                                                                                    "payload": {
+                                                                                        "country": "{{section_1.country}}",
+                                                                                        "state": "{{currentFieldValue}}"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "label": "City",
+                                                            "type": "select",
+                                                            "placeholder": "City",
+                                                            "dataSourceName": "DetailPageRFQTable",
+                                                            "mandatory": false,
+                                                            "option": true,
+                                                            "onChangeGetData": true,
+                                                            "filter": true,
+                                                            "readOnly":false,
+                                                            "style": "style1",
+                                                            "sendValueAsObject": true,
+                                                            "sendAllFieldsInSelectedValueAsObject": false,
+                                                            "dbColumnName": "city",
+                                                            "dataSource": {
+                                                                "method": "POST",
+                                                                "params": {
+
+                                                                },
+                                                                "body": {
+                                                                    "businessView": "cityCodeBV"
+                                                                },
+                                                                "url": "/lowcode-service/executeBVData",
+                                                                "optionArrayKey": "data",
+                                                                "dropDownKey": "city_name",
+                                                                "sendAllFieldsInSelectedValueAsObject": false,
+                                                                "dropDownValue": "city_code"
+                                                            },
+                                                            "color": "#f00",
+                                                            "formcontrol": "city",
+                                                            "componentId": "city",
+                                                            "closeOnSelect": true
+                                                        }
+
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+
+        "dataSource": [
+            {
+                "dataSourceType": "businessView",
+                "dataSourceName": "SupplierDetails",
+                "dataSourceDetails": {
+                    "businessView": "supplierDetailBV"
+                }
+            }
+        ],
+        "executePageActions": [
+  {
+    "ID": 1,
+    "Rule": "pageAction",
+    "enableLogs": true,
+    "storeChangeLog": true,
+    "RuleGroup": "",
+    "WHEN": "'{{payload.pageActionPerformed}}' == 'submit'",
+    "THEN": ["performAction"],
+    "Actions": [
+      {
+        "id": 1001,
+        "actionName": "updateSupplier",
+        "actionType": "updateBusinessView",
+        "collection":"MaterialMasterV2",
+        "actionDetails": {
+          "businessView": "SupplierUpdateSubmitBV",
+          "database": "{{payload.headers.dbName}}"
+        }
+      }
+    ],
+    "Output": {
+      "message": "Supplier details updated successfully",
+      "routerLink": "/page/SupplierListPage",
+      "redirect": {
+        "routerLink": "/page/SupplierListPage",
+        "params": {}
+      }
+    }
+  }
+],
+
+    "pageActions": [
+  {
+    "text": "Update",
+    "type": "submit",
+    "showLabel": true,
+    "style": "style2",
+    "disableFormValidation": false,
+    "onClick": [
+      {
+        "actions": [
+          {
+            "action": "executePageAction",
+            "actionPerformed": "submit",
+            "changeLogEnabled": true,
+            "pageActionType": "U",
+            "actionDetails": {
+              "payload": {
+                "selectedRowWithFlag": true
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
+
+    }
+}
+)
+    

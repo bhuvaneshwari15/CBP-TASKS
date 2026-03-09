@@ -1,0 +1,36 @@
+db.businessView.updateOne(
+ { _id: ObjectId("69ae6b7405207bd5cdb69cf2") },
+ {
+  $set: {
+      "businessView":"supplierDetailBV",
+   aggregation: [
+    {
+     "($)match": {
+      "supplierId": "{{inputParams.supplierId}}"
+     }
+    },
+    {
+     "($)facet": {
+      "paginatedResults": [
+       {
+        "$project": {
+         "_id": 0,
+         "supplierId": 1,
+         "supplierName": 1,
+         "phone": 1,
+         "email": 1,
+         "country": 1,
+         "state": 1,
+         "city": 1
+        }
+       }
+      ],
+      "totalCount": [
+       { "($)count": "count" }
+      ]
+     }
+    }
+   ]
+  }
+ }
+)

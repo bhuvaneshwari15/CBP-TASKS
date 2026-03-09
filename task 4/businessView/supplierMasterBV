@@ -1,0 +1,75 @@
+db.businessView.updateOne({ _id: ObjectId("69ae6f1f05207bd5cdb69cf4") }, {
+    $set: {
+        "businessView": "supplierMasterBV",
+	"collection": "MaterialMasterV2",
+	"defaultSortSetting": {
+		"sortField": "createdAt",
+		"sortDirection": -1
+	},
+	"searchTermFields": [
+		"supplierId",
+		"supplierName",
+		"phone",
+		"email",
+		"country",
+		"state",
+		"city"
+	],
+	"aggregation": [
+		{
+			"$match": {
+				"supplierId": {
+					"$exists": true
+				}
+			}
+		},
+		{
+			"$match": "{{searchTerm}}"
+		},
+		{
+			"$facet": {
+				"paginatedResults": [
+					{
+						"$sort": {
+							"createdAt": -1
+						}
+					},
+					{
+						"$project": {
+							"_id": 0,
+							"supplierId": 1,
+							"supplierName": 1,
+							"phone": 1,
+							"email": 1,
+							"country.key": 1,
+							"state.key": 1,
+							"city": 1,
+							"createdAt": 1
+						}
+					},
+					{
+						"($)match": "{{componentSetting.rowFilter}}"
+					},
+					{
+						"($)sort": {
+							"{{componentSetting.matSortActive}}": "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip": "{{componentSetting.page}}"
+					},
+					{
+						"($)limit": "{{componentSetting.limit}}"
+					}
+				],
+				"totalCount": [
+					{
+						"$count": "count"
+					}
+				]
+			}
+		}
+	]
+}
+    }
+})

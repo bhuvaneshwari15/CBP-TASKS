@@ -1,0 +1,152 @@
+{ _id: ObjectId("69ae6ada05207bd5cdb69cf1"),
+
+        "pageName": "SupplierDetailPage",
+        "tenant" : "100",
+	"createdBy" : "PGLADMIN",
+	"epic" : "Supplier-Onboarding",
+	"version" : "Grid",
+	"showPageBanner" : true,
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "SupplierMaster",
+		"Title" : "Supplier Details",
+		"Description" : "View Supplier Details",
+		"Images" : [ ],
+		"Screen_Name" : "SupplierMaster"
+	},
+        "rows": [
+            {
+                "columns": [
+                    {
+                        "components": [
+                            {
+                                "type": "section",
+                                "componentId": "SupplierDetails",
+                                "title": "Supplier Information",
+                                "description": "Supplier Basic Details",
+                                "icon": "user-icon",
+                                "dataSourceName": "SupplierDetails",
+
+                                "sectionBody": {
+                                    "style": "style1",
+                                    "rows": [
+                                        {
+                                            "columns": [
+                                                {
+                                                    "width": "50%",
+                                                    "components": [
+
+                                                        {
+                                                            "label": "Supplier ID",
+                                                            "type": "inputString",
+                                                            "componentId": "supplierId",
+                                                            "formcontrol": "supplierId",
+                                                            "dbColumnName": "supplierId",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        },
+
+                                                        {
+                                                            "label": "Supplier Name",
+                                                            "type": "inputString",
+                                                            "componentId": "supplierName",
+                                                            "formcontrol": "supplierName",
+                                                            "dbColumnName": "supplierName",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        },
+
+                                                        {
+                                                            "label": "Contact Number",
+                                                            "type": "inputPhoneNumber",
+                                                            "componentId": "ContactNumber",
+                                                            "formcontrol": "ContactNumber",
+                                                            "dbColumnName": "phone",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        }
+
+                                                    ]
+                                                },
+
+                                                {
+                                                    "width": "50%",
+                                                    "components": [
+
+                                                        {
+                                                            "label": "Email",
+                                                            "type": "inputEmail",
+                                                            "componentId": "email",
+                                                            "formcontrol": "email",
+                                                            "dbColumnName": "email",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        },
+
+                                                        {
+                                                            "label": "Country",
+                                                            "type": "inputString",
+                                                            "componentId": "country",
+                                                            "formcontrol": "country",
+                                                            "dbColumnName": "country",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        },
+
+                                                        {
+                                                            "label": "State",
+                                                            "type": "inputString",
+                                                            "componentId": "state",
+                                                            "formcontrol": "state",
+                                                            "dbColumnName": "state",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        },
+
+                                                        {
+                                                            "label": "City",
+                                                            "type": "inputString",
+                                                            "componentId": "city",
+                                                            "formcontrol": "city",
+                                                            "dbColumnName": "city",
+                                                            "dataSourceName": "SupplierDetails",
+                                                            "displayStyle": "verticalKeyValue",
+                                                            "readOnly": true
+                                                        }
+
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+
+        "dataSource": [
+            {
+                "dataSourceType": "businessView",
+                "dataSourceName": "SupplierDetails",
+                "dataSourceDetails": {
+                    "businessView": "supplierDetailBV"
+                }
+            }
+        ],
+
+        "pageActions": []
+
+    }
+}
+)
+    

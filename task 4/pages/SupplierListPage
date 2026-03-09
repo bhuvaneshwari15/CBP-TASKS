@@ -1,0 +1,268 @@
+db.pages.updateOne({ _id: ObjectId("69ae6e6205207bd5cdb69cf3") }, {
+    $set: {
+        "pageName": "SupplierListPage",
+
+  "createdBy": "PGLADMIN",
+  "epic": "SupplierMasters-Onboarding",
+  "fileDestination": "azure",
+
+  "pageBanner": {
+    "Business_Comp_Name": "SupplierList",
+    "Title": "Supplier Master",
+    "Description": "List of Created Suppliers",
+    "Images": [],
+    "Screen_Name": "SupplierList"
+  },
+
+  "showPageBanner": true,
+  "tenant": "100",
+  "version": "Grid",
+
+  "dataSource": [
+    {
+      "dataSourceType": "businessView",
+      "dataSourceName": "supplierMasterBV",
+      "dataSourceDetails": {
+        "businessView": "supplierMasterBV"
+      }
+    }
+  ],
+
+  "popups": {
+    "deleteSupplier": {
+      "type": "inline",
+      "inlineJson": {
+        "type": "form",
+        "header": {
+          "heading": "Delete Confirmation"
+        },
+        "body": {
+          "title": "Are you sure you want to delete this supplier?"
+        },
+        "footer": {
+          "button": [
+            {
+              "text": "No",
+              "type": "button",
+              "action": "close"
+            },
+            {
+              "text": "Yes",
+              "type": "submit",
+              "action": "submit",
+              "onClick": [
+                {
+                  "actions": [
+                    {
+                      "action": "executePopupAction"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+
+      "executePopUpAction": [
+        {
+          "WHEN": "'{{payload.popupActionPerformed}}' == 'submit'",
+          "THEN": ["performActions"],
+          "Actions": [
+            {
+              "actionName": "deleteSupplier",
+              "actionType": "deleteDocument",
+              "actionDetails": {
+                "database_details": {
+                  "database": "{{payload.headers.dbName}}",
+                  "collection": "MaterialMasterV2"
+                },
+                "matchCondition": {
+                  "supplierId": "{{payload.selectedRow.supplierId}}"
+                }
+              }
+            }
+          ],
+          "Output": {
+            "message": "Supplier Deleted Successfully",
+            "refresh": true
+          }
+        }
+      ]
+    }
+  },
+
+  "rows": [
+    {
+      "columns": [
+        {
+          "components": [
+            {
+              "componentId": "SupplierTable",
+              "type": "table",
+              "title": "Supplier List",
+              "description": "List of all suppliers",
+              "dataSourceName": "supplierMasterBV",
+
+              "tableConfig": {
+                "layoutIcon": false,
+                "downloadIcon": true,
+                "columnFilterIcon": true,
+                "rowFilterIcon": true,
+                "fullscreenIcon": true,
+                "showPagination": true,
+                "localPagination": false,
+                "checkbox": true,
+
+                "headerActions": [
+                  {
+                    "text": "Add Supplier",
+                    "showLabel": true,
+                    "icon": "feather icon-plus",
+                    "style": "style5",
+                    "onClick": [
+                      {
+                        "actions": [
+                          {
+                            "action": "redirect",
+                            "actionDetails": {
+                              "routerLink": "/page/InsertPage_SupplierMaterialMaster"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+
+                "tableFilter": {
+                  "dataSourceType": "inline",
+                  "dataSource": [
+                    {
+                      "dataSourceType": "businessView",
+                      "dataSourceName": "SupplierFilterBV",
+                      "dataSourceDetails": {
+                        "businessView": "SupplierFilterBV"
+                      }
+                    }
+                  ],
+
+                  "Filters": [
+                    {
+                      "description": "Supplier ID",
+                      "dbColumnName": "supplierId",
+                      "placeholder": "Supplier ID",
+                      "dataSourceName": "SupplierFilterBV",
+                      "filterType": "search"
+                    },
+                    {
+                      "description": "Supplier Name",
+                      "dbColumnName": "supplierName",
+                      "placeholder": "Supplier Name",
+                      "dataSourceName": "SupplierFilterBV",
+                      "filterType": "search"
+                    },
+                    {
+                      "description": "Country",
+                      "dbColumnName": "country",
+                      "placeholder": "Country",
+                      "dataSourceName": "SupplierFilterBV",
+                      "filterType": "checkBox"
+                    }
+                  ]
+                },
+
+                "downloadActions": [
+                  {
+                    "action": "excelDownload",
+                    "downloadPopupTitle": "Downloading Excel"
+                  },
+                  {
+                    "action": "pdfDownload",
+                    "downloadPopupTitle": "Downloading Pdf"
+                  }
+                ]
+              },
+
+              "tableColumns": {
+
+                "Supplier ID": {
+                  "type": "text",
+                  "openInNewTab": true,
+                  "value": {
+                    "routerLink": "/page/DetailPage_SupplierMaterialMaster",
+                    "text": "{{supplierId}}",
+                    "params": {
+                      "supplierId": "{{supplierId}}"
+                    }
+                  }
+                },
+
+                "Supplier Name": {
+                  "type": "text",
+                  "dbColumnName": "supplierName"
+                },
+
+                "Phone": {
+                  "type": "text",
+                  "dbColumnName": "phone"
+                },
+
+                "Email": {
+                  "type": "text",
+                  "dbColumnName": "email"
+                },
+
+                "Country": {
+                  "type": "text",
+                  "dbColumnName": "country"
+                },
+
+                "State": {
+                  "type": "text",
+                  "dbColumnName": "state"
+                },
+
+                "City": {
+                  "type": "text",
+                  "dbColumnName": "city"
+                },
+
+                "Action": {
+                  "type": "icon",
+                  "icon": "feather icon-edit",
+                  "value": {
+                    "routerLink": "/page/UpdatePage_SupplierMaterialMaster",
+                    "params": {
+                      "supplierId": "{{supplierId}}"
+                    },
+                    "enabled": true,
+                    "text": "Edit"
+                  }
+                },
+
+                "Delete": {
+                  "type": "menu",
+                  "dbColumnName": "menu",
+                  "menuDetails": {
+                    "menuIcon": "feather icon-more-vertical",
+                    "menuItems": [
+                      {
+                        "text": "Delete",
+                        "icon": "feather icon-trash-2",
+                        "action": "deleteRow"
+                      }
+                    ]
+                  }
+                }
+
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    }
+})
