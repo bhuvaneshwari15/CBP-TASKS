@@ -1,20 +1,52 @@
 db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
     $set: {
         "pageName": "SupplierUpdatePage",
-        "tenant" : "100",
-	"createdBy" : "PGLADMIN",
-	"epic" : "Supplier-Onboarding",
-	"version" : "Grid",
-	"showPageBanner" : true,
-	"fileDestination" : "azure",
-	"pageBanner" : {
-		"pageBannerButtons" : [ ],
-		"Business_Comp_Name" : "SupplierMaster",
-		"Title" : "Supplier Details",
-		"Description" : "View Supplier Details",
-		"Images" : [ ],
-		"Screen_Name" : "SupplierMaster"
-	},
+        "createdBy": "PGLADMIN",
+        "dataSource": [
+            {
+                "dataSourceType": "businessView",
+                "dataSourceName": "SupplierDetails",
+                "dataSourceDetails": {
+                    "businessView": "supplierDetailBV"
+                }
+            }
+        ],
+        "epic": "Supplier-Onboarding",
+        "fileDestination": "azure",
+        "pageActions": [
+            {
+                "text": "Update",
+                "type": "submit",
+                "showLabel": true,
+                "style": "style2",
+                "disableFormValidation": false,
+                "onClick": [
+                    {
+                        "actions": [
+                            {
+                                "action": "executePageAction",
+                                "actionPerformed": "submit",
+                                "changeLogEnabled": true,
+                                "pageActionType": "U",
+                                "actionDetails": {
+                                    "payload": {
+                                        "selectedRowWithFlag": true
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "pageBanner": {
+            "pageBannerButtons": [],
+            "Business_Comp_Name": "SupplierMaster",
+            "Title": "Supplier Details",
+            "Description": "View Supplier Details",
+            "Images": [],
+            "Screen_Name": "SupplierMaster"
+        },
         "rows": [
             {
                 "columns": [
@@ -27,7 +59,6 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                 "description": "Supplier Basic Details",
                                 "icon": "user-icon",
                                 "dataSourceName": "SupplierDetails",
-
                                 "sectionBody": {
                                     "style": "style1",
                                     "rows": [
@@ -36,7 +67,6 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                 {
                                                     "width": "50%",
                                                     "components": [
-
                                                         {
                                                             "label": "Supplier ID",
                                                             "type": "inputString",
@@ -47,7 +77,6 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "displayStyle": "verticalKeyValue",
                                                             "readOnly": true
                                                         },
-
                                                         {
                                                             "label": "Supplier Name",
                                                             "type": "inputString",
@@ -58,7 +87,6 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "displayStyle": "verticalKeyValue",
                                                             "readOnly": false
                                                         },
-
                                                         {
                                                             "label": "Contact Number",
                                                             "type": "inputPhoneNumber",
@@ -69,14 +97,11 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "displayStyle": "verticalKeyValue",
                                                             "readOnly": false
                                                         }
-
                                                     ]
                                                 },
-
                                                 {
                                                     "width": "50%",
                                                     "components": [
-
                                                         {
                                                             "label": "Email",
                                                             "type": "inputEmail",
@@ -87,8 +112,7 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "displayStyle": "verticalKeyValue",
                                                             "readOnly": false
                                                         },
-
-                                                         {
+                                                        {
                                                             "label": "Country",
                                                             "type": "select",
                                                             "placeholder": "Country",
@@ -99,7 +123,7 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "mandatory": true,
                                                             "option": true,
                                                             "filter": true,
-                                                            "readOnly":false,
+                                                            "readOnly": false,
                                                             "onChangeGetData": true,
                                                             "closeOnSelect": true,
                                                             "style": "style1",
@@ -212,7 +236,7 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "mandatory": false,
                                                             "displayStyle": "verticalKeyValue",
                                                             "option": true,
-                                                            "readOnly":false,
+                                                            "readOnly": false,
                                                             "filter": true,
                                                             "closeOnSelect": true,
                                                             "onChangeGetData": true,
@@ -264,7 +288,7 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "option": true,
                                                             "onChangeGetData": true,
                                                             "filter": true,
-                                                            "readOnly":false,
+                                                            "readOnly": false,
                                                             "style": "style1",
                                                             "sendValueAsObject": true,
                                                             "sendAllFieldsInSelectedValueAsObject": false,
@@ -288,7 +312,6 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                                                             "componentId": "city",
                                                             "closeOnSelect": true
                                                         }
-
                                                     ]
                                                 }
                                             ]
@@ -301,76 +324,41 @@ db.pages.updateOne({ _id: ObjectId("69ae77c505207bd5cdb69cf5") }, {
                 ]
             }
         ],
-
-        "dataSource": [
+        "showPageBanner": true,
+        "tenant": "100",
+        "version": "Grid",
+        "executePageActions": [
             {
-                "dataSourceType": "businessView",
-                "dataSourceName": "SupplierDetails",
-                "dataSourceDetails": {
-                    "businessView": "supplierDetailBV"
+                "ID": 1,
+                "Rule": "pageAction",
+                "enableLogs": true,
+                "storeChangeLog": true,
+                "RuleGroup": "",
+                "WHEN": "'{{payload.pageActionPerformed}}' == 'submit'",
+                "THEN": ["performAction"],
+                "Actions": [
+                    {
+                        "id": 1001,
+                        "actionName": "updateSupplier",
+                        "actionType": "updateBusinessView",
+                        "collection": "MaterialMasterV2",
+                        "actionDetails": {
+                            "businessView": "SupplierUpdateSubmitBV",
+                            "database": "{{payload.headers.dbName}}"
+                        }
+                    }
+                ],
+                "Output": {
+                    "message": "Supplier details updated successfully",
+                    "routerLink": "/page/SupplierListPage",
+                    "redirect": {
+                        "routerLink": "/page/SupplierListPage",
+                        "params": {
+
+                        }
+                    }
                 }
             }
-        ],
-        "executePageActions": [
-  {
-    "ID": 1,
-    "Rule": "pageAction",
-    "enableLogs": true,
-    "storeChangeLog": true,
-    "RuleGroup": "",
-    "WHEN": "'{{payload.pageActionPerformed}}' == 'submit'",
-    "THEN": ["performAction"],
-    "Actions": [
-      {
-        "id": 1001,
-        "actionName": "updateSupplier",
-        "actionType": "updateBusinessView",
-        "collection":"MaterialMasterV2",
-        "actionDetails": {
-          "businessView": "SupplierUpdateSubmitBV",
-          "database": "{{payload.headers.dbName}}"
-        }
-      }
-    ],
-    "Output": {
-      "message": "Supplier details updated successfully",
-      "routerLink": "/page/SupplierListPage",
-      "redirect": {
-        "routerLink": "/page/SupplierListPage",
-        "params": {}
-      }
-    }
-  }
-],
-
-    "pageActions": [
-  {
-    "text": "Update",
-    "type": "submit",
-    "showLabel": true,
-    "style": "style2",
-    "disableFormValidation": false,
-    "onClick": [
-      {
-        "actions": [
-          {
-            "action": "executePageAction",
-            "actionPerformed": "submit",
-            "changeLogEnabled": true,
-            "pageActionType": "U",
-            "actionDetails": {
-              "payload": {
-                "selectedRowWithFlag": true
-              }
-            }
-          }
         ]
-      }
-    ]
-  }
-]
-
     }
-}
-)
-    
+})
