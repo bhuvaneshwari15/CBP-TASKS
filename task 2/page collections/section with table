@@ -1,5 +1,5 @@
- {
-		 "_id": ObjectId("69a035a0182fb8d5f31271bf"),
+db.pages.updateOne({ _id: ObjectId("69a035a0182fb8d5f31271bf") }, {
+    $set: {
         "pageName": "InsertPage_SectionWith_MaterialMaster",
         "version": "Grid",
         "rows": [
@@ -23,27 +23,13 @@
                                                     "components": [
                                                         {
                                                             "label": "Material Code",
-                                                            "type": "select",
+                                                            "type": "inputString",
                                                             "componentId": "materialCode",
                                                             "dbColumnName": "materialCode",
                                                             "formcontrol": "materialCode",
                                                             "dataSourceName": "MaterialDetails",
                                                             "displayStyle": "verticalKeyValue",
-                                                            "mandatory": true,
-                                                            "options": [
-                                                                {
-                                                                    "label": "RM-STEEL-001",
-                                                                    "value": "RM-STEEL-001"
-                                                                },
-                                                                {
-                                                                    "label": "RM-AL-002",
-                                                                    "value": "RM-AL-002"
-                                                                },
-                                                                {
-                                                                    "label": "FG-ITEM-003",
-                                                                    "value": "FG-ITEM-003"
-                                                                }
-                                                            ]
+                                                            "mandatory": true
                                                         },
                                                         {
                                                             "label": "Material Name",
@@ -106,8 +92,8 @@
                                                                     "value": "Active"
                                                                 },
                                                                 {
-                                                                    "label": "Inactive",
-                                                                    "value": "Inactive"
+                                                                    "label": "InActive",
+                                                                    "value": "InActive"
                                                                 }
                                                             ]
                                                         }
@@ -134,7 +120,7 @@
                                 "tableConfig": {
                                     "enableEntityCreation": true,
                                     "checkbox": true,
-                                    "rowActions":true,
+                                    "rowActions": true,
                                     "localPagination": true,
                                     "entityCreationDetails": {
                                         "addTableRow": true
@@ -176,27 +162,26 @@
                                         "dbColumnName": "materialDesc",
                                         "formcontrol": "materialDesc"
                                     },
-                                    "Delete" : {
-									"type" : "menu",
-									"dbColumnName" : "menu",
-									"menuDetails" : {
-										"menuIcon" : "feather icon-more-vertical",
-										"menuItems" : [
-											{
-												"text" : "Delete",
-												"icon" : "feather icon-trash-2",
-												"action" : "deleteRow"
-											}
-										]
-									}
-								}
+                                    "Delete": {
+                                        "type": "menu",
+                                        "dbColumnName": "menu",
+                                        "menuDetails": {
+                                            "menuIcon": "feather icon-more-vertical",
+                                            "menuItems": [
+                                                {
+                                                    "text": "Delete",
+                                                    "icon": "feather icon-trash-2",
+                                                    "action": "deleteRow"
+                                                }
+                                            ]
+                                        }
+                                    }
                                 }
                             }
                         ]
                     }
                 ]
             }
-
         ],
         "executePageActions": [
             {
@@ -319,15 +304,13 @@
             {
                 "dataSourceName": "MaterialLineDS",
                 "dataSourceDetails": {
-
-                }
-            }
-        ],
-        "dataSourceDetails": {
             "businessView": "MaterialDetailBV",
             "filter": {
                 "materialId": "{{params.materialId}}"
             }
         }
+            }
+        ],
+        
     }
 })
