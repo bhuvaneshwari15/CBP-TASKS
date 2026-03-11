@@ -1,0 +1,60 @@
+{
+	"_id" : ObjectId("69aed926a0d1ebe4fe8e8cce"),
+	"businessView" : "ProductMasterBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"productId" : {
+					"$exists" : true
+				}
+			}
+		},
+		{
+			"$facet" : {
+				"paginatedResults" : [
+					{
+						"$sort" : {
+							"createdAt" : -1
+						}
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"productId" : "$productId",
+							"productName" : "$productName",
+							"price" : "$pricing.sellingPrice",
+							"gst" : "$tax.gst",
+							"status" : "$status",
+							"createdAt" : "$createdAt"
+						}
+					},
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					},
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"$count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "productMaster",
+	"defaultSortSetting" : {
+		"sortField" : "createdAt",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ "productId", "productName", "price", "gst", "status" ]
+}
