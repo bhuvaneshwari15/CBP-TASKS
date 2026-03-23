@@ -1,0 +1,39 @@
+{
+	"_id" : ObjectId("69b7cfa9fe6110d052f58a1b"),
+	"businessView" : "InvoiceUpdateSubmitBV",
+	"fieldMapping" : {
+		"collectionName" : "InvoiceDetails",
+		"sourceSchema" : {
+			
+		},
+		"targetSchema" : {
+			
+		}
+	},
+	"filter" : {
+		
+	},
+	"match" : {
+		"invoiceId" : "{{payload.section_ShopDetails.invoiceId}}"
+	},
+	"set" : {
+		"$set" : {
+			"shopId" : "{{payload.section_ShopDetails.shopId}}",
+			"shopName" : "{{payload.section_ShopDetails.shopName}}",
+			"ownerName" : "{{payload.section_ShopDetails.ownerName}}",
+			"gstNumber" : "{{payload.section_ShopDetails.gstNumber}}",
+			"contactNumber" : "{{payload.section_ShopDetails.contactNumber.number}}",
+			"address" : "{{payload.section_ShopDetails.address}}",
+			"emailId" : "{{payload.section_ShopDetails.emailId}}",
+			"customerDetails.customer_id" : "{{payload.section_CustomerDetails.customer_id}}",
+			"customerDetails.customer_name" : "{{payload.section_CustomerDetails.customer_name}}",
+			"customerDetails.contact_number" : "{{payload.section_CustomerDetails.contact_number.number}}",
+			"customerDetails.address" : "{{payload.section_CustomerDetails.customer_address}}",
+			"summary.amount" : "{{payload.section_CustomerDetails.amount}}",
+			"summary.gst_amount" : "{{payload.section_CustomerDetails.gst_amount}}",
+			"summary.total" : "{{payload.section_CustomerDetails.net_total}}",
+			"items" : "{{actionsResponse.MapInvoiceItems}}"
+		}
+	},
+	"ruleId" : ""
+}

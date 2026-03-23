@@ -1,0 +1,91 @@
+{
+	"_id" : ObjectId("69afc025271d2688d093207a"),
+	"businessView" : "shopDetailBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"shopId" : {
+					"$exists" : true
+				}
+			}
+		},
+		{
+			"$facet" : {
+				"paginatedResults" : [
+					{
+						"$sort" : {
+							"createdAt" : -1
+						}
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"shopId" : "$shopId",
+							"shopName" : "$shopName",
+							"ownerName" : "$ownerName",
+							"gstNumber" : "$gstNumber",
+							"contactNumber" : "$contactNumber",
+							"emailId" : "$email",
+							"address" : {
+								"$concat" : [
+									{
+										"$ifNull" : [ "$address.doorNo", "" ]
+									},
+									", ",
+									{
+										"$ifNull" : [ "$address.street", "" ]
+									},
+									", ",
+									{
+										"$ifNull" : [ "$address.area", "" ]
+									},
+									", ",
+									{
+										"$ifNull" : [ "$address.city", "" ]
+									},
+									", ",
+									{
+										"$ifNull" : [ "$address.state", "" ]
+									},
+									" - ",
+									{
+										"$ifNull" : [ "$address.pincode", "" ]
+									},
+									", ",
+									{
+										"$ifNull" : [ "$address.country", "" ]
+									}
+								]
+							}
+						}
+					},
+					{
+						"$match" : "{{componentSetting.rowFilter}}"
+					},
+					{
+						"$skip" : "{{componentSetting.page}}"
+					},
+					{
+						"$limit" : "{{componentSetting.limit}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"$count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "shopMaster",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ ],
+	"totalCount" : [
+		{
+			"$count" : "count"
+		}
+	]
+}

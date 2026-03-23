@@ -1,0 +1,52 @@
+{
+	"_id" : ObjectId("69b68af6e010ea21e5f86fca"),
+	"businessView" : "invoiceDetailBV",
+	"aggregation" : [
+		{
+			"($)match" : {
+				"invoiceId" : "{{inputParams.invoiceId}}"
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)project" : {
+							"_id" : 0,
+							"invoiceId" : "$invoiceId",
+							"shopId" : "$shopId",
+							"shopName" : 1,
+							"ownerName" : 1,
+							"gstNumber" : 1,
+							"contactNumber" : 1,
+							"address" : 1,
+							"emailId" : 1,
+							"customer_id" : "$customerDetails.customer_id",
+							"customer_name" : "$customerDetails.customer_name",
+							"contact_number" : "$customerDetails.contact_number",
+							"customer_address" : "$customerDetails.address",
+							"amount" : "$summary.amount",
+							"gst_amount" : "$summary.gst_amount",
+							"net_total" : {
+								"($)sum" : "$items.net_total"
+							}
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "InvoiceDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"_id" : ObjectId("69b294e6e407dcf95c7c54a5"),
+	"businessView" : "serviceMasterBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"service_code" : {
+					"$exists" : true
+				}
+			}
+		},
+		{
+			"$facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"service_code" : "$service_code",
+							"service_description" : "$service_description",
+							"service_cost" : "$service_cost"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"$count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "serviceMaster",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ ],
+	"totalCount" : [
+		{
+			"($)count" : "count"
+		}
+	]
+}

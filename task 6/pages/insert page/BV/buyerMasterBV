@@ -1,0 +1,45 @@
+{
+	"_id" : ObjectId("69b29411e407dcf95c7c54a3"),
+	"businessView" : "buyerMasterBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"customer_id" : {
+					"$exists" : true
+				}
+			}
+		},
+		{
+			"$facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"customer_id" : "$customer_id",
+							"customer_name" : "$customer_name",
+							"contact_number" : "$contact_number",
+							"address" : "$address",
+							"email_id" : "$email_id"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"$count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "buyerMaster",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ ],
+	"totalCount" : [
+		{
+			"($)count" : "count"
+		}
+	]
+}

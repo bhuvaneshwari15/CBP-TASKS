@@ -1,0 +1,56 @@
+{
+	"_id" : ObjectId("69b50ab7a73f317daf56b583"),
+	"businessView" : "invoiceServicesBV",
+	"collection" : "InvoiceDetails",
+	"aggregation" : [
+		{
+			"$match" : {
+				"invoiceId" : "{{inputParams.invoiceId}}"
+			}
+		},
+		{
+			"$unwind" : "$items"
+		},
+		{
+			"$match" : {
+				"items.product_id" : "{{inputParams.product_id}}"
+			}
+		},
+		{
+			"$unwind" : {
+				"path" : "$items.services",
+				"preserveNullAndEmptyArrays" : true
+			}
+		},
+		{
+			"$facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"product_id" : "$items.product_id",
+							"service_code" : "$items.services.service_code",
+							"serviceDescription" : "$items.services.serviceDescription",
+							"price" : "$items.services.price",
+							"qty" : "$items.services.qty",
+							"serviceTotal" : "$items.services.serviceTotal"
+						}
+					},
+					{
+						"$match" : "{{searchTerm}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"$count" : "totalCount"
+					}
+				]
+			}
+		}
+	],
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ ]
+}
