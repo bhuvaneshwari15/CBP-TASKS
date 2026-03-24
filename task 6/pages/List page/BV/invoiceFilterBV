@@ -1,66 +1,73 @@
-{
-	"_id" : ObjectId("69b523aca73f317daf56b584"),
-	"businessView" : "invoiceFilterBV",
-	"collection" : "InvoiceDetails",
-	"aggregation" : [
-		{
-			"$match" : {
-				
-			}
-		},
-		{
-			"$facet" : {
-				"paginatedResults" : [
-					{
-						"$unwind" : "$items"
-					},
-					{
-						"$group" : {
-							"_id" : null,
-							"shopName" : {
-								"$addToSet" : "$shopName"
-							},
-							"shopId" : {
-								"$addToSet" : "$shopId"
-							},
-							"customer_id" : {
-								"$addToSet" : "$customerDetails.customer_id"
-							},
-							"customer_name" : {
-								"$addToSet" : "$customerDetails.customer_name"
-							},
-							"location" : {
-								"$addToSet" : "$customerDetails.address"
-							},
-							"totalAmount" : {
-								"$addToSet" : "$items.net_total"
-							}
-						}
-					},
-					{
-						"$project" : {
-							"_id" : 0,
-							"shopName" : 1,
-							"shopId" : 1,
-							"customer_id" : 1,
-							"customer_name" : 1,
-							"location" : 1,
-							"totalAmount" : 1
-						}
-					}
-				],
-				"totalCount" : [
-					{
-						"$count" : "count"
-					}
-				]
-			}
-		}
-	],
-	"defaultSortSetting" : {
-		"sortField" : "createdAt",
-		"sortDirection" : -1
-	},
-	"ruleId" : "",
-	"searchTermFields" : [ "invoiceId", "shopName", "customer_name" ]
-}
+db.businessView.updateOne({ _id: ObjectId("69b523aca73f317daf56b584") }, {
+    $set: {
+        "businessView": "invoiceFilterBV",
+        "collection": "InvoiceDetails",
+        "aggregation": [
+            {
+                "$match": {
+
+                }
+            },
+            {
+                "$facet": {
+                    "paginatedResults": [
+                        {
+                            "$group": {
+                                "_id": null,
+                                "shopName": {
+                                    "$addToSet": "$shopName"
+                                },
+                                "shopId": {
+                                    "$addToSet": "$shopId"
+                                },
+                                
+                                "customer_id": {
+                                    "$addToSet": "$customerDetails.customer_id",
+                                },
+                                "location": {
+                                    "$addToSet": "$customerDetails.address"
+                                },
+                                "total": {
+                                    "$addToSet": "$summary.total"
+                                }
+                            }
+                        },
+                        {
+                            "$project": {
+                                "_id": 0,
+                                "shopName": "$shopName",
+                                "shopId": "$shopId",
+                                "location": "$location",
+                                "total": "$total",
+                                "customer_id":"$customer_id"
+                            }
+                        }
+                    ],
+                    "totalCount": [
+                        {
+                            "$count": "count"
+                        }
+                    ]
+                }
+            }
+        ],
+        "defaultSortSetting": {
+            "sortField": "createdAt",
+            "sortDirection": -1
+        },
+        "ruleId": "",
+        "searchTermFields": [
+            "invoiceId",
+            "shopId",
+            "shopName",
+            "ownerName",
+            "gstNumber",
+            "contactNumber",
+            "emailId",
+            "customerDetails.customer_id",
+            "customerDetails.customer_name",
+            "customerDetails.address",
+            "customerDetails.contact_number"
+        ]
+    }
+})

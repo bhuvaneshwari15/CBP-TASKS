@@ -1,4 +1,6 @@
-CusomterMaster for storing the data while inserted
-productMaster for dump collection showing the productId in dropdown
-shopMaster for showing the shop details in section
+db.productMaster.find();
+db.shopMaster.find();
+db.buyerMaster.find();
+db.serviceMaster.find();
 
+db.InvoiceDetails.find().sort({ createdAt:-1 })

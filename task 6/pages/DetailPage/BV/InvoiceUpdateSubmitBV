@@ -29,10 +29,10 @@
 			"customerDetails.customer_name" : "{{payload.section_CustomerDetails.customer_name}}",
 			"customerDetails.contact_number" : "{{payload.section_CustomerDetails.contact_number.number}}",
 			"customerDetails.address" : "{{payload.section_CustomerDetails.customer_address}}",
+			"items" : "{{actionsResponse.MapInvoiceItems}}",
 			"summary.amount" : "{{payload.section_CustomerDetails.amount}}",
 			"summary.gst_amount" : "{{payload.section_CustomerDetails.gst_amount}}",
-			"summary.total" : "{{payload.section_CustomerDetails.net_total}}",
-			"items" : "{{actionsResponse.MapInvoiceItems}}"
+			"summary.total" : "{{payload.section_CustomerDetails.net_total}}"
 		}
 	},
 	"ruleId" : ""

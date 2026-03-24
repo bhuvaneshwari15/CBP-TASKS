@@ -26,6 +26,9 @@
 			"$facet" : {
 				"paginatedResults" : [
 					{
+						"$match" : "{{searchTerm}}"
+					},
+					{
 						"$project" : {
 							"_id" : 0,
 							"product_id" : "$items.product_id",
@@ -35,9 +38,6 @@
 							"qty" : "$items.services.qty",
 							"serviceTotal" : "$items.services.serviceTotal"
 						}
-					},
-					{
-						"$match" : "{{searchTerm}}"
 					}
 				],
 				"totalCount" : [

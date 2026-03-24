@@ -490,7 +490,7 @@
 								},
 								"unit_price" : {
 									"label" : "Unit Price",
-									"type" : "inputString",
+									"type" : "inputText",
 									"componentId" : "unit_price",
 									"dataSourceName" : "invoiceDetailProductListBV",
 									"displayStyle" : "verticalKeyValue",
@@ -700,7 +700,7 @@
 								},
 								"gst" : {
 									"label" : "GST %",
-									"type" : "inputString",
+									"type" : "inputText",
 									"componentId" : "gst",
 									"displayStyle" : "verticalKeyValue",
 									"dataSourceName" : "invoiceDetailProductListBV",
@@ -914,7 +914,7 @@
 										},
 										"price" : {
 											"label" : "Price",
-											"type" : "inputString",
+											"type" : "inputText",
 											"componentId" : "price",
 											"dataSourceName" : "invoiceServicesBV",
 											"displayStyle" : "verticalKeyValue",
@@ -980,7 +980,7 @@
 										},
 										"serviceTotal" : {
 											"label" : "Total",
-											"type" : "inputString",
+											"type" : "inputText",
 											"componentId" : "serviceTotal",
 											"displayStyle" : "verticalKeyValue",
 											"dataSourceName" : "invoiceServicesBV",

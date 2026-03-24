@@ -945,35 +945,35 @@
 								"relatedField" : "['product_name'].text"
 							},
 							"unit_price" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['unit_price'].text"
 							},
 							"qty" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['qty'].text"
 							},
 							"amount" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['amount'].text"
 							},
 							"gst" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['gst'].text"
 							},
 							"gst_amount" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['gst_amount'].text"
 							},
 							"total" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['total'].text"
 							},
 							"service_total" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['service_total'].text"
 							},
 							"net_total" : {
-								"type" : "string",
+								"type" : "int",
 								"relatedField" : "['net_total'].text"
 							},
 							"services" : {

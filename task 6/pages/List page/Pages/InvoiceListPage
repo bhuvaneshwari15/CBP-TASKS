@@ -1,571 +1,570 @@
-{
-	"_id" : ObjectId("69b7adb5535b14e80761690d"),
-	"pageName" : "InvoiceListPage",
-	"createdBy" : "PGLADMIN",
-	"dataSource" : [
-		{
-			"dataSourceType" : "businessView",
-			"dataSourceName" : "invoiceDetailListPageBV",
-			"dataSourceDetails" : {
-				"businessView" : "invoiceDetailListPageBV"
-			}
-		},
-		{
-			"dataSourceType" : "businessView",
-			"dataSourceName" : "invoiceDetailProductListBV",
-			"dataSourceDetails" : {
-				"businessView" : "invoiceDetailProductListBV"
-			}
-		},
-		{
-			"dataSourceType" : "businessView",
-			"dataSourceName" : "invoiceServicesBV",
-			"dataSourceDetails" : {
-				"businessView" : "invoiceServicesBV"
-			}
-		},
-		{
-			"dataSourceType" : "businessView",
-			"dataSourceName" : "invoiceFilterBV",
-			"dataSourceDetails" : {
-				"businessView" : "invoiceFilterBV"
-			}
-		}
-	],
-	"epic" : "Details-Onboarding",
-	"fileDestination" : "azure",
-	"pageBanner" : {
-		"Business_Comp_Name" : "InvoiceList",
-		"Title" : "Invoice List",
-		"Description" : "List of Invoice Details",
-		"Images" : [ ],
-		"Screen_Name" : "InvoiceList"
-	},
-	"rows" : [
-		{
-			"columns" : [
-				{
-					"components" : [
-						{
-							"componentId" : "ListInvoice",
-							"type" : "table",
-							"title" : "Invoice List",
-							"description" : "List of invoices",
-							"dataSourceName" : "invoiceDetailListPageBV",
-							"tableConfig" : {
-								"layoutIcon" : false,
-								"downloadIcon" : true,
-								"columnFilterIcon" : true,
-								"rowFilterIcon" : true,
-								"fullscreenIcon" : true,
-								"showPagination" : true,
-								"localPagination" : false,
-								"showChart" : true,
-								"checkbox" : false,
-								"chartConfig" : {
-									"chartStyle" : {
-										"grid" : false,
-										"legend" : false,
-										"dataLabels" : true,
-										"distributed" : true,
-										"compact" : true,
-										"yaxis" : true,
-										"closeIcon" : false,
-										"style" : "style2"
-									},
-									"title" : "",
-									"sendCompressedData" : true,
-									"description" : "subtitle",
-									"chartType" : "column",
-									"defaultChartCategory" : "shopId",
-									"colors" : [
-										"#3391e2",
-										"#68CBE8",
-										"#E5E16D",
-										"#c2d439",
-										"#9AE7C0",
-										"#23c1a4",
-										"#cbcb8f",
-										"#D9DB9A",
-										"#ADC571"
-									],
-									"categorySelection" : {
-										"categories" : {
-											"dataSourceType" : "tableColumn",
-											"dataSourceDetails" : {
-												"categoryColumns" : [ "shopId", "shopName" ],
-												"defaultCategoryColumns" : "shopId"
-											}
-										}
-									},
-									"dataSource" : {
-										"dataSourceType" : "table"
-									}
-								},
-								"headerActions" : [
-									{
-										"text" : "Add Invoice",
-										"showLabel" : true,
-										"icon" : "feather icon-plus",
-										"style" : "style5",
-										"onClick" : [
-											{
-												"actions" : [
-													{
-														"action" : "redirect",
-														"actionDetails" : {
-															"routerLink" : "/page/invoicePageCreation"
-														}
-													}
-												]
-											}
-										]
-									}
-								],
-								"downloadActions" : [
-									{
-										"action" : "excelDownload",
-										"downloadPopupTitle" : "Downloading Excel"
-									},
-									{
-										"action" : "pdfDownload",
-										"downloadPopupTitle" : "Downloading Pdf"
-									}
-								],
-								"DataDownload" : {
-									"downloadColumnName" : [
-										{
-											"label" : "Invoice ID",
-											"property" : "Invoice ID",
-											"dbColumnName" : "invoiceId"
-										},
-										{
-											"label" : "Shop ID",
-											"property" : "Shop ID",
-											"dbColumnName" : "shopId"
-										},
-										{
-											"label" : "Shop Name",
-											"property" : "Shop Name",
-											"dbColumnName" : "shopName"
-										},
-										{
-											"label" : "Customer Name",
-											"property" : "Customer Name",
-											"dbColumnName" : "customer_name"
-										},
-										{
-											"label" : "Contact Number",
-											"property" : "Contact Number",
-											"dbColumnName" : "contact_number"
-										},
-										{
-											"label" : "Location",
-											"property" : "Location",
-											"dbColumnName" : "location"
-										},
-										{
-											"label" : "Amount",
-											"property" : "Amount",
-											"dbColumnName" : "amount"
-										},
-										{
-											"label" : "GST Amount",
-											"property" : "GST Amount",
-											"dbColumnName" : "gst_amount"
-										},
-										{
-											"label" : "Total",
-											"property" : "Total",
-											"dbColumnName" : "total"
-										}
-									]
-								},
-								"tableFilter" : {
-									"dataSourceType" : "inline",
-									"dataSource" : [
-										{
-											"dataSourceType" : "businessView",
-											"dataSourceName" : "invoiceFilterBV",
-											"dataSourceDetails" : {
-												"businessView" : "invoiceFilterBV"
-											}
-										}
-									],
-									"Filters" : [
-										{
-											"description" : "Shop ID",
-											"dbColumnName" : "shopId",
-											"placeholder" : "Shop ID",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Shop Name",
-											"dbColumnName" : "shopName",
-											"placeholder" : "Shop Name",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Customer ID",
-											"dbColumnName" : "customer_id",
-											"placeholder" : "Customer ID",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Customer Name",
-											"dbColumnName" : "customer_name",
-											"placeholder" : "Customer Name",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Location",
-											"dbColumnName" : "location",
-											"placeholder" : "Location",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "search"
-										},
-										{
-											"description" : "Total Amount",
-											"dbColumnName" : "totalAmount",
-											"placeholder" : "Total Amount",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "search"
-										}
-									]
-								}
-							},
-							"tableColumns" : {
-								"invoice_Id" : {
-									"type" : "text",
-									"dbColumnName" : null,
-									"openInNewTab" : true,
-									"value" : {
-										"routerLink" : "/page/InvoiceDetailPage",
-										"text" : "{{invoiceId}}",
-										"params" : {
-											"invoiceId" : "{{invoiceId}}"
-										}
-									}
-								},
-								"shop_Id" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "shopId"
-								},
-								"shop_Name" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "shopName"
-								},
-								"shop_Contact_Number" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "contactNumber"
-								},
-								"Location" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "location"
-								},
-								"customer_Name" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "customer_name"
-								},
-								"contact_Number" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "contact_number"
-								},
-								"amount" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "amount"
-								},
-								"gst_amount" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "gst_amount"
-								},
-								"total" : {
-									"type" : "text",
-									"dataSourceName" : "invoiceDetailListPageBV",
-									"dbColumnName" : "total"
-								},
-								"items" : {
-									"type" : "embeddedTable",
-									"dataSourceName" : "invoiceDetailProductListBV",
-									"componentId" : [ "invoiceId" ],
-									"counterSize" : "m",
-									"style" : "style0",
-									"tableConfig" : {
-										"enableEntityCreation" : false,
-										"entityCreationDetails" : {
-											"addTableRow" : false
-										}
-									},
-									"tableColumns" : {
-										"product_id" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "product_id"
-										},
-										"product_name" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "product_name"
-										},
-										"unit_price" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "unit_price"
-										},
-										"qty" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "qty"
-										},
-										"amount" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "amount"
-										},
-										"gst" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "gst"
-										},
-										"gst_amount" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "gst_amount"
-										},
-										"total" : {
-											"type" : "text",
-											"dataSourceName" : "invoiceDetailProductListBV",
-											"dbColumnName" : "total"
-										},
-										"services" : {
-											"type" : "embeddedTable",
-											"dataSourceName" : "invoiceServicesBV",
-											"componentId" : [ "product_id" ],
-											"counterSize" : "m",
-											"style" : "style0",
-											"tableConfig" : {
-												"enableEntityCreation" : false,
-												"entityCreationDetails" : {
-													"addTableRow" : false
-												}
-											},
-											"tableColumns" : {
-												"serviceCode" : {
-													"type" : "text",
-													"dataSourceName" : "invoiceServicesBV",
-													"dbColumnName" : "service_code"
-												},
-												"serviceDescription" : {
-													"type" : "text",
-													"dataSourceName" : "invoiceServicesBV",
-													"dbColumnName" : "serviceDescription"
-												},
-												"price" : {
-													"type" : "text",
-													"dataSourceName" : "invoiceServicesBV",
-													"dbColumnName" : "price"
-												},
-												"qty" : {
-													"type" : "text",
-													"dataSourceName" : "invoiceServicesBV",
-													"dbColumnName" : "qty"
-												},
-												"serviceTotal" : {
-													"type" : "text",
-													"dataSourceName" : "invoiceServicesBV",
-													"dbColumnName" : "serviceTotal"
-												}
-											}
-										}
-									}
-								},
-								"Action" : {
-									"type" : "icon",
-									"icon" : "feather icon-edit",
-									"value" : {
-										"routerLink" : "/page/InvoiceDetailPage",
-										"params" : {
-											"invoiceId" : "{{invoiceId}}"
-										},
-										"enabled" : true,
-										"text" : "Edit"
-									}
-								},
-								"Delete" : {
-									"type" : "menu",
-									"dbColumnName" : "menu",
-									"enabled" : true,
-									"menuDetails" : {
-										"menuIcon" : "feather icon-more-vertical",
-										"menuItems" : [
-											{
-												"text" : "Delete",
-												"icon" : "feather icon-trash-2",
-												"action" : "showPopup",
-												"actionDetails" : {
-													"popupName" : "delete",
-													"tableRefresh" : true
-												}
-											}
-										]
-									}
-								}
-							}
-						}
-					]
-				}
-			]
-		}
-	],
-	"showPageBanner" : true,
-	"tenant" : "100",
-	"version" : "Grid",
-	"popups" : {
-		"delete" : {
-			"type" : "inline",
-			"pageName" : "menuDetialsPage",
-			"inlineJson" : {
-				"type" : "form",
-				"dataSource" : {
-					"dataSourceType" : "businessView",
-					"dataSourceName" : "invoiceDetailListPageBV",
-					"dataSourceDetails" : {
-						"businessView" : "invoiceDetailListPageBV"
-					}
-				},
-				"header" : {
-					"heading" : "Delete Confirmation"
-				},
-				"body" : {
-					"title" : "Do you want to proceed ?",
-					"components" : [ ]
-				},
-				"footer" : {
-					"button" : [
-						{
-							"text" : "No",
-							"type" : "button",
-							"action" : "close"
-						},
-						{
-							"text" : "Yes",
-							"type" : "submit",
-							"action" : "submit",
-							"onClick" : [
-								{
-									"actions" : [
-										{
-											"action" : "executePopupAction",
-											"actionDetails" : {
-												"payload" : {
-													
-												}
-											}
-										},
-										{
-											"action" : "refresh"
-										}
-									]
-								}
-							]
-						}
-					]
-				}
-			},
-			"executePopUpAction" : [
-				{
-					"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
-					"THEN" : [ "performActions" ],
-					"enableLogs" : true,
-					"Actions" : [
-						{
-							"id" : "deleteNotificationDocument",
-							"actionName" : "deleteNotificationDocument",
-							"actionType" : "deleteDocument",
-							"actionDetails" : {
-								"database_details" : {
-									"database" : "{{payload.headers.dbName}}",
-									"collection" : "InvoiceDetails"
-								},
-								"matchCondition" : {
-									"invoiceId" : "{{payload.selectedRow.invoice_Id.text}}"
-								}
-							}
-						}
-					],
-					"Output" : {
-						"message" : "Deleted Successfully",
-						"refresh" : true
-					}
-				}
-			]
-		}
-	},
-	"executePopUpAction" : [
-		{
-			"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
-			"THEN" : [ "performActions" ],
-			"Actions" : [
-				{
-					"actionName" : "deleteInvoice",
-					"actionType" : "deleteDocument",
-					"actionDetails" : {
-						"database_details" : {
-							"database" : "{{payload.headers.dbName}}",
-							"collection" : "InvoiceDetails"
-						},
-						"matchCondition" : {
-							"_id" : "{{payload.selectedRow._id}}"
-						}
-					}
-				}
-			],
-			"Output" : {
-				"message" : "Invoice Deleted Successfully",
-				"refresh" : true
-			}
-		}
-	],
-	"executePageActions" : [
-		{
-			"ID" : 1,
-			"Rule" : "pageAction",
-			"RuleGroup" : "",
-			"WHEN" : "'{{payload.pageActionPerformed}}' == 'delete'",
-			"THEN" : [ "performAction" ],
-			"Actions" : [
-				{
-					"id" : 2,
-					"actionName" : "deleteLibrary",
-					"actionType" : "updateBusinessView",
-					"actionDetails" : {
-						"businessView" : "LibraryDeleteBV",
-						"database" : "{{payload.headers.dbName}}",
-						"targetSchema" : {
-							
-						},
-						"sourceSchema" : {
-							
-						}
-					}
-				}
-			],
-			"Output" : {
-				"message" : "Deleted successfully",
-				"refresh" : true
-			}
-		}
-	]
-}
+db.pages.updateOne({ _id: ObjectId("69b7adb5535b14e80761690d") }, {
+    $set: {
+        "pageName": "InvoiceListPage",
+        "createdBy": "PGLADMIN",
+        "dataSource": [
+            {
+                "dataSourceType": "businessView",
+                "dataSourceName": "invoiceDetailListPageBV",
+                "dataSourceDetails": {
+                    "businessView": "invoiceDetailListPageBV"
+                }
+            },
+            {
+                "dataSourceType": "businessView",
+                "dataSourceName": "invoiceDetailProductListBV",
+                "dataSourceDetails": {
+                    "businessView": "invoiceDetailProductListBV"
+                }
+            },
+            {
+                "dataSourceType": "businessView",
+                "dataSourceName": "invoiceServicesBV",
+                "dataSourceDetails": {
+                    "businessView": "invoiceServicesBV"
+                }
+            },
+            {
+                "dataSourceType": "businessView",
+                "dataSourceName": "invoiceFilterBV",
+                "dataSourceDetails": {
+                    "businessView": "invoiceFilterBV"
+                }
+            }
+        ],
+        "epic": "Details-Onboarding",
+        "fileDestination": "azure",
+        "pageBanner": {
+            "Business_Comp_Name": "InvoiceList",
+            "Title": "Invoice List",
+            "Description": "List of Invoice Details",
+            "Images": [],
+            "Screen_Name": "InvoiceList"
+        },
+        "rows": [
+            {
+                "columns": [
+                    {
+                        "components": [
+                            {
+                                "componentId": "ListInvoice",
+                                "type": "table",
+                                "title": "Invoice List",
+                                "description": "List of invoices",
+                                "dataSourceName": "invoiceDetailListPageBV",
+                                "tableConfig": {
+                                    "layoutIcon": false,
+                                    "downloadIcon": true,
+                                    "columnFilterIcon": true,
+                                    "rowFilterIcon": true,
+                                    "fullscreenIcon": true,
+                                    "showPagination": true,
+                                    "localPagination": false,
+                                    "checkbox": false,
+                                    "chartConfig": {
+                                        "chartStyle": {
+                                            "grid": false,
+                                            "legend": false,
+                                            "dataLabels": true,
+                                            "distributed": true,
+                                            "compact": true,
+                                            "showChart": true,
+                                            "yaxis": true,
+                                            "closeIcon": false,
+                                            "style": "style2"
+                                        },
+                                        "title": "",
+                                        "sendCompressedData": true,
+                                        "description": "subtitle",
+                                        "chartType": "column",
+                                        "defaultChartCategory": "shopId",
+                                        "colors": [
+                                            "#3391e2",
+                                            "#68CBE8",
+                                            "#E5E16D",
+                                            "#c2d439",
+                                            "#9AE7C0",
+                                            "#23c1a4",
+                                            "#cbcb8f",
+                                            "#D9DB9A",
+                                            "#ADC571"
+                                        ],
+                                        "categorySelection": {
+                                            "categories": {
+                                                "dataSourceType": "tableColumn",
+                                                "dataSourceDetails": {
+                                                    "categoryColumns": ["shopId", "shopName","location","customer_id"],
+                                                    "defaultCategoryColumns": "shopId"
+                                                }
+                                            }
+                                        },
+                                        "dataSource": {
+                                            "dataSourceType": "table"
+                                        }
+                                    },
+                                    "headerActions": [
+                                        {
+                                            "text": "Add Invoice",
+                                            "showLabel": true,
+                                            "icon": "feather icon-plus",
+                                            "style": "style5",
+                                            "onClick": [
+                                                {
+                                                    "actions": [
+                                                        {
+                                                            "action": "redirect",
+                                                            "actionDetails": {
+                                                                "routerLink": "/page/invoicePageCreation"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "downloadActions": [
+                                        {
+                                            "action": "excelDownload",
+                                            "downloadPopupTitle": "Downloading Excel"
+                                        },
+                                        {
+                                            "action": "pdfDownload",
+                                            "downloadPopupTitle": "Downloading Pdf"
+                                        }
+                                    ],
+                                    "DataDownload": {
+                                        "downloadColumnName": [
+                                            {
+                                                "label": "Invoice ID",
+                                                "property": "Invoice ID",
+                                                "dbColumnName": "invoiceId"
+                                            },
+                                            {
+                                                "label": "Shop ID",
+                                                "property": "Shop ID",
+                                                "dbColumnName": "shopId"
+                                            },
+                                            {
+                                                "label": "Shop Name",
+                                                "property": "Shop Name",
+                                                "dbColumnName": "shopName"
+                                            },
+                                            {
+                                                "label": "Customer Name",
+                                                "property": "Customer Name",
+                                                "dbColumnName": "customer_name"
+                                            },
+                                            {
+                                                "label": "Contact Number",
+                                                "property": "Contact Number",
+                                                "dbColumnName": "contact_number"
+                                            },
+                                            {
+                                                "label": "Location",
+                                                "property": "Location",
+                                                "dbColumnName": "location"
+                                            },
+                                            {
+                                                "label": "Amount",
+                                                "property": "Amount",
+                                                "dbColumnName": "amount"
+                                            },
+                                            {
+                                                "label": "GST Amount",
+                                                "property": "GST Amount",
+                                                "dbColumnName": "gst_amount"
+                                            },
+                                            {
+                                                "label": "Total",
+                                                "property": "Total",
+                                                "dbColumnName": "total"
+                                            }
+                                        ]
+                                    },
+                                    "tableFilter": {
+                                        "dataSourceType": "inline",
+                                        "dataSource": [
+                                            {
+                                                "dataSourceType": "businessView",
+                                                "dataSourceName": "invoiceFilterBV",
+                                                "dataSourceDetails": {
+                                                    "businessView": "invoiceFilterBV"
+                                                }
+                                            }
+                                        ],
+                                        "Filters": [
+                                            {
+                                                "description": "Shop ID",
+                                                "dbColumnName": "shopId",
+                                                "placeholder": "Shop ID",
+                                                "dataSourceName": "invoiceFilterBV",
+                                                "filterType": "checkBox"
+                                            },
+                                            {
+                                                "description": "Shop Name",
+                                                "dbColumnName": "shopName",
+                                                "placeholder": "Shop Name",
+                                                "dataSourceName": "invoiceFilterBV",
+                                                "filterType": "search"
+                                            },
+                                            {
+                                                "description": "Customer ID",
+                                                "dbColumnName": "customer_id",
+                                                "placeholder": "Shop Name",
+                                                "dataSourceName": "invoiceFilterBV",
+                                                "filterType": "checkBox"
+                                            },
+                                            {
+                                                "description": "Location",
+                                                "dataSourceName": "invoiceFilterBV",
+                                                "dbColumnName": "location",
+                                                "placeholder": "Location",
+                                                "filterType": "checkBox"
+                                            },
+                                            {
+                                                "description": "Total Amount",
+                                                "dataSourceName": "invoiceFilterBV",
+                                                "dbColumnName": "total",
+                                                "placeholder": "Total Amount",
+                                                "filterType": "numberRange"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "tableColumns": {
+                                    "invoice_Id": {
+                                        "type": "text",
+                                        "dbColumnName": null,
+                                        "openInNewTab": true,
+                                        "value": {
+                                            "routerLink": "/page/InvoiceDetailPage",
+                                            "text": "{{invoiceId}}",
+                                            "params": {
+                                                "invoiceId": "{{invoiceId}}"
+                                            }
+                                        }
+                                    },
+                                    "shop_Id": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "shopId"
+                                    },
+                                    "shop_Name": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "shopName"
+                                    },
+                                    "shop_Contact_Number": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "contactNumber"
+                                    },
+                                    "Location": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "location"
+                                    },
+                                    "customer_Id": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "customer_id"
+                                    },
+                                    "customer_Name": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "customer_name"
+                                    },
+                                    "contact_Number": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "contact_number"
+                                    },
+                                    "amount": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "amount"
+                                    },
+                                    "gst_amount": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "gst_amount"
+                                    },
+                                    "total": {
+                                        "type": "text",
+                                        "dataSourceName": "invoiceDetailListPageBV",
+                                        "dbColumnName": "total"
+                                    },
+                                    "items": {
+                                        "type": "embeddedTable",
+                                        "dataSourceName": "invoiceDetailProductListBV",
+                                        "componentId": ["invoiceId"],
+                                        "counterSize": "m",
+                                        "style": "style0",
+                                        "tableConfig": {
+                                            "enableEntityCreation": false,
+                                            "entityCreationDetails": {
+                                                "addTableRow": false
+                                            }
+                                        },
+                                        "tableColumns": {
+                                            "product_id": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "product_id"
+                                            },
+                                            "product_name": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "product_name"
+                                            },
+                                            "unit_price": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "unit_price"
+                                            },
+                                            "qty": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "qty"
+                                            },
+                                            "amount": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "amount"
+                                            },
+                                            "gst": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "gst"
+                                            },
+                                            "gst_amount": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "gst_amount"
+                                            },
+                                            "total": {
+                                                "type": "text",
+                                                "dataSourceName": "invoiceDetailProductListBV",
+                                                "dbColumnName": "total"
+                                            },
+                                            "services": {
+                                                "type": "embeddedTable",
+                                                "dataSourceName": "invoiceServicesBV",
+                                                "componentId": ["invoiceId", "product_id"],
+                                                "counterSize": "m",
+                                                "style": "style0",
+                                                "tableConfig": {
+                                                    "enableEntityCreation": false,
+                                                    "entityCreationDetails": {
+                                                        "addTableRow": false
+                                                    }
+                                                },
+                                                "tableColumns": {
+                                                    "serviceCode": {
+                                                        "type": "text",
+                                                        "dataSourceName": "invoiceServicesBV",
+                                                        "dbColumnName": "service_code"
+                                                    },
+                                                    "serviceDescription": {
+                                                        "type": "text",
+                                                        "dataSourceName": "invoiceServicesBV",
+                                                        "dbColumnName": "serviceDescription"
+                                                    },
+                                                    "price": {
+                                                        "type": "text",
+                                                        "dataSourceName": "invoiceServicesBV",
+                                                        "dbColumnName": "price"
+                                                    },
+                                                    "qty": {
+                                                        "type": "text",
+                                                        "dataSourceName": "invoiceServicesBV",
+                                                        "dbColumnName": "qty"
+                                                    },
+                                                    "serviceTotal": {
+                                                        "type": "text",
+                                                        "dataSourceName": "invoiceServicesBV",
+                                                        "dbColumnName": "serviceTotal"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "Action": {
+                                        "type": "icon",
+                                        "icon": "feather icon-edit",
+                                        "value": {
+                                            "routerLink": "/page/InvoiceDetailPage",
+                                            "params": {
+                                                "invoiceId": "{{invoiceId}}"
+                                            },
+                                            "enabled": true,
+                                            "text": "Edit"
+                                        }
+                                    },
+                                    "Delete": {
+                                        "type": "menu",
+                                        "dbColumnName": "menu",
+                                        "enabled": true,
+                                        "menuDetails": {
+                                            "menuIcon": "feather icon-more-vertical",
+                                            "menuItems": [
+                                                {
+                                                    "text": "Delete",
+                                                    "icon": "feather icon-trash-2",
+                                                    "action": "showPopup",
+                                                    "actionDetails": {
+                                                        "popupName": "delete",
+                                                        "tableRefresh": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "showPageBanner": true,
+        "tenant": "100",
+        "version": "Grid",
+        "popups": {
+            "delete": {
+                "type": "inline",
+                "pageName": "menuDetialsPage",
+                "inlineJson": {
+                    "type": "form",
+                    "dataSource": {
+                        "dataSourceType": "businessView",
+                        "dataSourceName": "invoiceDetailListPageBV",
+                        "dataSourceDetails": {
+                            "businessView": "invoiceDetailListPageBV"
+                        }
+                    },
+                    "header": {
+                        "heading": "Delete Confirmation"
+                    },
+                    "body": {
+                        "title": "Do you want to proceed ?",
+                        "components": []
+                    },
+                    "footer": {
+                        "button": [
+                            {
+                                "text": "No",
+                                "type": "button",
+                                "action": "close"
+                            },
+                            {
+                                "text": "Yes",
+                                "type": "submit",
+                                "action": "submit",
+                                "onClick": [
+                                    {
+                                        "actions": [
+                                            {
+                                                "action": "executePopupAction",
+                                                "actionDetails": {
+                                                    "payload": {
+
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "action": "refresh"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "executePopUpAction": [
+                    {
+                        "WHEN": "'{{payload.popupActionPerformed}}' == 'submit'",
+                        "THEN": ["performActions"],
+                        "enableLogs": true,
+                        "Actions": [
+                            {
+                                "id": "deleteNotificationDocument",
+                                "actionName": "deleteNotificationDocument",
+                                "actionType": "deleteDocument",
+                                "actionDetails": {
+                                    "database_details": {
+                                        "database": "{{payload.headers.dbName}}",
+                                        "collection": "InvoiceDetails"
+                                    },
+                                    "matchCondition": {
+                                        "invoiceId": "{{payload.selectedRow.invoice_Id.text}}"
+                                    }
+                                }
+                            }
+                        ],
+                        "Output": {
+                            "message": "Deleted Successfully",
+                            "refresh": true
+                        }
+                    }
+                ]
+            }
+        },
+        "executePopUpAction": [
+            {
+                "WHEN": "'{{payload.popupActionPerformed}}' == 'submit'",
+                "THEN": ["performActions"],
+                "Actions": [
+                    {
+                        "actionName": "deleteInvoice",
+                        "actionType": "deleteDocument",
+                        "actionDetails": {
+                            "database_details": {
+                                "database": "{{payload.headers.dbName}}",
+                                "collection": "InvoiceDetails"
+                            },
+                            "matchCondition": {
+                                "_id": "{{payload.selectedRow._id}}"
+                            }
+                        }
+                    }
+                ],
+                "Output": {
+                    "message": "Invoice Deleted Successfully",
+                    "refresh": true
+                }
+            }
+        ],
+        "executePageActions": [
+            {
+                "ID": 1,
+                "Rule": "pageAction",
+                "RuleGroup": "",
+                "WHEN": "'{{payload.pageActionPerformed}}' == 'delete'",
+                "THEN": ["performAction"],
+                "Actions": [
+                    {
+                        "id": 2,
+                        "actionName": "deleteLibrary",
+                        "actionType": "updateBusinessView",
+                        "actionDetails": {
+                            "businessView": "LibraryDeleteBV",
+                            "database": "{{payload.headers.dbName}}",
+                            "targetSchema": {
+
+                            },
+                            "sourceSchema": {
+
+                            }
+                        }
+                    }
+                ],
+                "Output": {
+                    "message": "Deleted successfully",
+                    "refresh": true
+                }
+            }
+        ]
+    }
+})

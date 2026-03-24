@@ -31,7 +31,13 @@
 							"amount" : "$summary.amount",
 							"gst_amount" : "$summary.gst_amount",
 							"net_total" : {
-								"($)sum" : "$items.net_total"
+								"($)sum" : {
+									"($)map" : {
+										"input" : "$items",
+										"as" : "item",
+										"in" : "$$item.net_total"
+									}
+								}
 							}
 						}
 					}

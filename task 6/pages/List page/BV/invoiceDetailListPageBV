@@ -1,111 +1,124 @@
-{
-	"_id" : ObjectId("69b4f7bce407dcf95c7c54a6"),
-	"businessView" : "invoiceDetailListPageBV",
-	"aggregation" : [
-		{
-			"$match" : {
-				"invoiceId" : {
-					"$exists" : true
-				}
-			}
-		},
-		{
-			"($)match" : "{{searchTerm}}"
-		},
-		{
-			"($)sort" : {
-				"_id" : -1
-			}
-		},
-		{
-			"$facet" : {
-				"paginatedResults" : [
-					{
-						"($)match" : "{{componentSetting.rowFilter}}"
-					},
-					{
-						"($)sort" : {
-							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
-						}
-					},
-					{
-						"($)skip" : "{{componentSetting.page}}"
-					},
-					{
-						"($)limit" : "{{componentSetting.limit}}"
-					},
-					{
-						"$project" : {
-							"_id" : 0,
-							"invoiceId" : "$invoiceId",
-							"shopId" : 1,
-							"shopName" : 1,
-							"contactNumber" : 1,
-							"customer_name" : "$customerDetails.customer_name",
-							"contact_number" : "$customerDetails.contact_number",
-							"location" : "$customerDetails.address",
-							"amount" : "$summary.amount",
-							"gst_amount" : "$summary.gst_amount",
-							"total" : {
-								"($)sum" : "$items.net_total"
-							}
-						}
-					}
-				],
-				"totalCount" : [
-					{
-						"$count" : "count"
-					}
-				],
-				"chartData" : [
-					{
-						"($)group" : {
-							"_id" : "${{componentSetting.chartCategory}}",
-							"count" : {
-								"($)sum" : 1
-							}
-						}
-					},
-					{
-						"($)match" : {
-							"_id" : {
-								"($)ne" : null
-							}
-						}
-					},
-					{
-						"($)project" : {
-							"_id" : 0,
-							"x" : "$_id",
-							"y" : "$count"
-						}
-					},
-					{
-						"($)sort" : {
-							"y" : 1
-						}
-					}
-				]
-			}
-		}
-	],
-	"collection" : "InvoiceDetails",
-	"defaultSortSetting" : {
-		"sortField" : "_id",
-		"sortDirection" : -1
-	},
-	"searchTermFields" : [
-		"invoiceId",
-		"shopId",
-		"shopName",
-		"ownerName",
-		"gstNumber",
-		"contactNumber",
-		"address",
-		"emailId",
-		"customerDetails.customer_id",
-		"customerDetails.customer_name",
-		"customerDetails.address",
-		"customerDetails.contact_number"
-	]
-}
+db.businessView.updateOne({ _id: ObjectId("69b4f7bce407dcf95c7c54a6") }, {
+    $set: {
+        "businessView": "invoiceDetailListPageBV",
+        "collection": "InvoiceDetails",
+        "defaultSortSetting": {
+            "sortField": "_id",
+            "sortDirection": -1
+        },
+        "searchTermFields": [
+            "invoiceId",
+            "shopId",
+            "shopName",
+            "ownerName",
+            "gstNumber",
+            "contactNumber",
+            "emailId",
+            "customerDetails.customer_id",
+            "customerDetails.customer_name",
+            "customerDetails.address",
+            "customerDetails.contact_number"
+        ],
+        "aggregation": [
+            {
+                "$match": {
+                    "invoiceId": {
+                        "$exists": true
+                    }
+                }
+            },
+            {
+                "($)match": "{{searchTerm}}"
+            },
+            {
+                "($)sort": {
+                    "_id": -1
+                }
+            },
+            {
+                "$facet": {
+                    "paginatedResults": [
+                        {
+                            "$addFields": {
+                                "customer_id": "$customerDetails.customer_id",
+                                "location": "$customerDetails.address",
+                                "total": "$summary.total"
+                            }
+                        },
+                        {
+                            "($)match": "{{componentSetting.rowFilter}}"
+                        },
+                        {
+                            "($)sort": {
+                                "{{componentSetting.matSortActive}}": "{{componentSetting.matSortDirection}}"
+                            }
+                        },
+                        {
+                            "($)skip": "{{componentSetting.page}}"
+                        },
+                        {
+                            "($)limit": "{{componentSetting.limit}}"
+                        },
+                        {
+                            "$project": {
+                                "_id": 0,
+                                "invoiceId": "$invoiceId",
+                                "shopId": 1,
+                                "shopName": 1,
+                                "contactNumber": 1,
+                                "customer_name": "$customerDetails.customer_name",
+                                "contact_number": "$customerDetails.contact_number",
+                                "customer_id": "$customerDetails.customer_id",
+                                "location": "$customerDetails.address",
+                                "amount": "$summary.amount",
+                                "gst_amount": "$summary.gst_amount",
+                                "total": "$summary.total"
+                            }
+                        }
+                    ],
+                    "totalCount": [
+                        {
+                            "$count": "count"
+                        }
+                    ],
+                    "chartData": [
+                        {
+                            "$addFields": {
+                                "location": "$customerDetails.address",
+                                "customer_id": "$customerDetails.customer_id"
+                            }
+                        },
+                        {
+                            "($)group": {
+                                "_id": "${{componentSetting.chartCategory}}",
+                                "count": {
+                                    "($)sum": 1
+                                }
+                            }
+                        },
+                        {
+                            "($)match": {
+                                "_id": {
+                                    "($)ne": null
+                                }
+                            }
+                        },
+                        {
+                            "($)project": {
+                                "_id": 0,
+                                "x": "$_id",
+                                "y": "$count"
+                            }
+                        },
+                        {
+                            "($)sort": {
+                                "y": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+        
+    }
+})
