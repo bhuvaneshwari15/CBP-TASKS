@@ -27,6 +27,7 @@
 							"customer_id" : "$customerDetails.customer_id",
 							"customer_name" : "$customerDetails.customer_name",
 							"contact_number" : "$customerDetails.contact_number",
+							"email_id" : "$customerDetails.customer_email_id",
 							"customer_address" : "$customerDetails.address",
 							"amount" : "$summary.amount",
 							"gst_amount" : "$summary.gst_amount",
@@ -38,7 +39,8 @@
 										"in" : "$$item.net_total"
 									}
 								}
-							}
+							},
+							"total" : "$summary.total"
 						}
 					}
 				],

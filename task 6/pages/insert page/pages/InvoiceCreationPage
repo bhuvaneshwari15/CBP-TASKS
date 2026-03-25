@@ -1,1086 +1,1086 @@
-db.pages.updateOne({ _id: ObjectId("69afb5a6271d2688d0932079") }, {
-    $set: {
-        "pageName": "invoicePageCreation",
-        "createdBy": "PGLADMIN",
-        "epic": "Details-Onboarding",
-        "fileDestination": "azure",
-        "pageBanner": {
-            "pageBannerButtons": [],
-            "Business_Comp_Name": "ShopDetails",
-            "Title": "ShopDetails",
-            "Description": "ShopDetails",
-            "Images": [],
-            "Screen_Name": "ShopDetails"
-        },
-        "showPageBanner": true,
-        "tenant": "100",
-        "version": "Grid",
-        "rows": [
-            {
-                "columns": [
-                    {
-                        "components": [
-                            {
-                                "type": "section",
-                                "componentId": "ShopDetails",
-                                "title": "Shop Details",
-                                "description": "Enter Shop Detail below",
-                                "dataSourceName": "shopMaster",
-                                "icon": "Detail-icon",
-                                "headerComponents": [],
-                                "sectionBody": {
-                                    "style": "style1",
-                                    "verticalSpacing": "fixed",
-                                    "rows": [
-                                        {
-                                            "columns": [
-                                                {
-                                                    "width": "33%",
-                                                    "components": [
-                                                        {
-                                                            "label": "Shop Id",
-                                                            "type": "selectWithBusinessView",
-                                                            "formcontrol": "shopId",
-                                                            "componentId": "shopId",
-                                                            "mandatory": true,
-                                                            "option": true,
-                                                            "dataSourceName": "",
-                                                            "onChangeGetData": true,
-                                                            "filter": true,
-                                                            "hidden": false,
-                                                            "closeOnSelect": true,
-                                                            "style": "style6",
-                                                            "sendAllFieldsInSelectedValueAsObject": false,
-                                                            "dataSource": {
-                                                                "method": "POST",
-                                                                "body": {
-                                                                    "businessView": "shopDetailBV"
-                                                                },
-                                                                "url": "/lowcode-service/executeBVData",
-                                                                "optionArrayKey": "data",
-                                                                "dropDownKey": "shopId",
-                                                                "dropDownValue": "shopId"
-                                                            },
-                                                            "onChange": [
-                                                                {
-                                                                    "actions": [
-                                                                        {
-                                                                            "action": "setComponentValue",
-                                                                            "actionDetails": {
-                                                                                "targetComponent": [
-                                                                                    "section_ShopDetails.shopName",
-                                                                                    "section_ShopDetails.ownerName",
-                                                                                    "section_ShopDetails.gstNumber",
-                                                                                    "section_ShopDetails.contactNumber",
-                                                                                    "section_ShopDetails.address",
-                                                                                    "section_ShopDetails.emailId"
-                                                                                ],
-                                                                                "url": "/lowcode-service/executeBVData",
-                                                                                "method": "POST"
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "dbColumnName": "shopId"
-                                                        },
-                                                        {
-                                                            "label": "Shop Name",
-                                                            "type": "inputString",
-                                                            "componentId": "shopName",
-                                                            "formcontrol": "shopName",
-                                                            "dbColumnName": "shopName",
-                                                            "readOnly": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        },
-                                                        {
-                                                            "label": "Owner Name",
-                                                            "type": "inputString",
-                                                            "readOnly": true,
-                                                            "componentId": "ownerName",
-                                                            "dbColumnName": "ownerName",
-                                                            "formcontrol": "ownerName",
-                                                            "displayStyle": "verticalKeyValue"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "width": "33%",
-                                                    "components": [
-                                                        {
-                                                            "label": "GST Number",
-                                                            "type": "inputString",
-                                                            "readOnly": true,
-                                                            "componentId": "gstNumber",
-                                                            "dbColumnName": "gstNumber",
-                                                            "formcontrol": "gstNumber",
-                                                            "displayStyle": "verticalKeyValue"
-                                                        },
-                                                        {
-                                                            "label": "contact Number",
-                                                            "type": "inputPhoneNumber",
-                                                            "readOnly": true,
-                                                            "componentId": "contactNumber",
-                                                            "formcontrol": "contactNumber",
-                                                            "mandatory": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "width": "33%",
-                                                    "components": [
-                                                        {
-                                                            "label": "Address",
-                                                            "type": "inputText",
-                                                            "readOnly": true,
-                                                            "componentId": "address",
-                                                            "dbColumnName": "address",
-                                                            "formcontrol": "address",
-                                                            "displayStyle": "verticalKeyValue"
-                                                        },
-                                                        {
-                                                            "label": "Email-Id",
-                                                            "type": "inputString",
-                                                            "readOnly": true,
-                                                            "componentId": "emailId",
-                                                            "dbColumnName": "emailId",
-                                                            "formcontrol": "emailId",
-                                                            "displayStyle": "verticalKeyValue"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "section",
-                                "componentId": "CustomerDetails",
-                                "title": "Customer Details",
-                                "description": "Enter Customer Details",
-                                "icon": "Detail-icon",
-                                "headerComponents": [],
-                                "sectionBody": {
-                                    "style": "style1",
-                                    "verticalSpacing": "fixed",
-                                    "rows": [
-                                        {
-                                            "columns": [
-                                                {
-                                                    "width": "33%",
-                                                    "components": [
-                                                        {
-                                                            "label": "Customer Id",
-                                                            "type": "selectWithBusinessView",
-                                                            "formcontrol": "customer_id",
-                                                            "componentId": "customer_id",
-                                                            "mandatory": true,
-                                                            "option": true,
-                                                            "dataSourceName": "",
-                                                            "onChangeGetData": true,
-                                                            "filter": true,
-                                                            "hidden": false,
-                                                            "closeOnSelect": true,
-                                                            "style": "style6",
-                                                            "sendAllFieldsInSelectedValueAsObject": false,
-                                                            "dataSource": {
-                                                                "method": "POST",
-                                                                "body": {
-                                                                    "businessView": "buyerMasterBV"
-                                                                },
-                                                                "url": "/lowcode-service/executeBVData",
-                                                                "optionArrayKey": "data",
-                                                                "dropDownKey": "customer_id",
-                                                                "dropDownValue": "customer_id"
-                                                            },
-                                                            "onChange": [
-                                                                {
-                                                                    "actions": [
-                                                                        {
-                                                                            "action": "setComponentValue",
-                                                                            "actionDetails": {
-                                                                                "targetComponent": ["section_CustomerDetails.customer_name", "section_CustomerDetails.contact_number", "section_CustomerDetails.address"],
-                                                                                "url": "/lowcode-service/executeBVData",
-                                                                                "method": "POST"
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "dbColumnName": "customer_id"
-                                                        },
-                                                        {
-                                                            "label": "Customer Name",
-                                                            "type": "inputString",
-                                                            "componentId": "customer_name",
-                                                            "dbColumnName": "customer_name",
-                                                            "formcontrol": "customer_name",
-                                                            "mandatory": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        },
-                                                        {
-                                                            "label": "Amount",
-                                                            "type": "inputString",
-                                                            "componentId": "amount",
-                                                            "dbColumnName": "amount",
-                                                            "formcontrol": "amount",
-                                                            "readOnly": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "width": "33%",
-                                                    "components": [
-                                                        {
-                                                            "label": "Contact Number",
-                                                            "type": "inputPhoneNumber",
-                                                            "componentId": "contact_number",
-                                                            "dbColumnName": "contact_number",
-                                                            "formcontrol": "contact_number",
-                                                            "mandatory": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        },
-                                                         {
-                                                            "label": "Email-Id",
-                                                            "type": "inputString",
-                                                            "componentId": "email_id",
-                                                            "dbColumnName": "email_id",
-                                                            "formcontrol": "email_id",
-                                                            "mandatory": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        },
-                                                        {
-                                                            "label": "GST-Amount",
-                                                            "type": "inputString",
-                                                            "componentId": "gst_amount",
-                                                            "dbColumnName": "gst_amount",
-                                                            "formcontrol": "gst_amount",
-                                                            "readOnly": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "width": "33%",
-                                                    "components": [
-                                                        {
-                                                            "label": "Address",
-                                                            "type": "inputText",
-                                                            "componentId": "address",
-                                                            "dbColumnName": "address",
-                                                            "formcontrol": "address",
-                                                            "displayStyle": "verticalKeyValue"
-                                                        },
-                                                        {
-                                                            "label": "Total",
-                                                            "type": "inputString",
-                                                            "componentId": "net_total",
-                                                            "dbColumnName": "net_total",
-                                                            "formcontrol": "net_total",
-                                                            "readOnly": true,
-                                                            "displayStyle": "verticalKeyValue"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "columns": [
-                    {
-                        "components": [
-                            {
-                                "type": "table",
-                                "title": "product details",
-                                "description": "Enter product Details below",
-                                "componentId": "invoice_items",
-                                "formcontrol": "invoice_items",
-                                "dataSourceName": "",
-                                "hidden": false,
-                                "tableConfig": {
-                                    "businessComponent": "SCRAB_WEIGH",
-                                    "layoutIcon": false,
-                                    "downloadIcon": true,
-                                    "columnFilterIcon": true,
-                                    "rowFilterIcon": true,
-                                    "aggregationFooter": true,
-                                    "fullscreenIcon": true,
-                                    "enableEntityCreation": true,
-                                    "checkbox": true,
-                                    "rowActions": true,
-                                    "localPagination": false,
-                                    "entityCreationDetails": {
-                                        "addTableRow": true
-                                    }
-                                },
-                                "tableColumns": {
-                                    "SNO": {
-                                        "type": "uiRowIndex"
-                                    },
-                                    "product_id": {
-                                        "type": "selectWithBusinessView",
-                                        "componentId": "product_id",
-                                        "dbColumnName": "product_id",
-                                        "mandatory": true,
-                                        "disableSelectedValueInTable": true,
-                                        "dataSourceType": "businessView",
-                                        "dataSourceDetails": {
-                                            "businessViewName": "ProductMasterBV",
-                                            "dataKey": "productId",
-                                            "dataValue": "productId"
-                                        },
-                                        "onChange": [
-                                            {
-                                                "actions": [
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["product_name"],
-                                                            "setValue": {
-                                                                "valueof": {
-                                                                    "type": "currentColumnNameKey",
-                                                                    "currentColumnNameKey": "productName"
-                                                                }
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["unit_price"],
-                                                            "setValue": {
-                                                                "valueof": {
-                                                                    "type": "currentColumnNameKey",
-                                                                    "currentColumnNameKey": "price"
-                                                                }
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["gst"],
-                                                            "setValue": {
-                                                                "valueof": {
-                                                                    "type": "currentColumnNameKey",
-                                                                    "currentColumnNameKey": "gst"
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "product_name": {
-                                        "type": "inputString",
-                                        "componentId": "product_name",
-                                        "dbColumnName": "product_name",
-                                        "readOnly": true
-                                    },
-                                    "unit_price": {
-                                        "type": "inputString",
-                                        "componentId": "unit_price",
-                                        "dbColumnName": "unit_price",
-                                        "readOnly": true
-                                    },
-                                    "qty": {
-                                        "type": "inputString",
-                                        "componentId": "qty",
-                                        "readOnly": false,
-                                        "dbColumnName": "qty",
-                                        "validation": [
-                                            {
-                                                "type": "min",
-                                                "failureMessage": "Value should be greater than or equal to 0.001",
-                                                "valueof": {
-                                                    "value": 0.001
-                                                }
-                                            }
-                                        ],
-                                        "onChange": [
-                                            {
-                                                "actions": [
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["amount"],
-                                                            "setValue": {
-                                                                "multiply": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "unit_price"
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "qty"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["gst_amount"],
-                                                            "setValue": {
-                                                                "percent": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "gst"
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "amount"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["total"],
-                                                            "setValue": {
-                                                                "addition": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "amount"
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "gst_amount"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["net_total"],
-                                                            "setValue": {
-                                                                "addition": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "total"
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "service_total"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "updateSection",
-                                                        "actionDetails": {
-                                                            "targetSectionId": "CustomerDetails",
-                                                            "targetField": ["amount"],
-                                                            "setValue": {
-                                                                "validation": [
-                                                                    {
-                                                                        "type": "maxDecimalDigits",
-                                                                        "valueof": {
-                                                                            "value": 2
-                                                                        }
-                                                                    }
-                                                                ],
-                                                                "sumOfRows": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "amount"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "updateSection",
-                                                        "actionDetails": {
-                                                            "targetSectionId": "CustomerDetails",
-                                                            "targetField": ["gst_amount"],
-                                                            "setValue": {
-                                                                "validation": [
-                                                                    {
-                                                                        "type": "maxDecimalDigits",
-                                                                        "valueof": {
-                                                                            "value": 2
-                                                                        }
-                                                                    }
-                                                                ],
-                                                                "sumOfRows": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "gst_amount"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "updateSection",
-                                                        "actionDetails": {
-                                                            "targetSectionId": "CustomerDetails",
-                                                            "targetField": ["net_total"],
-                                                            "setValue": {
-                                                                "validation": [
-                                                                    {
-                                                                        "type": "maxDecimalDigits",
-                                                                        "valueof": {
-                                                                            "value": 2
-                                                                        }
-                                                                    }
-                                                                ],
-                                                                "sumOfRows": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "net_total"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "amount": {
-                                        "type": "inputText",
-                                        "componentId": "amount",
-                                        "dbColumnName": "amount",
-                                        "readOnly": true
-                                    },
-                                    "gst": {
-                                        "type": "inputString",
-                                        "componentId": "gst",
-                                        "dbColumnName": "gst",
-                                        "readOnly": true
-                                    },
-                                    "gst_amount": {
-                                        "type": "inputText",
-                                        "componentId": "gst_amount",
-                                        "dbColumnName": "gst_amount",
-                                        "readOnly": true
-                                    },
-                                    "total": {
-                                        "type": "inputText",
-                                        "componentId": "total",
-                                        "dbColumnName": "total",
-                                        "readOnly": true
-                                    },
-                                    "service_total": {
-                                        "type": "inputText",
-                                        "componentId": "service_total",
-                                        "dbColumnName": "service_total",
-                                        "readOnly": true,
-                                        "onChange": [
-                                            {
-                                                "actions": [
-                                                    {
-                                                        "action": "changeFieldValue",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["net_total"],
-                                                            "setValue": {
-                                                                "addition": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "total"
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "service_total"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            },
-                                                            "sumOfRows": [
-                                                                {
-                                                                    "fieldId": "net_total"
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "action": "updateSection",
-                                                        "actionDetails": {
-                                                            "targetSectionId": "CustomerDetails",
-                                                            "targetField": ["net_total"],
-                                                            "setValue": {
-                                                                "sumOfRows": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "net_total"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "net_total": {
-                                        "type": "inputText",
-                                        "componentId": "net_total",
-                                        "dbColumnName": "net_total",
-                                        "readOnly": true
-                                    },
-                                    "services": {
-                                        "type": "embeddedTable",
-                                        "componentId": "services",
-                                        "dataSourceName": "",
-                                        "dbColumnName": "services",
-                                        "counterSize": "m",
-                                        "style": "style0",
-                                        "onPopupSaveClick": [
-                                            {
-                                                "actions": [
-                                                    {
-                                                        "action": "inputAllRowsToTable"
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "onPopupSaveClose": [
-                                            {
-                                                "actions": [
-                                                    {
-                                                        "action": "inputSumToParentTableField",
-                                                        "actionDetails": {
-                                                            "targetColumn": ["service_total"],
-                                                            "setValue": {
-                                                                "sumOfRows": [
-                                                                    {
-                                                                        "valueof": {
-                                                                            "type": "columnName",
-                                                                            "fieldId": "serviceTotal"
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "tableConfig": {
-                                            "localPagination": true,
-                                            "aggregationFooter": true,
-                                            "refresh": true,
-                                            "enableEntityCreation": true,
-                                            "entityCreationDetails": {
-                                                "addTableRow": true
-                                            }
-                                        },
-                                        "tableColumns": {
-                                            "service_code": {
-                                                "label": "Service Code",
-                                                "type": "selectWithBusinessView",
-                                                "componentId": "service_code",
-                                                "disableSelectedValueInTable": true,
-                                                "dbColumnName": "service_code",
-                                                "dataSourceType": "businessView",
-                                                "dataSourceDetails": {
-                                                    "businessViewName": "serviceMasterBV",
-                                                    "dataKey": "service_code",
-                                                    "dataValue": "service_code"
-                                                },
-                                                "onChange": [
-                                                    {
-                                                        "actions": [
-                                                            {
-                                                                "action": "changeFieldValue",
-                                                                "actionDetails": {
-                                                                    "targetColumn": ["serviceDescription"],
-                                                                    "setValue": {
-                                                                        "valueof": {
-                                                                            "type": "currentColumnNameKey",
-                                                                            "currentColumnNameKey": "service_description"
-                                                                        }
-                                                                    }
-                                                                }
-                                                            },
-                                                            {
-                                                                "action": "changeFieldValue",
-                                                                "actionDetails": {
-                                                                    "targetColumn": ["price"],
-                                                                    "setValue": {
-                                                                        "valueof": {
-                                                                            "type": "currentColumnNameKey",
-                                                                            "currentColumnNameKey": "service_cost"
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            "serviceDescription": {
-                                                "label": "Description",
-                                                "type": "inputString",
-                                                "componentId": "serviceDescription",
-                                                "dbColumnName": "serviceDescription"
-                                            },
-                                            "price": {
-                                                "label": "Price",
-                                                "type": "inputString",
-                                                "componentId": "price",
-                                                "dbColumnName": "price"
-                                            },
-                                            "qty": {
-                                                "label": "Qty",
-                                                "type": "inputString",
-                                                "componentId": "qty",
-                                                "dbColumnName": "qty",
-                                                "onChange": [
-                                                    {
-                                                        "actions": [
-                                                            {
-                                                                "action": "changeFieldValue",
-                                                                "actionDetails": {
-                                                                    "targetColumn": ["serviceTotal"],
-                                                                    "setValue": {
-                                                                        "multiply": [
-                                                                            {
-                                                                                "valueof": {
-                                                                                    "type": "columnName",
-                                                                                    "fieldId": "price"
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "valueof": {
-                                                                                    "type": "columnName",
-                                                                                    "fieldId": "qty"
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                }
-                                                            },
-                                                            {
-                                                                "action": "changeFieldValue",
-                                                                "actionDetails": {
-                                                                    "targetColumn": ["net_total"],
-                                                                    "setValue": {
-                                                                        "addition": [
-                                                                            {
-                                                                                "valueof": {
-                                                                                    "type": "columnName",
-                                                                                    "fieldId": "total"
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "valueof": {
-                                                                                    "type": "columnName",
-                                                                                    "fieldId": "service_total"
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            "serviceTotal": {
-                                                "label": "Total",
-                                                "type": "inputString",
-                                                "componentId": "serviceTotal",
-                                                "dbColumnName": "serviceTotal",
-                                                "readOnly": true,
-                                                "onChange": [
-                                                    {
-                                                        "actions": [
-                                                            {
-                                                                "action": "changeFieldValue",
-                                                                "actionDetails": {
-                                                                    "targetColumn": ["net_total"],
-                                                                    "setValue": {
-                                                                        "addition": [
-                                                                            {
-                                                                                "valueof": {
-                                                                                    "type": "columnName",
-                                                                                    "fieldId": "total"
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "valueof": {
-                                                                                    "type": "columnName",
-                                                                                    "fieldId": "service_total"
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    "sumOfRows": [
-                                                                        {
-                                                                            "fieldId": "net_total"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            "Delete": {
-                                                "type": "menu",
-                                                "menuDetails": {
-                                                    "menuItems": [
-                                                        {
-                                                            "text": "Delete",
-                                                            "action": "deleteRow"
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "Delete": {
-                                        "type": "menu",
-                                        "dbColumnName": "menu",
-                                        "menuDetails": {
-                                            "menuIcon": "feather icon-more-vertical",
-                                            "menuItems": [
-                                                {
-                                                    "text": "Delete",
-                                                    "icon": "feather icon-trash-2",
-                                                    "action": "deleteRow"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        "dataSource": [
-            {
-                "dataSourceType": "businessView",
-                "dataSourceName": "shopMaster",
-                "dataSourceDetails": {
-                    "businessView": "shopDetailBV"
-                }
-            },
-            {
-                "dataSourceType": "businessView",
-                "dataSourceName": "ProductMaster",
-                "dataSourceDetails": {
-                    "businessView": "ProductMasterBV"
-                }
-            },
-            {
-                "dataSourceType": "businessView",
-                "dataSourceName": "",
-                "dataSourceDetails": {
-                    "businessView": ""
-                }
-            }
-        ],
-        "pageActions": [
-            {
-                "text": "Submit",
-                "type": "submit",
-                "showLabel": true,
-                "style": "style2",
-                "disableFormValidation": false,
-                "onClick": [
-                    {
-                        "actions": [
-                            {
-                                "action": "executePageAction",
-                                "actionPerformed": "submit"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        "executePageActions": [
-            {
-                "ID": 1,
-                "Rule": "pageAction",
-                "WHEN": "'{{payload.pageActionPerformed}}' == 'submit'",
-                "THEN": ["performAction"],
-                "Actions": [
-                    {
-                        "id": "MapInvoiceItems",
-                        "actionName": "MapInvoiceItems",
-                        "actionType": "mapFields",
-                        "actionDetails": {
-                            "sourceSchema": "{{payload.selectedRows.invoice_items.selectedRows}}",
-                            "targetSchema": {
-                                "product_id": {
-                                    "type": "string",
-                                    "relatedField": "['product_id'].text"
-                                },
-                                "product_name": {
-                                    "type": "string",
-                                    "relatedField": "['product_name'].text"
-                                },
-                                "unit_price": {
-                                    "type": "int",
-                                    "relatedField": "['unit_price'].text"
-                                },
-                                "qty": {
-                                    "type": "int",
-                                    "relatedField": "['qty'].text"
-                                },
-                                "amount": {
-                                    "type": "int",
-                                    "relatedField": "['amount'].text"
-                                },
-                                "gst": {
-                                    "type": "int",
-                                    "relatedField": "['gst'].text"
-                                },
-                                "gst_amount": {
-                                    "type": "int",
-                                    "relatedField": "['gst_amount'].text"
-                                },
-                                "total": {
-                                    "type": "int",
-                                    "relatedField": "['total'].text"
-                                },
-                                "service_total": {
-                                    "type": "int",
-                                    "relatedField": "['service_total'].text"
-                                },
-                                "net_total": {
-                                    "type": "int",
-                                    "relatedField": "['net_total'].text"
-                                },
-                                "services": {
-                                    "type": "array",
-                                    "relatedField": "['services']['data']",
-                                    "items": [
-                                        {
-                                            "service_code": {
-                                                "type": "string",
-                                                "relatedField": "currentItem['service_code']['text']",
-                                                "default": null
-                                            },
-                                            "serviceDescription": {
-                                                "type": "string",
-                                                "relatedField": "currentItem['serviceDescription']['text']",
-                                                "default": null
-                                            },
-                                            "qty": {
-                                                "type": "int",
-                                                "relatedField": "currentItem['qty']['text']",
-                                                "default": null
-                                            },
-                                            "price": {
-                                                "type": "int",
-                                                "relatedField": "currentItem['price']['text']",
-                                                "default": null
-                                            },
-                                            "serviceTotal": {
-                                                "type": "int",
-                                                "relatedField": "currentItem['serviceTotal']['text']",
-                                                "default": null
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "id": "InvoiceInsert",
-                        "actionName": "InvoiceInsert",
-                        "actionType": "insertData",
-                        "actionDetails": {
-                            "database_details": {
-                                "database": "{{payload.headers.dbName}}",
-                                "collection": "InvoiceDetails"
-                            },
-                            "primaryKey": {
-                                "fieldName": "invoiceId",
-                                "prefix": "INV-"
-                            },
-                            "payload": {
-                                "shopId": "{{payload.section_ShopDetails.shopId}}",
-                                "shopName": "{{payload.section_ShopDetails.shopName}}",
-                                "ownerName": "{{payload.section_ShopDetails.ownerName}}",
-                                "gstNumber": "{{payload.section_ShopDetails.gstNumber}}",
-                                "contactNumber": "{{payload.section_ShopDetails.contactNumber.number}}",
-                                "address": "{{payload.section_ShopDetails.address}}",
-                                "emailId": "{{payload.section_ShopDetails.emailId}}",
-                                "customerDetails": {
-                                    "customer_id": "{{payload.section_CustomerDetails.customer_id}}",
-                                    "customer_name": "{{payload.section_CustomerDetails.customer_name}}",
-                                    "contact_number": "{{payload.section_CustomerDetails.contact_number.number}}",
-                                    "address": "{{payload.section_CustomerDetails.address}}"
-                                },
-                                "items": "{{actionsResponse.MapInvoiceItems}}",
-                                "summary": {
-                                    "amount": "{{payload.section_CustomerDetails.amount}}",
-                                    "gst_amount": "{{payload.section_CustomerDetails.gst_amount}}",
-                                    "total": "{{payload.section_CustomerDetails.net_total}}"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "id": "RequestComplete",
-                        "actionName": "RequestComplete",
-                        "actionType": "completed",
-                        "actionDetails": {
-
-                        }
-                    }
-                ],
-                "Output": {
-                    "message": "Created Successfully",
-                    "routerLink": "/page/InvoiceListPage",
-                    "redirect": {
-                        "routerLink": "/page/InvoiceListPage"
-                    }
-                }
-            }
-        ]
-    }
-})
+{
+	"_id" : ObjectId("69afb5a6271d2688d0932079"),
+	"pageName" : "invoicePageCreation",
+	"createdBy" : "PGLADMIN",
+	"epic" : "Details-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "ShopDetails",
+		"Title" : "ShopDetails",
+		"Description" : "ShopDetails",
+		"Images" : [ ],
+		"Screen_Name" : "ShopDetails"
+	},
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "ShopDetails",
+							"title" : "Shop Details",
+							"description" : "Enter Shop Detail below",
+							"dataSourceName" : "shopMaster",
+							"icon" : "Detail-icon",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Shop Id",
+														"type" : "selectWithBusinessView",
+														"formcontrol" : "shopId",
+														"componentId" : "shopId",
+														"mandatory" : true,
+														"option" : true,
+														"dataSourceName" : "",
+														"onChangeGetData" : true,
+														"filter" : true,
+														"hidden" : false,
+														"closeOnSelect" : true,
+														"style" : "style6",
+														"sendAllFieldsInSelectedValueAsObject" : false,
+														"dataSource" : {
+															"method" : "POST",
+															"body" : {
+																"businessView" : "shopDetailBV"
+															},
+															"url" : "/lowcode-service/executeBVData",
+															"optionArrayKey" : "data",
+															"dropDownKey" : "shopId",
+															"dropDownValue" : "shopId"
+														},
+														"onChange" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "setComponentValue",
+																		"actionDetails" : {
+																			"targetComponent" : [
+																				"section_ShopDetails.shopName",
+																				"section_ShopDetails.ownerName",
+																				"section_ShopDetails.gstNumber",
+																				"section_ShopDetails.contactNumber",
+																				"section_ShopDetails.address",
+																				"section_ShopDetails.emailId"
+																			],
+																			"url" : "/lowcode-service/executeBVData",
+																			"method" : "POST"
+																		}
+																	}
+																]
+															}
+														],
+														"dbColumnName" : "shopId"
+													},
+													{
+														"label" : "Shop Name",
+														"type" : "inputString",
+														"componentId" : "shopName",
+														"formcontrol" : "shopName",
+														"dbColumnName" : "shopName",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Owner Name",
+														"type" : "inputString",
+														"readOnly" : true,
+														"componentId" : "ownerName",
+														"dbColumnName" : "ownerName",
+														"formcontrol" : "ownerName",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "GST Number",
+														"type" : "inputString",
+														"readOnly" : true,
+														"componentId" : "gstNumber",
+														"dbColumnName" : "gstNumber",
+														"formcontrol" : "gstNumber",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "contact Number",
+														"type" : "inputPhoneNumber",
+														"readOnly" : true,
+														"componentId" : "contactNumber",
+														"formcontrol" : "contactNumber",
+														"mandatory" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Address",
+														"type" : "inputText",
+														"readOnly" : true,
+														"componentId" : "address",
+														"dbColumnName" : "address",
+														"formcontrol" : "address",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Email-Id",
+														"type" : "inputString",
+														"readOnly" : true,
+														"componentId" : "emailId",
+														"dbColumnName" : "emailId",
+														"formcontrol" : "emailId",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"type" : "section",
+							"componentId" : "CustomerDetails",
+							"title" : "Customer Details",
+							"description" : "Enter Customer Details",
+							"icon" : "Detail-icon",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Customer Id",
+														"type" : "selectWithBusinessView",
+														"formcontrol" : "customer_id",
+														"componentId" : "customer_id",
+														"mandatory" : true,
+														"option" : true,
+														"dataSourceName" : "",
+														"onChangeGetData" : true,
+														"filter" : true,
+														"hidden" : false,
+														"closeOnSelect" : true,
+														"style" : "style6",
+														"sendAllFieldsInSelectedValueAsObject" : false,
+														"dataSource" : {
+															"method" : "POST",
+															"body" : {
+																"businessView" : "buyerMasterBV"
+															},
+															"url" : "/lowcode-service/executeBVData",
+															"optionArrayKey" : "data",
+															"dropDownKey" : "customer_id",
+															"dropDownValue" : "customer_id"
+														},
+														"onChange" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "setComponentValue",
+																		"actionDetails" : {
+																			"targetComponent" : [ "section_CustomerDetails.customer_name", "section_CustomerDetails.contact_number", "section_CustomerDetails.address" ],
+																			"url" : "/lowcode-service/executeBVData",
+																			"method" : "POST"
+																		}
+																	}
+																]
+															}
+														],
+														"dbColumnName" : "customer_id"
+													},
+													{
+														"label" : "Customer Name",
+														"type" : "inputString",
+														"componentId" : "customer_name",
+														"dbColumnName" : "customer_name",
+														"formcontrol" : "customer_name",
+														"mandatory" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Amount",
+														"type" : "inputString",
+														"componentId" : "amount",
+														"dbColumnName" : "amount",
+														"formcontrol" : "amount",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Contact Number",
+														"type" : "inputPhoneNumber",
+														"componentId" : "contact_number",
+														"dbColumnName" : "contact_number",
+														"formcontrol" : "contact_number",
+														"mandatory" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Email-Id",
+														"type" : "inputString",
+														"componentId" : "email_id",
+														"dbColumnName" : "email_id",
+														"formcontrol" : "email_id",
+														"mandatory" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "GST-Amount",
+														"type" : "inputString",
+														"componentId" : "gst_amount",
+														"dbColumnName" : "gst_amount",
+														"formcontrol" : "gst_amount",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Address",
+														"type" : "inputText",
+														"componentId" : "address",
+														"dbColumnName" : "address",
+														"formcontrol" : "address",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Total",
+														"type" : "inputString",
+														"componentId" : "net_total",
+														"dbColumnName" : "net_total",
+														"formcontrol" : "net_total",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "table",
+							"title" : "product details",
+							"description" : "Enter product Details below",
+							"componentId" : "invoice_items",
+							"formcontrol" : "invoice_items",
+							"dataSourceName" : "",
+							"hidden" : false,
+							"tableConfig" : {
+								"businessComponent" : "SCRAB_WEIGH",
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"aggregationFooter" : true,
+								"fullscreenIcon" : true,
+								"enableEntityCreation" : true,
+								"checkbox" : true,
+								"rowActions" : true,
+								"localPagination" : false,
+								"entityCreationDetails" : {
+									"addTableRow" : true
+								}
+							},
+							"tableColumns" : {
+								"SNO" : {
+									"type" : "uiRowIndex"
+								},
+								"product_id" : {
+									"type" : "selectWithBusinessView",
+									"componentId" : "product_id",
+									"dbColumnName" : "product_id",
+									"mandatory" : true,
+									"disableSelectedValueInTable" : true,
+									"dataSourceType" : "businessView",
+									"dataSourceDetails" : {
+										"businessViewName" : "ProductMasterBV",
+										"dataKey" : "productId",
+										"dataValue" : "productId"
+									},
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "product_name" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "productName"
+															}
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "unit_price" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "price"
+															}
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "gst" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "gst"
+															}
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"product_name" : {
+									"type" : "inputString",
+									"componentId" : "product_name",
+									"dbColumnName" : "product_name",
+									"readOnly" : true
+								},
+								"unit_price" : {
+									"type" : "inputString",
+									"componentId" : "unit_price",
+									"dbColumnName" : "unit_price",
+									"readOnly" : true
+								},
+								"qty" : {
+									"type" : "inputString",
+									"componentId" : "qty",
+									"readOnly" : false,
+									"dbColumnName" : "qty",
+									"validation" : [
+										{
+											"type" : "min",
+											"failureMessage" : "Value should be greater than or equal to 0.001",
+											"valueof" : {
+												"value" : 0.001
+											}
+										}
+									],
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "amount" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "unit_price"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "qty"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "gst_amount" ],
+														"setValue" : {
+															"percent" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "total" ],
+														"setValue" : {
+															"addition" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "net_total" ],
+														"setValue" : {
+															"addition" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "total"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "service_total"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "CustomerDetails",
+														"targetField" : [ "amount" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "CustomerDetails",
+														"targetField" : [ "gst_amount" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "CustomerDetails",
+														"targetField" : [ "net_total" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "net_total"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"amount" : {
+									"type" : "inputText",
+									"componentId" : "amount",
+									"dbColumnName" : "amount",
+									"readOnly" : true
+								},
+								"gst" : {
+									"type" : "inputString",
+									"componentId" : "gst",
+									"dbColumnName" : "gst",
+									"readOnly" : true
+								},
+								"gst_amount" : {
+									"type" : "inputText",
+									"componentId" : "gst_amount",
+									"dbColumnName" : "gst_amount",
+									"readOnly" : true
+								},
+								"total" : {
+									"type" : "inputText",
+									"componentId" : "total",
+									"dbColumnName" : "total",
+									"readOnly" : true
+								},
+								"service_total" : {
+									"type" : "inputText",
+									"componentId" : "service_total",
+									"dbColumnName" : "service_total",
+									"readOnly" : true,
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "net_total" ],
+														"setValue" : {
+															"addition" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "total"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "service_total"
+																	}
+																}
+															]
+														},
+														"sumOfRows" : [
+															{
+																"fieldId" : "net_total"
+															}
+														]
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "CustomerDetails",
+														"targetField" : [ "net_total" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "net_total"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"net_total" : {
+									"type" : "inputText",
+									"componentId" : "net_total",
+									"dbColumnName" : "net_total",
+									"readOnly" : true
+								},
+								"services" : {
+									"type" : "embeddedTable",
+									"componentId" : "services",
+									"dataSourceName" : "",
+									"dbColumnName" : "services",
+									"counterSize" : "m",
+									"style" : "style0",
+									"onPopupSaveClick" : [
+										{
+											"actions" : [
+												{
+													"action" : "inputAllRowsToTable"
+												}
+											]
+										}
+									],
+									"onPopupSaveClose" : [
+										{
+											"actions" : [
+												{
+													"action" : "inputSumToParentTableField",
+													"actionDetails" : {
+														"targetColumn" : [ "service_total" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "serviceTotal"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									],
+									"tableConfig" : {
+										"localPagination" : true,
+										"aggregationFooter" : true,
+										"refresh" : true,
+										"enableEntityCreation" : true,
+										"entityCreationDetails" : {
+											"addTableRow" : true
+										}
+									},
+									"tableColumns" : {
+										"service_code" : {
+											"label" : "Service Code",
+											"type" : "selectWithBusinessView",
+											"componentId" : "service_code",
+											"disableSelectedValueInTable" : true,
+											"dbColumnName" : "service_code",
+											"dataSourceType" : "businessView",
+											"dataSourceDetails" : {
+												"businessViewName" : "serviceMasterBV",
+												"dataKey" : "service_code",
+												"dataValue" : "service_code"
+											},
+											"onChange" : [
+												{
+													"actions" : [
+														{
+															"action" : "changeFieldValue",
+															"actionDetails" : {
+																"targetColumn" : [ "serviceDescription" ],
+																"setValue" : {
+																	"valueof" : {
+																		"type" : "currentColumnNameKey",
+																		"currentColumnNameKey" : "service_description"
+																	}
+																}
+															}
+														},
+														{
+															"action" : "changeFieldValue",
+															"actionDetails" : {
+																"targetColumn" : [ "price" ],
+																"setValue" : {
+																	"valueof" : {
+																		"type" : "currentColumnNameKey",
+																		"currentColumnNameKey" : "service_cost"
+																	}
+																}
+															}
+														}
+													]
+												}
+											]
+										},
+										"serviceDescription" : {
+											"label" : "Description",
+											"type" : "inputString",
+											"componentId" : "serviceDescription",
+											"dbColumnName" : "serviceDescription"
+										},
+										"price" : {
+											"label" : "Price",
+											"type" : "inputString",
+											"componentId" : "price",
+											"dbColumnName" : "price"
+										},
+										"qty" : {
+											"label" : "Qty",
+											"type" : "inputString",
+											"componentId" : "qty",
+											"dbColumnName" : "qty",
+											"onChange" : [
+												{
+													"actions" : [
+														{
+															"action" : "changeFieldValue",
+															"actionDetails" : {
+																"targetColumn" : [ "serviceTotal" ],
+																"setValue" : {
+																	"multiply" : [
+																		{
+																			"valueof" : {
+																				"type" : "columnName",
+																				"fieldId" : "price"
+																			}
+																		},
+																		{
+																			"valueof" : {
+																				"type" : "columnName",
+																				"fieldId" : "qty"
+																			}
+																		}
+																	]
+																}
+															}
+														},
+														{
+															"action" : "changeFieldValue",
+															"actionDetails" : {
+																"targetColumn" : [ "net_total" ],
+																"setValue" : {
+																	"addition" : [
+																		{
+																			"valueof" : {
+																				"type" : "columnName",
+																				"fieldId" : "total"
+																			}
+																		},
+																		{
+																			"valueof" : {
+																				"type" : "columnName",
+																				"fieldId" : "service_total"
+																			}
+																		}
+																	]
+																}
+															}
+														}
+													]
+												}
+											]
+										},
+										"serviceTotal" : {
+											"label" : "Total",
+											"type" : "inputString",
+											"componentId" : "serviceTotal",
+											"dbColumnName" : "serviceTotal",
+											"readOnly" : true,
+											"onChange" : [
+												{
+													"actions" : [
+														{
+															"action" : "changeFieldValue",
+															"actionDetails" : {
+																"targetColumn" : [ "net_total" ],
+																"setValue" : {
+																	"addition" : [
+																		{
+																			"valueof" : {
+																				"type" : "columnName",
+																				"fieldId" : "total"
+																			}
+																		},
+																		{
+																			"valueof" : {
+																				"type" : "columnName",
+																				"fieldId" : "service_total"
+																			}
+																		}
+																	]
+																},
+																"sumOfRows" : [
+																	{
+																		"fieldId" : "net_total"
+																	}
+																]
+															}
+														}
+													]
+												}
+											]
+										},
+										"Delete" : {
+											"type" : "menu",
+											"menuDetails" : {
+												"menuItems" : [
+													{
+														"text" : "Delete",
+														"action" : "deleteRow"
+													}
+												]
+											}
+										}
+									}
+								},
+								"Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "deleteRow"
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "shopMaster",
+			"dataSourceDetails" : {
+				"businessView" : "shopDetailBV"
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "ProductMaster",
+			"dataSourceDetails" : {
+				"businessView" : "ProductMasterBV"
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "",
+			"dataSourceDetails" : {
+				"businessView" : ""
+			}
+		}
+	],
+	"pageActions" : [
+		{
+			"text" : "Submit",
+			"type" : "submit",
+			"showLabel" : true,
+			"style" : "style2",
+			"disableFormValidation" : false,
+			"onClick" : [
+				{
+					"actions" : [
+						{
+							"action" : "executePageAction",
+							"actionPerformed" : "submit"
+						}
+					]
+				}
+			]
+		}
+	],
+	"executePageActions" : [
+		{
+			"ID" : 1,
+			"Rule" : "pageAction",
+			"WHEN" : "'{{payload.pageActionPerformed}}' == 'submit'",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : "MapInvoiceItems",
+					"actionName" : "MapInvoiceItems",
+					"actionType" : "mapFields",
+					"actionDetails" : {
+						"sourceSchema" : "{{payload.selectedRows.invoice_items.selectedRows}}",
+						"targetSchema" : {
+							"product_id" : {
+								"type" : "string",
+								"relatedField" : "['product_id'].text"
+							},
+							"product_name" : {
+								"type" : "string",
+								"relatedField" : "['product_name'].text"
+							},
+							"unit_price" : {
+								"type" : "int",
+								"relatedField" : "['unit_price'].text"
+							},
+							"qty" : {
+								"type" : "int",
+								"relatedField" : "['qty'].text"
+							},
+							"amount" : {
+								"type" : "int",
+								"relatedField" : "['amount'].text"
+							},
+							"gst" : {
+								"type" : "int",
+								"relatedField" : "['gst'].text"
+							},
+							"gst_amount" : {
+								"type" : "int",
+								"relatedField" : "['gst_amount'].text"
+							},
+							"total" : {
+								"type" : "int",
+								"relatedField" : "['total'].text"
+							},
+							"service_total" : {
+								"type" : "int",
+								"relatedField" : "['service_total'].text"
+							},
+							"net_total" : {
+								"type" : "int",
+								"relatedField" : "['net_total'].text"
+							},
+							"services" : {
+								"type" : "array",
+								"relatedField" : "['services']['data']",
+								"items" : [
+									{
+										"service_code" : {
+											"type" : "string",
+											"relatedField" : "currentItem['service_code']['text']",
+											"default" : null
+										},
+										"serviceDescription" : {
+											"type" : "string",
+											"relatedField" : "currentItem['serviceDescription']['text']",
+											"default" : null
+										},
+										"qty" : {
+											"type" : "int",
+											"relatedField" : "currentItem['qty']['text']",
+											"default" : null
+										},
+										"price" : {
+											"type" : "int",
+											"relatedField" : "currentItem['price']['text']",
+											"default" : null
+										},
+										"serviceTotal" : {
+											"type" : "int",
+											"relatedField" : "currentItem['serviceTotal']['text']",
+											"default" : null
+										}
+									}
+								]
+							}
+						}
+					}
+				},
+				{
+					"id" : "InvoiceInsert",
+					"actionName" : "InvoiceInsert",
+					"actionType" : "insertData",
+					"actionDetails" : {
+						"database_details" : {
+							"database" : "{{payload.headers.dbName}}",
+							"collection" : "InvoiceDetails"
+						},
+						"primaryKey" : {
+							"fieldName" : "invoiceId",
+							"prefix" : "INV-"
+						},
+						"payload" : {
+							"shopId" : "{{payload.section_ShopDetails.shopId}}",
+							"shopName" : "{{payload.section_ShopDetails.shopName}}",
+							"ownerName" : "{{payload.section_ShopDetails.ownerName}}",
+							"gstNumber" : "{{payload.section_ShopDetails.gstNumber}}",
+							"contactNumber" : "{{payload.section_ShopDetails.contactNumber.number}}",
+							"address" : "{{payload.section_ShopDetails.address}}",
+							"emailId" : "{{payload.section_ShopDetails.emailId}}",
+							"customerDetails" : {
+								"customer_id" : "{{payload.section_CustomerDetails.customer_id}}",
+								"customer_name" : "{{payload.section_CustomerDetails.customer_name}}",
+								"contact_number" : "{{payload.section_CustomerDetails.contact_number.number}}",
+								"email_id" : "{{payload.section_CustomerDetails.email_id}}",
+								"address" : "{{payload.section_CustomerDetails.address}}"
+							},
+							"items" : "{{actionsResponse.MapInvoiceItems}}",
+							"summary" : {
+								"amount" : "{{payload.section_CustomerDetails.amount}}",
+								"gst_amount" : "{{payload.section_CustomerDetails.gst_amount}}",
+								"total" : "{{payload.section_CustomerDetails.net_total}}"
+							}
+						}
+					}
+				},
+				{
+					"id" : "RequestComplete",
+					"actionName" : "RequestComplete",
+					"actionType" : "completed",
+					"actionDetails" : {
+						
+					}
+				}
+			],
+			"Output" : {
+				"message" : "Created Successfully",
+				"routerLink" : "/page/InvoiceListPage",
+				"redirect" : {
+					"routerLink" : "/page/InvoiceListPage"
+				}
+			}
+		}
+	]
+}
