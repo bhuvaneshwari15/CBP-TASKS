@@ -1,0 +1,11 @@
+{
+	"_id" : ObjectId("69cb92dd8a00cf526f213368"),
+	"businessComponentId" : "invoiceApproval",
+	"collectionName" : "InvoiceDetails",
+	"businessComponentInstanceIdKey" : "invoiceId",
+	"primaryKey" : [
+		{
+			"key" : "invoiceId"
+		}
+	]
+}

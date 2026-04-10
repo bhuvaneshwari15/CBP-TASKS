@@ -15,13 +15,6 @@
 		},
 		{
 			"dataSourceType" : "businessView",
-			"dataSourceName" : "invoiceDetailListPageBV",
-			"dataSourceDetails" : {
-				"businessView" : "invoiceDetailListPageBV"
-			}
-		},
-		{
-			"dataSourceType" : "businessView",
 			"dataSourceName" : "invoiceDetailProductListBV",
 			"dataSourceDetails" : {
 				"businessView" : "invoiceDetailProductListBV",
@@ -38,13 +31,6 @@
 				"inputParams" : {
 					"invoiceId" : "{{params.invoiceId}}"
 				}
-			}
-		},
-		{
-			"dataSourceType" : "businessView",
-			"dataSourceName" : "invoiceFilterBV",
-			"dataSourceDetails" : {
-				"businessView" : "invoiceFilterBV"
 			}
 		}
 	],
@@ -307,112 +293,12 @@
 								"rowFilterIcon" : true,
 								"aggregationFooter" : true,
 								"fullscreenIcon" : true,
-								"enableEntityCreation" : true,
+								"enableEntityCreation" : false,
 								"checkbox" : true,
 								"rowActions" : true,
 								"localPagination" : true,
 								"entityCreationDetails" : {
-									"addTableRow" : true
-								},
-								"downloadActions" : [
-									{
-										"action" : "excelDownload",
-										"downloadPopupTitle" : "Downloading Excel"
-									},
-									{
-										"action" : "pdfDownload",
-										"downloadPopupTitle" : "Downloading Pdf"
-									}
-								],
-								"DataDownload" : {
-									"downloadColumnName" : [
-										{
-											"label" : "Invoice ID",
-											"property" : "Invoice ID",
-											"dbColumnName" : "invoiceId"
-										},
-										{
-											"label" : "Shop ID",
-											"property" : "Shop ID",
-											"dbColumnName" : "shopId"
-										},
-										{
-											"label" : "Shop Name",
-											"property" : "Shop Name",
-											"dbColumnName" : "shopName"
-										},
-										{
-											"label" : "Amount",
-											"property" : "Amount",
-											"dbColumnName" : "amount"
-										},
-										{
-											"label" : "GST Amount",
-											"property" : "GST Amount",
-											"dbColumnName" : "gst_amount"
-										},
-										{
-											"label" : "Total",
-											"property" : "Total",
-											"dbColumnName" : "total"
-										}
-									]
-								},
-								"tableFilter" : {
-									"dataSourceType" : "inline",
-									"dataSource" : [
-										{
-											"dataSourceType" : "businessView",
-											"dataSourceName" : "invoiceFilterBV",
-											"dataSourceDetails" : {
-												"businessView" : "invoiceFilterBV"
-											}
-										}
-									],
-									"Filters" : [
-										{
-											"description" : "Shop ID",
-											"dbColumnName" : "shopId",
-											"placeholder" : "Shop ID",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Shop Name",
-											"dbColumnName" : "shopName",
-											"placeholder" : "Shop Name",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Customer ID",
-											"dbColumnName" : "customer_id",
-											"placeholder" : "Customer ID",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Customer Name",
-											"dbColumnName" : "customer_name",
-											"placeholder" : "Customer Name",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "checkBox"
-										},
-										{
-											"description" : "Location",
-											"dbColumnName" : "location",
-											"placeholder" : "Location",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "search"
-										},
-										{
-											"description" : "Total Amount",
-											"dbColumnName" : "totalAmount",
-											"placeholder" : "Total Amount",
-											"dataSourceName" : "invoiceFilterBV",
-											"filterType" : "search"
-										}
-									]
+									"addTableRow" : false
 								}
 							},
 							"icon" : "Product-icon",
@@ -426,9 +312,10 @@
 									"closeOnSelect" : true,
 									"displayStyle" : "verticalKeyValue",
 									"dataSourceName" : "invoiceDetailProductListBV",
-									"disableSelectedValueInTable" : true,
 									"mandatory" : true,
+									"readOnly" : true,
 									"dataSourceType" : "businessView",
+									"disableSelectedValueInTable" : true,
 									"blankOption" : false,
 									"dataSourceDetails" : {
 										"businessViewName" : "ProductMasterBV",
@@ -490,7 +377,7 @@
 								},
 								"unit_price" : {
 									"label" : "Unit Price",
-									"type" : "inputText",
+									"type" : "inputString",
 									"componentId" : "unit_price",
 									"dataSourceName" : "invoiceDetailProductListBV",
 									"displayStyle" : "verticalKeyValue",
@@ -503,7 +390,7 @@
 									"componentId" : "qty",
 									"dataSourceName" : "invoiceDetailProductListBV",
 									"displayStyle" : "verticalKeyValue",
-									"readOnly" : false,
+									"readOnly" : true,
 									"dbColumnName" : "qty",
 									"onChange" : [
 										{
@@ -660,26 +547,12 @@
 																	}
 																}
 															],
-															"addition" : [
+															"sumOfRows" : [
 																{
-																	"sumOfRows" : [
-																		{
-																			"valueof" : {
-																				"type" : "columnName",
-																				"fieldId" : "total"
-																			}
-																		}
-																	]
-																},
-																{
-																	"sumOfRows" : [
-																		{
-																			"valueof" : {
-																				"type" : "columnName",
-																				"fieldId" : "service_total"
-																			}
-																		}
-																	]
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "net_total"
+																	}
 																}
 															]
 														}
@@ -700,7 +573,7 @@
 								},
 								"gst" : {
 									"label" : "GST %",
-									"type" : "inputText",
+									"type" : "inputString",
 									"componentId" : "gst",
 									"displayStyle" : "verticalKeyValue",
 									"dataSourceName" : "invoiceDetailProductListBV",
@@ -741,14 +614,6 @@
 													"actionDetails" : {
 														"targetColumn" : [ "net_total" ],
 														"setValue" : {
-															"validation" : [
-																{
-																	"type" : "maxDecimalDigits",
-																	"valueof" : {
-																		"value" : 2
-																	}
-																}
-															],
 															"addition" : [
 																{
 																	"valueof" : {
@@ -777,14 +642,6 @@
 														"targetSectionId" : "CustomerDetails",
 														"targetField" : [ "net_total" ],
 														"setValue" : {
-															"validation" : [
-																{
-																	"type" : "maxDecimalDigits",
-																	"valueof" : {
-																		"value" : 2
-																	}
-																}
-															],
 															"sumOfRows" : [
 																{
 																	"valueof" : {
@@ -853,9 +710,9 @@
 										"localPagination" : true,
 										"aggregationFooter" : true,
 										"refresh" : true,
-										"enableEntityCreation" : true,
+										"enableEntityCreation" : false,
 										"entityCreationDetails" : {
-											"addTableRow" : true
+											"addTableRow" : false
 										}
 									},
 									"tableColumns" : {
@@ -910,21 +767,24 @@
 											"componentId" : "serviceDescription",
 											"displayStyle" : "verticalKeyValue",
 											"dataSourceName" : "invoiceServicesBV",
-											"dbColumnName" : "serviceDescription"
+											"dbColumnName" : "serviceDescription",
+											"readOnly" : true
 										},
 										"price" : {
 											"label" : "Price",
-											"type" : "inputText",
+											"type" : "inputString",
 											"componentId" : "price",
 											"dataSourceName" : "invoiceServicesBV",
 											"displayStyle" : "verticalKeyValue",
-											"dbColumnName" : "price"
+											"dbColumnName" : "price",
+											"readOnly" : true
 										},
 										"qty" : {
 											"label" : "Qty",
 											"type" : "inputString",
 											"componentId" : "qty",
 											"dataSourceName" : "invoiceServicesBV",
+											"readOnly" : true,
 											"displayStyle" : "verticalKeyValue",
 											"dbColumnName" : "qty",
 											"onChange" : [
@@ -980,7 +840,7 @@
 										},
 										"serviceTotal" : {
 											"label" : "Total",
-											"type" : "inputText",
+											"type" : "inputString",
 											"componentId" : "serviceTotal",
 											"displayStyle" : "verticalKeyValue",
 											"dataSourceName" : "invoiceServicesBV",
@@ -1024,169 +884,29 @@
 	"showPageBanner" : true,
 	"tenant" : "100",
 	"version" : "Grid",
-	"pageActions" : [
+	"pageActions" : [ ],
+	"executePageActions" : [ ],
+	"businessComponent" : "invoiceApproval",
+	"businessComponentInstance" : "{{inputParams.invoiceId}}",
+	"changeLogVersion" : "{{payload.currentVersion}}",
+	"businessComponentDesc" : "INVOICE",
+	"showWorkflowActions" : true,
+	"allowedWorkflowActions" : [ "WF_INVOICE_CREATION" ],
+	"checkConditions" : [
 		{
-			"text" : "Update",
-			"type" : "submit",
-			"showLabel" : true,
-			"style" : "style2",
-			"disableFormValidation" : false,
-			"onClick" : [
-				{
-					"actions" : [
-						{
-							"action" : "executePageAction",
-							"actionPerformed" : "submit",
-							"changeLogEnabled" : true,
-							"pageActionType" : "U",
-							"actionDetails" : {
-								"payload" : {
-									"selectedRowWithFlag" : true
-								}
-							}
-						}
-					]
-				}
-			]
-		}
-	],
-	"executePageActions" : [
-		{
-			"ID" : 1,
-			"Rule" : "pageAction",
-			"WHEN" : "'{{payload.pageActionPerformed}}' == 'submit'",
-			"THEN" : [ "performAction" ],
-			"enableLogs" : true,
-			"storeChangeLog" : true,
-			"RuleGroup" : "",
-			"Actions" : [
-				{
-					"id" : "MapInvoiceItems",
-					"actionName" : "MapInvoiceItems",
-					"actionType" : "mapFields",
-					"actionDetails" : {
-						"sourceSchema" : "{{payload.selectedRows.invoice_items.unSelectedRows}}",
-						"targetSchema" : {
-							"product_id" : {
-								"type" : "string",
-								"relatedField" : "['product_id'].value",
-								"convertToDataType" : false
-							},
-							"product_name" : {
-								"type" : "string",
-								"relatedField" : "['product_name'].value",
-								"convertToDataType" : false
-							},
-							"unit_price" : {
-								"type" : "int",
-								"relatedField" : "['unit_price'].value",
-								"convertToDataType" : true
-							},
-							"qty" : {
-								"type" : "int",
-								"relatedField" : "['qty'].value",
-								"convertToDataType" : true
-							},
-							"amount" : {
-								"type" : "int",
-								"relatedField" : "['amount'].value",
-								"convertToDataType" : true
-							},
-							"gst" : {
-								"type" : "int",
-								"relatedField" : "['gst'].value",
-								"convertToDataType" : true
-							},
-							"gst_amount" : {
-								"type" : "int",
-								"relatedField" : "['gst_amount'].value",
-								"convertToDataType" : true
-							},
-							"total" : {
-								"type" : "int",
-								"relatedField" : "['total'].value",
-								"convertToDataType" : true
-							},
-							"service_total" : {
-								"type" : "int",
-								"relatedField" : "['service_total'].value",
-								"convertToDataType" : true
-							},
-							"net_total" : {
-								"type" : "int",
-								"relatedField" : "['net_total'].value",
-								"convertToDataType" : true
-							},
-							"services" : {
-								"type" : "array",
-								"relatedField" : "['services']['data']",
-								"items" : [
-									{
-										"service_code" : {
-											"type" : "string",
-											"relatedField" : "currentItem['service_code']['value']",
-											"default" : null
-										},
-										"serviceDescription" : {
-											"type" : "string",
-											"relatedField" : "currentItem['serviceDescription']['value']",
-											"default" : null
-										},
-										"qty" : {
-											"type" : "int",
-											"relatedField" : "currentItem['qty']['value']",
-											"default" : 0,
-											"convertToDataType" : true
-										},
-										"price" : {
-											"type" : "int",
-											"relatedField" : "currentItem['price']['value']",
-											"default" : 0,
-											"convertToDataType" : true
-										},
-										"serviceTotal" : {
-											"type" : "int",
-											"relatedField" : "currentItem['serviceTotal']['value']",
-											"default" : 0,
-											"convertToDataType" : true
-										}
-									}
-								]
-							}
-						}
-					}
-				},
-				{
-					"id" : "UpdateInvoice",
-					"actionName" : "UpdateInvoice",
-					"actionType" : "updateBusinessView",
-					"actionDetails" : {
-						"businessView" : "InvoiceUpdateSubmitBV",
-						"database_details" : {
-							"database" : "{{payload.headers.dbName}}",
-							"collection" : "InvoiceDetails"
-						}
-					}
-				},
-				{
-					"id" : 100,
-					"actionName" : "InvoiceUpdate",
-					"actionType" : "completed",
-					"actionDetails" : {
-						
-					}
-				}
-			],
-			"Output" : {
-				"message" : "Invoice Updated Successfully",
-				"refresh" : true,
-				"redirect" : {
-					"routerLink" : "/page/InvoiceListPage",
-					"params" : {
-						
-					}
-				}
+			"sourceType" : "dbColumn",
+			"sourceDetails" : {
+				"dataSourceName" : "invoiceDetailBV",
+				"dbColumnName" : "showWorkflowActions"
+			},
+			"operation" : "EQ",
+			"valueOf" : {
+				"value" : "false"
+			},
+			"setValue" : {
+				"showWorkflowActions" : false
 			}
 		}
-	]
+	],
+	"workflowLogPositionBottom" : true
 }
