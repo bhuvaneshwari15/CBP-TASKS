@@ -1,0 +1,185 @@
+{
+	"_id" : ObjectId("69e5b6f40ae1c43f4be03315"),
+	"ruleSetName" : "invoice_creation_validation",
+	"Rules" : [
+		{
+			"ID" : 1,
+			"Rule" : "",
+			"enableLogs" : true,
+			"WHEN" : "(true)",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : "updateInvoiceDocument",
+					"actionName" : "updateInvoiceDocument",
+					"actionType" : "updateBusinessView",
+					"captureLoopEvents" : true,
+					"storeActionResponse" : true,
+					"eventLog" : {
+						"enabled" : true,
+						"title" : "Invoice Update",
+						"description" : "Invoice workflow",
+						"businessComponent" : "invoiceApproval",
+						"businessComponentInstance" : "{{payload.Context_Data.invoiceId}}",
+						"longDescription" : "",
+						"event" : "update",
+						"eventDetails" : {
+							"Event On" : "{{getIsoDate now}}",
+							"Event by" : "{{headers.userid}}"
+						}
+					},
+					"actionDetails" : {
+						"businessView" : "updateWorkflowStatusBV",
+						"database" : "{{payload.headers.dbName}}",
+						"sourceSchema" : {
+							
+						},
+						"targetSchema" : {
+							
+						}
+					}
+				},
+				{
+					"id" : "invoiceCheck",
+					"actionName" : "invoiceCheck",
+					"actionType" : "conditional",
+					"actionDetails" : {
+						"WHEN" : "('{{payload.status}}'=='Reject')",
+						"THEN" : [ "nextAction=sendRejectEmailNotification" ],
+						"ELSE" : [ "nextAction=sendApproveEmailNotification" ]
+					}
+				},
+				{
+					"id" : "sendRejectEmailNotification",
+					"actionName" : "sendEmailNotification",
+					"actionType" : "executeApi",
+					"actionOnFailureStop" : false,
+					"async" : false,
+					"actionDetails" : {
+						"apiDetails" : {
+							"URL" : "/notification_engine/insert-queue",
+							"Method" : "Post"
+						},
+						"Body" : {
+							"businessComponentId" : "invoiceApproval",
+							"businessComponentInstance" : "{{payload.Context_Data.invoiceId}}",
+							"sourceType" : "ruleSets",
+							"notificationType" : "Invoice approval",
+							"notificationDescription" : "Invoice approval",
+							"eventLog" : {
+								"enabled" : true,
+								"notificationId" : "{{thisActionResponse.emailLogId}}",
+								"title" : " {{payload.status}}",
+								"description" : "Invoice Approval",
+								"businessComponent" : "invoiceApproval",
+								"businessComponentInstance" : "{{payload.Context_Data.invoiceId}}",
+								"longDescription" : "Approval Request",
+								"event" : "notification"
+							},
+							"data" : {
+								"emailId" : [ "bhuvaneshwari.m@supplychainhub.com" ],
+								"userIds" : [ "VM0001" ],
+								"ccEmailId" : [ "bhuvaneshwari.m@supplychainhub.com" ],
+								"subject" : "Invoice details",
+								"tenant" : 100,
+								"templateUrl" : "https://esaaenprodschapppublic.blob.core.windows.net/schsupplier/templates/po-collaboration/dev/esa-po-collab-template.html",
+								"templateValue" : {
+									"timestamp" : "",
+									"title" : "InvoiceDetails",
+									"userName" : "{{Dear Admin}}",
+									"emailBody1" : "The Workflow is started",
+									"emailBody2" : "I hope this message finds you well.",
+									"emailBody3" : "",
+									"emailBody4" : "",
+									"tableHeader" : " Invoice Details.",
+									"tableColumnName1" : "total",
+									"tableColumnValue1" : "{{payload.Context_Data.total}}",
+									"tableColumnName2" : "invoiceId",
+									"tableColumnValue2" : "{{payload.Context_Data.invoiceId}}",
+									"remarks" : "{{payload.Remarks}}",
+									"infoText" : "Thank you for Approving the Invoice.",
+									"infoTextColor" : "blue",
+									"footer1" : "Sincerely,",
+									"footer2" : "Manager"
+								},
+								"articleIds" : [ "68dba55423562f44772eace3" ]
+							}
+						}
+					},
+					"nextAction" : "RequestComplete"
+				},
+				{
+					"id" : "sendApproveEmailNotification",
+					"actionName" : "sendEmailNotification",
+					"actionType" : "executeApi",
+					"actionOnFailureStop" : false,
+					"async" : false,
+					"actionDetails" : {
+						"apiDetails" : {
+							"URL" : "/notification_engine/insert-queue",
+							"Method" : "Post"
+						},
+						"Body" : {
+							"businessComponentId" : "invoiceApproval",
+							"businessComponentInstance" : "{{payload.Context_Data.invoiceId}}",
+							"sourceType" : "ruleSets",
+							"notificationType" : "Invoice approval",
+							"notificationDescription" : "Invoice approval",
+							"eventLog" : {
+								"enabled" : true,
+								"notificationId" : "{{thisActionResponse.emailLogId}}",
+								"title" : " {{payload.status}}",
+								"description" : "Invoice Approval",
+								"businessComponent" : "invoiceApproval",
+								"businessComponentInstance" : "{{payload.Context_Data.invoiceId}}",
+								"longDescription" : "Approval Request",
+								"event" : "notification"
+							},
+							"data" : {
+								"emailId" : [ "bhuvaneshwari.m@supplychainhub.com" ],
+								"userIds" : [ "VM0001" ],
+								"ccEmailId" : [ "bhuvaneshwari.m@supplychainhub.com" ],
+								"subject" : "Invoice details",
+								"tenant" : 100,
+								"templateUrl" : "https://esaaenprodschapppublic.blob.core.windows.net/schsupplier/templates/po-collaboration/dev/esa-po-collab-template.html",
+								"templateValue" : {
+									"timestamp" : "",
+									"title" : "InvoiceDetails",
+									"userName" : "{{Dear Admin}}",
+									"emailBody1" : "The Workflow is started",
+									"emailBody2" : "I hope this message finds you well.",
+									"emailBody3" : "",
+									"emailBody4" : "",
+									"tableHeader" : " Invoice Details.",
+									"tableColumnName1" : "total",
+									"tableColumnValue1" : "{{payload.Context_Data.total}}",
+									"tableColumnName2" : "invoiceId",
+									"tableColumnValue2" : "{{payload.Context_Data.invoiceId}}",
+									"remarks" : "{{payload.Remarks}}",
+									"infoText" : "Thank you for Approving the Invoice.",
+									"infoTextColor" : "blue",
+									"footer1" : "Sincerely,",
+									"footer2" : "Manager"
+								},
+								"articleIds" : [ "68dba55423562f44772eace3" ]
+							}
+						}
+					}
+				},
+				{
+					"id" : "RequestComplete",
+					"actionName" : "RequestComplete",
+					"actionType" : "completed",
+					"actionDetails" : {
+						
+					}
+				}
+			],
+			"Output" : {
+				"invoiceId" : "{{actionsResponse.InvoiceInsert.invoiceId}}",
+				"total" : "{{actionsResponse.InvoiceInsert.section_CustomerDetails.net_total}}"
+			}
+		}
+	],
+	"createdBy" : ""
+},

@@ -61,7 +61,7 @@
 								"showPagination" : true,
 								"localPagination" : false,
 								"showChart" : true,
-								"checkbox" : false,
+								"checkbox" : true,
 								"chartConfig" : {
 									"chartStyle" : {
 										"grid" : false,
@@ -115,6 +115,114 @@
 														"action" : "redirect",
 														"actionDetails" : {
 															"routerLink" : "/page/invoicePageCreation"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"text" : "Additional User",
+										"showLabel" : true,
+										"hidden" : false,
+										"componentId" : "additionalUser",
+										"icon" : "ficon feather icon-edit",
+										"image" : "",
+										"css" : {
+											
+										},
+										"style" : "style1",
+										"onClick" : [
+											{
+												"actions" : [
+													{
+														"action" : "confirmationPopup",
+														"checkCondition" : [
+															{
+																"failureMessage" : "Please select at least one row to proceed",
+																"source" : "tableCheckbox",
+																"sourceType" : "column",
+																"operation" : "checked",
+																"valueof" : {
+																	"value" : true
+																}
+															}
+														],
+														"actionDetails" : {
+															"formDetails" : {
+																"header" : {
+																	"title" : "Additional User ID",
+																	"icon" : "feather icon-user-check"
+																},
+																"body" : {
+																	"layout" : "vertical",
+																	"title2" : "Select the User ID ?",
+																	"components" : [
+																		{
+																			"label" : "Additional User ID",
+																			"type" : "select",
+																			"closeOnSelect" : true,
+																			"dbcolumnName" : "additionalUser",
+																			"formcontrol" : "assignReviewer",
+																			"placeholder" : "Please Select any Requster",
+																			"mandatory" : true,
+																			"readOnly" : false,
+																			"options" : [
+																				{
+																					"description" : "L1",
+																					"value" : "L1"
+																				},
+																				{
+																					"description" : "L2",
+																					"value" : "L2"
+																				},
+																				{
+																					"description" : "Reviewer",
+																					"value" : "Reviewer"
+																				},
+																				{
+																					"description" : "Admin",
+																					"value" : "Admin"
+																				}
+																			]
+																		},
+																		{
+																			"label" : "Remark",
+																			"type" : "textarea",
+																			"closeOnSelect" : true,
+																			"dbcolumnName" : "",
+																			"formcontrol" : "remark",
+																			"placeholder" : "Remark",
+																			"mandatory" : true,
+																			"readOnly" : false
+																		}
+																	]
+																},
+																"footer" : {
+																	"button" : [
+																		{
+																			"text" : "Cancel",
+																			"type" : "button",
+																			"action" : "close"
+																		},
+																		{
+																			"text" : "Submit",
+																			"type" : "submit",
+																			"action" : "submit",
+																			"onClick" : [
+																				{
+																					"actions" : [
+																						{
+																							"action" : "executePageAction",
+																							"actionPerformed" : "additionalUser"
+																						}
+																					]
+																				}
+																			]
+																		}
+																	]
+																}
+															}
 														}
 													}
 												]
@@ -243,6 +351,11 @@
 											"invoiceId" : "{{invoiceId}}"
 										}
 									}
+								},
+								"createdAt" : {
+									"type" : "date",
+									"dataSourceName" : "invoiceDetailListPageBV",
+									"dbColumnName" : "createdAt"
 								},
 								"shop_Id" : {
 									"type" : "text",
@@ -403,11 +516,62 @@
 									"changeLogIconEnabled" : true,
 									"actionIconEnabled" : true
 								},
+								"status" : {
+									"type" : "status",
+									"dbColumnName" : "status"
+								},
+								"status1" : {
+									"type" : "status",
+									"style" : "style7",
+									"dbColumnName" : "status1",
+									"editable" : true,
+									"options" : [ "Approved", "Rejected", "Pending" ],
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "executeRuleSet",
+													"actionDetails" : {
+														"ruleSetName" : "updateStatusinvoiceListPage",
+														"ruleSetId" : "updateStatusinvoiceListPage",
+														"payload" : {
+															
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"status2" : {
+									"type" : "status",
+									"style" : "style7",
+									"dbColumnName" : "status2"
+								},
+								"statusAction" : {
+									"type" : "button",
+									"enabled" : true,
+									"text" : "Update Status",
+									"dbColumnName" : null,
+									"onClick" : [
+										{
+											"actions" : [
+												{
+													"action" : "showPopup",
+													"actionDetails" : {
+														"popupName" : "updateStatusPopup",
+														"tableRefresh" : true
+													}
+												}
+											]
+										}
+									]
+								},
 								"Action" : {
 									"type" : "icon",
 									"icon" : "feather icon-edit",
 									"value" : {
-										"routerLink" : "/page/InvoiceDetailPage",
+										"routerLink" : "/page/InvoiceUpdatePage",
 										"params" : {
 											"invoiceId" : "{{invoiceId}}"
 										},
@@ -523,6 +687,110 @@
 					}
 				}
 			]
+		},
+		"updateStatusPopup" : {
+			"type" : "inline",
+			"inlineJson" : {
+				"type" : "form",
+				"header" : {
+					"heading" : "Change Status"
+				},
+				"body" : {
+					"layout" : "vertical",
+					"title2" : "Do you want to Update Status?",
+					"components" : [
+						{
+							"label" : "Status",
+							"type" : "select",
+							"formcontrol" : "status",
+							"dbcolumnName" : "status",
+							"closeOnSelect" : true,
+							"mandatory" : true,
+							"options" : [
+								{
+									"description" : "Pending",
+									"value" : "Pending"
+								},
+								{
+									"description" : "Approved",
+									"value" : "Approved"
+								},
+								{
+									"description" : "Rejected",
+									"value" : "Rejected"
+								}
+							]
+						}
+					]
+				},
+				"footer" : {
+					"button" : [
+						{
+							"text" : "Cancel",
+							"type" : "button",
+							"action" : "close"
+						},
+						{
+							"text" : "Yes",
+							"type" : "submit",
+							"action" : "submit",
+							"onClick" : [
+								{
+									"actions" : [
+										{
+											"action" : "executePopupAction"
+										},
+										{
+											"action" : "refresh"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			"executePopUpAction" : [
+				{
+					"ID" : 1,
+					"Rule" : "pageAction",
+					"RuleGroup" : "",
+					"enableLogs" : true,
+					"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
+					"THEN" : [ "performAction" ],
+					"Actions" : [
+						{
+							"id" : "updateStatus",
+							"actionName" : "updateStatus",
+							"actionType" : "updateBusinessView",
+							"actionOnFailureStop" : false,
+							"async" : false,
+							"storeActionResponse" : true,
+							"actionDetails" : {
+								"businessView" : "updateStatusBV",
+								"database" : "{{payload.headers.dbName}}",
+								"sourceSchema" : {
+									
+								},
+								"targetSchema" : {
+									
+								}
+							}
+						}
+					],
+					"Output" : {
+						"message" : "Status Changed Successfully",
+						"refresh" : true,
+						"routerLink" : "/page/",
+						"redirect" : {
+							"routerLink" : "/page/",
+							"params" : {
+								
+							}
+						}
+					}
+				}
+			]
 		}
 	},
 	"executePopUpAction" : [
@@ -555,29 +823,117 @@
 			"ID" : 1,
 			"Rule" : "pageAction",
 			"RuleGroup" : "",
-			"WHEN" : "'{{payload.pageActionPerformed}}' == 'delete'",
+			"enableLogs" : true,
+			"WHEN" : "'{{payload.pageActionPerformed}}' =='additionalUser'",
+			"storeChangeLog" : true,
 			"THEN" : [ "performAction" ],
 			"Actions" : [
 				{
-					"id" : 2,
-					"actionName" : "deleteLibrary",
+					"id" : "updateAdditionalUser",
+					"actionName" : "updateAdditionalUser",
+					"runCount" : "{{#forEach payload.selectedRows}}",
 					"actionType" : "updateBusinessView",
+					"storeActionResponse" : true,
 					"actionDetails" : {
-						"businessView" : "LibraryDeleteBV",
 						"database" : "{{payload.headers.dbName}}",
-						"targetSchema" : {
+						"businessView" : "updateAdditionalUserBv",
+						"sourceData" : {
 							
 						},
-						"sourceSchema" : {
+						"targetSchema" : {
 							
 						}
 					}
 				}
 			],
 			"Output" : {
-				"message" : "Deleted successfully",
-				"refresh" : true
+				"message" : "Additional User Assigned Successfully",
+				"refresh" : true,
+				"routerLink" : "/page/",
+				"redirect" : {
+					"routerLink" : "/page/",
+					"params" : {
+						
+					}
+				}
 			}
 		}
-	]
+	],
+	"updateStatusPopup" : {
+		"type" : "inline",
+		"inlineJson" : {
+			"type" : "form",
+			"header" : {
+				"heading" : "Update Status"
+			},
+			"body" : {
+				"components" : [
+					{
+						"label" : "Status",
+						"type" : "select",
+						"formcontrol" : "status",
+						"dbcolumnName" : "status",
+						"mandatory" : true,
+						"options" : [
+							{
+								"description" : "Pending",
+								"value" : "Pending"
+							},
+							{
+								"description" : "Approved",
+								"value" : "Approved"
+							},
+							{
+								"description" : "Rejected",
+								"value" : "Rejected"
+							}
+						]
+					}
+				]
+			},
+			"footer" : {
+				"button" : [
+					{
+						"text" : "Cancel",
+						"type" : "button",
+						"action" : "close"
+					},
+					{
+						"text" : "Submit",
+						"type" : "submit",
+						"action" : "submit"
+					}
+				]
+			}
+		},
+		"executePopUpAction" : [
+			{
+				"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
+				"THEN" : [ "performActions" ],
+				"enableLogs" : true,
+				"Actions" : [
+					{
+						"actionName" : "updateStatus",
+						"actionType" : "updateDocument",
+						"actionDetails" : {
+							"database_details" : {
+								"database" : "{{payload.headers.dbName}}",
+								"collection" : "InvoiceDetails"
+							},
+							"matchCondition" : {
+								"_id" : "{{payload.selectedRow._id}}"
+							},
+							"updateData" : {
+								"status" : "{{payload.form.status}}"
+							}
+						}
+					}
+				],
+				"Output" : {
+					"message" : "Status updated successfully",
+					"refresh" : true
+				}
+			}
+		]
+	}
 }

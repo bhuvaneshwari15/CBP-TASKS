@@ -303,7 +303,6 @@
 							"title" : "product details",
 							"description" : "Enter product Details below",
 							"componentId" : "invoice_items",
-							"formcontrol" : "invoice_items",
 							"dataSourceName" : "",
 							"hidden" : false,
 							"tableConfig" : {
@@ -315,7 +314,7 @@
 								"aggregationFooter" : true,
 								"fullscreenIcon" : true,
 								"enableEntityCreation" : true,
-								"checkbox" : true,
+								"checkbox" : false,
 								"rowActions" : true,
 								"localPagination" : false,
 								"entityCreationDetails" : {
@@ -328,6 +327,7 @@
 								},
 								"product_id" : {
 									"type" : "selectWithBusinessView",
+									"blankOption" : false,
 									"componentId" : "product_id",
 									"dbColumnName" : "product_id",
 									"mandatory" : true,
@@ -394,7 +394,7 @@
 									"readOnly" : true
 								},
 								"qty" : {
-									"type" : "inputString",
+									"type" : "inputText",
 									"componentId" : "qty",
 									"readOnly" : false,
 									"dbColumnName" : "qty",
@@ -584,7 +584,7 @@
 									"readOnly" : true
 								},
 								"gst" : {
-									"type" : "inputString",
+									"type" : "inputText",
 									"componentId" : "gst",
 									"dbColumnName" : "gst",
 									"readOnly" : true
@@ -669,7 +669,7 @@
 									"dataSourceName" : "",
 									"dbColumnName" : "services",
 									"counterSize" : "m",
-									"style" : "style0",
+									"style" : "style1",
 									"onPopupSaveClick" : [
 										{
 											"actions" : [
@@ -952,6 +952,10 @@
 					"actionDetails" : {
 						"sourceSchema" : "{{payload.selectedRows.invoice_items.selectedRows}}",
 						"targetSchema" : {
+							"SNO" : {
+								"type" : "int",
+								"relatedField" : "['SNO'].text"
+							},
 							"product_id" : {
 								"type" : "string",
 								"relatedField" : "['product_id'].text"
@@ -1073,7 +1077,10 @@
 								"amount" : "{{payload.section_CustomerDetails.amount}}",
 								"gst_amount" : "{{payload.section_CustomerDetails.gst_amount}}",
 								"total" : "{{payload.section_CustomerDetails.net_total}}"
-							}
+							},
+							"status" : "Pending for L1 Approval",
+							"status1" : "Pending for L1 Approval",
+							"status2" : "Pending for L1 Approval"
 						}
 					}
 				},
@@ -1117,18 +1124,17 @@
 								"templateValue" : {
 									"title" : "Your Invoice is created",
 									"userName" : "Sir/Mam",
-									"emailBody1" : "Here your InvoiceId ",
-									"emailBody2" : "This is your InvoiceId",
-									"tableHeader" : "InvoiceDEtails",
+									"emailBody1" : "Here your Invoice",
+									"tableHeader" : "InvoiceDetails",
 									"tableColumnName1" : "InvoiceId",
 									"tableColumnValue1" : "{{actionsResponse.InvoiceInsert.invoiceId}}",
-									"tableColumnName2" : "ProductName",
-									"tableColumnValue2" : "Samsung Mobile Phone",
-									"tableColumnName3" : "Vivo",
-									"tableColumnValue3" : "8148344182",
+									"tableColumnName2" : "Amount",
+									"tableColumnValue2" : "{{actionsResponse.InvoiceInsert.summary.total}}",
+									"tableColumnName3" : "Phone",
+									"tableColumnValue3" : "{{actionsResponse.InvoiceInsert.customerDetails.contact_number}}",
 									"footer1" : "regards",
-									"footer2" : "bhuvi",
-									"footer3" : "kutty"
+									"footer2" : "Invoice",
+									"footer3" : "Team"
 								},
 								"articleIds" : [ ]
 							}
@@ -1141,6 +1147,20 @@
 					"actionType" : "executeApi",
 					"actionOnFailureStop" : false,
 					"async" : true,
+					"eventLog" : {
+						"enabled" : true,
+						"title" : "Workflow Creation",
+						"description" : "Workflow Triggered for Creation",
+						"businessComponent" : "invoiceApproval",
+						"businessComponentInstance" : "{{actionsResponse.InvoiceInsert.invoiceId}}",
+						"userId" : "{{payload.headers.userId}}",
+						"userName" : "{{payload.headers.userId}}",
+						"longDescription" : "",
+						"event" : "create",
+						"eventDetails" : {
+							
+						}
+					},
 					"actionDetails" : {
 						"apiDetails" : {
 							"URL" : "/api/publishEvent",
@@ -1160,6 +1180,11 @@
 								"total" : "{{payload.section_CustomerDetails.net_total}}",
 								"tenant" : "{{payload.headers.tenant}}",
 								"User" : "{{payload.headers.userId}}",
+								"approver1" : "MANAGER",
+								"approver2" : "SCHITADMIN",
+								"approver3" : "SCHSUPPORT",
+								"approver4" : "SCHADMIN",
+								"approver5" : "SCHBATCH",
 								"WF_BASE_URL" : "{{payload.baseUrl}}"
 							},
 							"Trigger_Date" : "{{timeStamp YYYY-MM-DD}}",

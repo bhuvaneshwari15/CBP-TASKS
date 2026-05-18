@@ -1,0 +1,33 @@
+{
+	"_id" : ObjectId("69f055afdce92f118dd6c3f9"),
+	"ruleSetName" : "updateStatusinvoiceListPage",
+	"Rules" : [
+		{
+			"ID" : 1,
+			"Rule" : "",
+			"RuleGroup" : "",
+			"WHEN" : "(true) ",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : "changestatus",
+					"actionName" : "changestatus",
+					"actionType" : "updateBusinessView",
+					"actionDetails" : {
+						"businessView" : "updateStatusinvoiceListPageBV",
+						"database" : "{{payload.headers.dbName}}",
+						"targetSchema" : {
+							
+						},
+						"sourceData" : {
+							
+						}
+					}
+				}
+			],
+			"Output" : {
+				
+			}
+		}
+	]
+},

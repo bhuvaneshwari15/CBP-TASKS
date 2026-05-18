@@ -1,0 +1,23 @@
+{
+	"_id" : ObjectId("69eeed35e446b334403176a8"),
+	"businessView" : "updateStatusBV",
+	"collection" : "InvoiceDetails",
+	"fieldMapping" : {
+		"collectionName" : "InvoiceDetails",
+		"targetSchema" : {
+			
+		}
+	},
+	"filter" : {
+		
+	},
+	"match" : {
+		"invoiceId" : "{{payload.selectedRow.invoiceId.params.invoiceId}}"
+	},
+	"ruleId" : "",
+	"set" : {
+		"$set" : {
+			"status2" : "{{payload.formData.status}}"
+		}
+	}
+}
