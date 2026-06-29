@@ -1,0 +1,76 @@
+{
+	"_id" : ObjectId("69fd723982477927477f590c"),
+	"businessView" : "PODetailBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"POId" : "{{inputParams.POId}}"
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"$unwind" : {
+				"path" : "$material_items",
+				"preserveNullAndEmptyArrays" : false
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"POId" : "$POId",
+							"poDate" : "$poDetails.poDate",
+							"currency" : "$poDetails.currency",
+							"poStatus" : "$poDetails.poStatus",
+							"poType" : "$poDetails.poType",
+							"shopId" : "$shopDetails.shopId",
+							"shopName" : "$shopDetails.shopName",
+							"ownerName" : "$shopDetails.ownerName",
+							"gstNumber" : "$shopDetails.gstNumber",
+							"contactNumber" : "$shopDetails.contactNumber",
+							"address" : "$shopDetails.address",
+							"emailId" : "$shopDetails.emailId",
+							"customer_id" : "$customerDetails.customer_id",
+							"customer_name" : "$customerDetails.customer_name",
+							"contact_number" : "$customerDetails.contact_number",
+							"email_id" : "$customerDetails.email_id",
+							"customer_address" : "$customerDetails.address",
+							"gst_number" : "$customerDetails.gst_number",
+							"deliveryExpectedDate" : "$deliveryDetails.deliveryExpectedDate",
+							"deliveryLine" : "$deliveryDetails.deliveryLine",
+							"shippingMethod" : "$deliveryDetails.shippingMethod",
+							"country" : "$deliveryDetails.country",
+							"state" : "$deliveryDetails.state",
+							"city" : "$deliveryDetails.city",
+							"deliveryTerms" : "$deliveryDetails.deliveryTerms",
+							"deliveryPostalCode" : "$deliveryDetails.deliveryPostalCode",
+							"product_id" : "$material_items.product_id",
+							"product_name" : "$material_items.product_name",
+							"unit_price" : "$material_items.unit_price",
+							"OrderedQty" : "$material_items.OrderedQty",
+							"amount" : "$material_items.amount",
+							"gst" : "$material_items.gst",
+							"gst_amount" : "$material_items.gst_amount",
+							"total" : "$material_items.Total"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "PODetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"searchTermFields" : [ "POId" ]
+}

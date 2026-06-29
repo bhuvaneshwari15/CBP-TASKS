@@ -1,0 +1,63 @@
+{
+	"_id" : ObjectId("6a031758dcab0a78d24012fb"),
+	"businessView" : "GRNDetailBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"GRNNumber" : "{{inputParams.GRNNumber}}"
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"$unwind" : {
+				"path" : "$grnDetails.POData",
+				"preserveNullAndEmptyArrays" : false
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"GRNNumber" : "$GRNNumber",
+							"poDate" : "$grnDetails.poDate",
+							"poNumber" : "$grnDetails.poNumber",
+							"grnDate" : "$grnDetails.grnDate",
+							"grnStatus" : "$grnDetails.grnStatus",
+							"supplierId" : "$grnDetails.supplierId",
+							"supplierName" : "$grnDetails.supplierName",
+							"grnValue" : "$grnDetails.grnValue",
+							"deliveryRemarks" : "$grnDetails.deliveryRemarks",
+							"SNO" : "$grnDetails.POData.SNO",
+							"qty" : "$grnDetails.POData.qty",
+							"amount" : "$grnDetails.POData.amount",
+							"POOrderNO" : "$grnDetails.POData.POOrderNO",
+							"POItem" : "$grnDetails.POData.SNO",
+							"OrderedQty" : "$grnDetails.POData.POItem",
+							"ProductCode" : "$grnDetails.POData.ProductCode",
+							"ProductDescription" : "$grnDetails.POData.ProductDescription",
+							"TotalQty" : "$grnDetails.POData.TotalQty",
+							"UnitPrice" : "$grnDetails.POData.UnitPrice",
+							"ReceivedQuantity" : "$grnDetails.POData.ReceivedQuantity",
+							"lineTotal" : "$grnDetails.POData.lineTotal"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "GRNDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"searchTermFields" : [ "GRNNumber" ]
+}

@@ -1,0 +1,117 @@
+{
+	"_id" : ObjectId("6a030331dcab0a78d24012f9"),
+	"businessView" : "GRNListItemBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"GRNNumber" : "{{inputParams.GRNNumber}}"
+			}
+		},
+		{
+			"$unwind" : {
+				"path" : "$grnDetails.POData",
+				"preserveNullAndEmptyArrays" : true
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"SNO" : "$grnDetails.POData.SNO",
+							"POOrderNO" : "$grnDetails.POData.POOrderNO",
+							"POItem" : "$grnDetails.POData.POItem",
+							"ProductCode" : "$grnDetails.POData.ProductCode",
+							"ProductDescription" : "$grnDetails.POData.ProductDescription",
+							"UnitPrice" : "$grnDetails.POData.UnitPrice",
+							"ReceivedQuantity" : "$grnDetails.POData.ReceivedQuantity",
+							"lineTotal" : "$grnDetails.POData.lineTotal",
+							"amount" : "$grnDetails.POData.amount",
+							"gst" : "$grnDetails.POData.gst",
+							"gst_amount" : "$grnDetails.POData.gst_amount"
+						}
+					},
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "GRNDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"searchTermFields" : [ "GRNNumber" ],
+	"aggregation1" : [
+		{
+			"$match" : {
+				"GRNNumber" : "{{inputParams.GRNNumber}}"
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"$unwind" : {
+				"path" : "$POData",
+				"preserveNullAndEmptyArrays" : false
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"POOrderNO" : "$POData.POOrderNO",
+							"POItem" : "$POData.POItem",
+							"Product Code" : "$POData.Product Code",
+							"Product Description" : "$POData.Product Description",
+							"Unit Price" : "$POData.Unit Price",
+							"Received Quantity" : "$POData.Received Quantity",
+							"lineTotal" : "$POData.lineTotal"
+						}
+					},
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	]
+}

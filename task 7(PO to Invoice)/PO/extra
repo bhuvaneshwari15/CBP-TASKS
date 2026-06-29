@@ -1,0 +1,178 @@
+db.targetSchema.find({ "schemaName": "purchaseOrderSchema"})
+{
+	"_id" : ObjectId("6a057bf2c8352b7440349fce"),
+	"schemaName" : "purchaseOrderSchema",
+	"collectionName" : "PODetails",
+	"primaryKey" : {
+		"POId" : 1
+	},
+	"schema" : {
+		"POId" : {
+			"type" : "String"
+		},
+		"poDetails" : {
+			"poDate" : {
+				"type" : "Date"
+			},
+			"currency" : {
+				"type" : "String"
+			},
+			"poType" : {
+				"type" : "String"
+			}
+		},
+		"shopDetails" : {
+			"shopId" : {
+				"type" : "String"
+			},
+			"shopName" : {
+				"type" : "String"
+			},
+			"ownerName" : {
+				"type" : "String"
+			},
+			"gstNumber" : {
+				"type" : "String"
+			},
+			"contactNumber" : {
+				"type" : "String"
+			},
+			"address" : {
+				"type" : "String"
+			},
+			"emailId" : {
+				"type" : "String"
+			}
+		},
+		"customerDetails" : {
+			"customer_id" : {
+				"type" : "String"
+			},
+			"customer_name" : {
+				"type" : "String"
+			},
+			"contact_number" : {
+				"type" : "String"
+			},
+			"email_id" : {
+				"type" : "String"
+			},
+			"address" : {
+				"type" : "String"
+			},
+			"gst_number" : {
+				"type" : "String"
+			}
+		},
+		"deliveryDetails" : {
+			"deliveryExpectedDate" : {
+				"type" : "Date"
+			},
+			"deliveryLine" : {
+				"type" : "String"
+			},
+			"shippingMethod" : {
+				"type" : "String"
+			},
+			"country" : {
+				"type" : "String"
+			},
+			"state" : {
+				"type" : "String"
+			},
+			"city" : {
+				"type" : "String"
+			},
+			"deliveryTerms" : {
+				"type" : "String"
+			},
+			"deliveryPostalCode" : {
+				"type" : "String"
+			}
+		},
+		"material_items" : [
+			{
+				"SNO" : {
+					"type" : "Number"
+				},
+				"product_id" : {
+					"type" : "String"
+				},
+				"product_name" : {
+					"type" : "String"
+				},
+				"unit_price" : {
+					"type" : "Number"
+				},
+				"OrderedQty" : {
+					"type" : "Number"
+				},
+				"balanceQty" : {
+					"type" : "Number",
+					"default" : 0
+				},
+				"avaliableQty" : {
+					"type" : "Number",
+					"default" : 0
+				},
+				"amount" : {
+					"type" : "Number"
+				},
+				"gst" : {
+					"type" : "Number"
+				},
+				"gst_amount" : {
+					"type" : "Number"
+				},
+				"Total" : {
+					"type" : "String"
+				}
+			}
+		],
+		"service_items" : {
+			"type" : "Array",
+			"default" : [ ]
+		},
+		"summary" : {
+			"amount" : {
+				"type" : "Number"
+			},
+			"gst_amount" : {
+				"type" : "Number"
+			},
+			"total" : {
+				"type" : "Number"
+			}
+		},
+		"createdAt" : {
+			"type" : "Date"
+		},
+		"updatedAt" : {
+			"type" : "Date"
+		},
+		"createdBy" : {
+			"type" : "String"
+		},
+		"updatedBy" : {
+			"type" : "String"
+		},
+		"grnStatus" : {
+			"type" : "String"
+		},
+		"poStatus" : {
+			"type" : "String"
+		},
+		"totalReceivedQty" : {
+			"type" : "Number"
+		},
+		"totalOrderedQty" : {
+			"type" : "Number"
+		},
+		"totalGrnValue" : {
+			"type" : "Number"
+		}
+	}
+}
+
+
+db.PODetails.find().sort({createdAt:-1})

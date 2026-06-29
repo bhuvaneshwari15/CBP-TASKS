@@ -1,0 +1,1011 @@
+{
+	"_id" : ObjectId("6a16d89d12604849170191c6"),
+	"pageName" : "Invoicedetail",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "InvoiceDetailBV",
+			"dataSourceDetails" : {
+				"businessView" : "InvoiceDetailBV",
+				"inputParams" : {
+					"invoiceNo" : "{{params.invoiceNo}}"
+				}
+			}
+		}
+	],
+	"epic" : "Invoicedetail-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Title" : "Invoice Detail",
+		"Description" : "Invoice Detail",
+		"Images" : [ ],
+		"Screen_Name" : "Invoice Detail"
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "errorMessage",
+							"type" : "messageSection",
+							"dataSourceName" : "",
+							"hidden" : true,
+							"timerConfig" : {
+								"automaticRefresh" : {
+									"interval" : "10000",
+									"defaultValue" : true
+								}
+							},
+							"messages" : [
+								{
+									"type" : "normalMessage",
+									"style" : "style3",
+									"lines" : [
+										{
+											"textArray" : [
+												{
+													"text" : "The invoice cannot be created currently because the Goods Received Note (GRN) or Service Entry Sheet (SES) is not yet fully approved, once approved a notification will be sent to you to inform that the invoice can now be uploaded (if any issue, please contact the buyer who issued the PO).",
+													"style" : "style1"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "BankDetails",
+							"type" : "section",
+							"hidden" : false,
+							"title" : "Invoice Bank Details",
+							"dataSourceName" : "InvoiceDetailBV",
+							"description" : "Invoice Bank Details",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "30%",
+												"components" : [
+													{
+														"type" : "inputText",
+														"label" : "bankName",
+														"componentId" : "bankName",
+														"dbColumnName" : "bankName",
+														"formcontrol" : "bankName",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue",
+														"dataSourceName" : "InvoiceDetailBV"
+													},
+													{
+														"type" : "inputString",
+														"label" : "Bank A/C Number",
+														"readOnly" : true,
+														"mandatory" : false,
+														"componentId" : "accountNumber",
+														"dbColumnName" : "accountNumber",
+														"formcontrol" : "accountNumber",
+														"displayStyle" : "verticalKeyValue",
+														"dataSourceName" : "InvoiceDetailBV"
+													}
+												]
+											},
+											{
+												"width" : "30%",
+												"components" : [
+													{
+														"type" : "text",
+														"label" : "Branch Name",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "branchName",
+														"formcontrol" : "branchName",
+														"dbColumnName" : "branchName",
+														"dataSourceName" : "InvoiceDetailBV",
+														"mandatory" : false,
+														"readOnly" : true
+													},
+													{
+														"type" : "text",
+														"label" : "ifscCode",
+														"readOnly" : true,
+														"mandatory" : false,
+														"componentId" : "ifscCode",
+														"dbColumnName" : "ifscCode",
+														"formcontrol" : "ifscCode",
+														"displayStyle" : "verticalKeyValue",
+														"dataSourceName" : "InvoiceDetailBV"
+													}
+												]
+											},
+											{
+												"width" : "30%",
+												"components" : [
+													{
+														"type" : "text",
+														"label" : "accountHolderName",
+														"readOnly" : true,
+														"componentId" : "accountHolderName",
+														"displayStyle" : "verticalKeyValue",
+														"dbColumnName" : "accountHolderName",
+														"formcontrol" : "accountHolderName",
+														"dataSourceName" : "InvoiceDetailBV"
+													},
+													{
+														"label" : "accountType",
+														"type" : "text",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue",
+														"dbColumnName" : "accountType",
+														"dataSourceName" : "InvoiceDetailBV",
+														"componentId" : "accountType",
+														"formcontrol" : "accountType"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "invoiceHeaderDetails",
+							"type" : "section",
+							"hidden" : false,
+							"title" : "Invoice Header",
+							"description" : "Invoice Header",
+							"dataSourceName" : "InvoiceDetailBV",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "30%",
+												"components" : [
+													{
+														"type" : "text",
+														"description" : "showMessage",
+														"label" : "showMessage",
+														"mandatory" : false,
+														"readOnly" : true,
+														"hidden" : true,
+														"formcontrol" : "showMessage",
+														"dbColumnName" : "showMessage",
+														"dataSourceName" : "InvoiceDetailBV",
+														"style" : "style1",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "showMessage",
+														"onLoad" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "invoiceHeaderDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "false"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "errorMessage",
+																			"setProperty" : {
+																				"hidden" : true
+																			}
+																		}
+																	},
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "invoiceHeaderDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "true"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "invoiceItemDetails",
+																			"setProperty" : {
+																				"hidden" : true
+																			}
+																		}
+																	},
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "invoiceHeaderDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "true"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "invoiceHeaderDetails",
+																			"setProperty" : {
+																				"hidden" : true
+																			}
+																		}
+																	},
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "invoiceHeaderDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "true"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "BankDetails",
+																			"setProperty" : {
+																				"hidden" : true
+																			}
+																		}
+																	},
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "invoiceHeaderDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "true"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "errorMessage",
+																			"setProperty" : {
+																				"hidden" : false
+																			}
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"type" : "text",
+														"label" : "Supplier No",
+														"dbColumnName" : "supplierNo",
+														"dataSourceName" : "InvoiceDetailBV",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "supplierNo"
+													},
+													{
+														"type" : "text",
+														"label" : "PO Number",
+														"dbColumnName" : "POId",
+														"dataSourceName" : "InvoiceDetailBV",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "POId"
+													},
+													{
+														"type" : "text",
+														"label" : "Supplier City",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "supplierCity",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "supplierCity"
+													},
+													{
+														"type" : "text",
+														"label" : "Supplier Country",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "supplierCountry",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "supplierCountry"
+													},
+													{
+														"type" : "text",
+														"label" : "Vendor Name",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "ownerName",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "ownerName"
+													},
+													{
+														"type" : "text",
+														"label" : "Vendor Number",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "supplierNo",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "contactNumber"
+													},
+													{
+														"type" : "text",
+														"componentId" : "poClassification",
+														"label" : "PO Classification",
+														"mandatory" : false,
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "poClassification",
+														"displayStyle" : "verticalKeyValue",
+														"icon" : "https://image",
+														"onLoad" : [
+															{
+																"checkCondition" : {
+																	"value" : "Service"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceItemDetails_2",
+																	"setProperty" : {
+																		"hidden" : false
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Service"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceItemDetails",
+																	"setProperty" : {
+																		"hidden" : true
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Service"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceLimitDetails",
+																	"setProperty" : {
+																		"hidden" : true
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Material"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceItemDetails",
+																	"setProperty" : {
+																		"hidden" : false
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Material"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceItemDetails_2",
+																	"setProperty" : {
+																		"hidden" : true
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Material"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceLimitDetails",
+																	"setProperty" : {
+																		"hidden" : true
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Limit"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceLimitDetails",
+																	"setProperty" : {
+																		"hidden" : false
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Limit"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceItemDetails_2",
+																	"setProperty" : {
+																		"hidden" : true
+																	}
+																}
+															},
+															{
+																"checkCondition" : {
+																	"value" : "Limit"
+																},
+																"action" : "changeTableProperty",
+																"actionDetails" : {
+																	"tableComponentId" : "invoiceItemDetails",
+																	"setProperty" : {
+																		"hidden" : true
+																	}
+																}
+															}
+														]
+													}
+												]
+											},
+											{
+												"width" : "30%",
+												"components" : [
+													{
+														"type" : "date",
+														"label" : "PO Created On",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "poDate",
+														"mandatory" : false,
+														"readOnly" : true,
+														"style" : "style1",
+														"displayStyle" : "verticalKeyValue",
+														"hidden" : false
+													},
+													{
+														"type" : "date",
+														"label" : "GRN Created On",
+														"componentId" : "grnDate",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "grnDate",
+														"mandatory" : false,
+														"readOnly" : true,
+														"style" : "style1",
+														"displayStyle" : "verticalKeyValue",
+														"hidden" : false
+													},
+													{
+														"type" : "text",
+														"label" : "GRNNumber",
+														"componentId" : "grnNumber",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "grnNumber",
+														"mandatory" : false,
+														"readOnly" : true,
+														"style" : "style1",
+														"displayStyle" : "verticalKeyValue",
+														"hidden" : false
+													},
+													{
+														"type" : "text",
+														"description" : "currency",
+														"label" : "Currency",
+														"mandatory" : false,
+														"textAlign" : "right",
+														"readOnly" : true,
+														"dataSourceName" : "InvoiceDetailBV",
+														"emphasize" : true,
+														"dbColumnName" : "currency",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "currency"
+													},
+													{
+														"type" : "number",
+														"label" : "Invoice Value",
+														"style" : "style3",
+														"readOnly" : true,
+														"emphasize" : true,
+														"dbColumnName" : "totalInvoiceAmount",
+														"textAlign" : "right",
+														"componentId" : "totalInvoiceAmount",
+														"numberFormat" : "1.2-2",
+														"displayStyle" : "horizontalKeyValue",
+														"onChange2" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "changeColumnValueFromSection",
+																		"actionDetails" : {
+																			"targetTableComponentId" : "withHoldingTaxDetails",
+																			"targetColumnName" : "totalInvoiceAmount",
+																			"setValue" : {
+																				"valueof" : {
+																					"type" : "currentComponent"
+																				}
+																			}
+																		}
+																	}
+																]
+															}
+														],
+														"onLoad2" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "changeColumnValueFromSection",
+																		"actionDetails" : {
+																			"targetTableComponentId" : "withHoldingTaxDetails",
+																			"targetColumnName" : "totalInvoiceAmount",
+																			"setValue" : {
+																				"valueof" : {
+																					"type" : "currentComponent"
+																				}
+																			}
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"type" : "date",
+														"label" : "Invoice Created On",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "invoiceDate",
+														"mandatory" : false,
+														"componentId" : "invoiceDate",
+														"formcontrol" : "invoiceDate",
+														"style" : "style1",
+														"displayStyle" : "verticalKeyValue",
+														"hidden" : false
+													}
+												]
+											},
+											{
+												"width" : "30%",
+												"components" : [
+													{
+														"type" : "textarea",
+														"label" : "Notes",
+														"dataSourceName" : "InvoiceDetailBV",
+														"dbColumnName" : "notes",
+														"componentId" : "notes",
+														"formcontrol" : "notes",
+														"mandatory" : false,
+														"readOnly" : false,
+														"displayStyle" : "verticalKeyValue",
+														"hidden" : false,
+														"rows" : 3
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "invoiceItemDetails",
+							"type" : "table",
+							"title" : "Invoice Item Details",
+							"description" : "Invoice Item details",
+							"icon" : "Invoice Info",
+							"dataSourceName" : "InvoiceDetailBV",
+							"hidden" : false,
+							"tableConfig" : {
+								"businessComponent" : "SDN",
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"defaultRoundOffDigits" : 3,
+								"columnFilterIcon" : false,
+								"rowFilterIcon" : false,
+								"fullscreenIcon" : true,
+								"aggregationFooter" : true,
+								"checkbox" : false,
+								"localPagination" : true,
+								"tableFilter" : {
+									"dataSourceType" : "inline",
+									"lazyLoadFilterData" : true,
+									"dataSource" : [
+										{
+											"dataSourceType" : "businessView",
+											"dataSourceName" : "InvoiceDetailBV",
+											"dataSourceDetails" : {
+												"businessView" : "   "
+											}
+										}
+									],
+									"Filters" : [ ]
+								},
+								"downloadActions" : [
+									{
+										"action" : "excelDownload"
+									}
+								],
+								"DataDownload" : {
+									"dataSource" : {
+										"dataSourceType" : "businessView",
+										"dataSourceName" : "InvoiceDetailBV",
+										"dataSourceDetails" : {
+											"businessView" : ""
+										}
+									},
+									"downloadColumnName" : [ ]
+								},
+								"headerActions" : [ ],
+								"showRowInSidebar" : true,
+								"checkBox" : true,
+								"emptyValue" : "- -",
+								"autoCollapse" : false
+							},
+							"tableColumns" : {
+								"InvoiceItem" : {
+									"mandatory" : false,
+									"type" : "uiRowIndex",
+									"dbColumnName" : "InvoiceItem",
+									"sticky" : true,
+									"hidden" : true
+								},
+								"PO Item" : {
+									"type" : "text",
+									"dbColumnName" : "POItem",
+									"dataSourceName" : "InvoiceDetailBV",
+									"sticky" : false
+								},
+								"GRN Item" : {
+									"type" : "text",
+									"dbColumnName" : "grnItem",
+									"dataSourceName" : "InvoiceDetailBV",
+									"sticky" : false,
+									"hidden" : false
+								},
+								"Item / Description" : {
+									"fields" : [
+										{
+											"dbColumnName" : "productCode",
+											"lable" : "1. Item Code",
+											"type" : "text",
+											"css" : {
+												
+											}
+										},
+										{
+											"dbColumnName" : "productName",
+											"lable" : "2. Item Description",
+											"type" : "text",
+											"css" : {
+												
+											}
+										}
+									],
+									"noDisplay" : "No",
+									"type" : "group",
+									"hidden" : false,
+									"trimLeftZeroes" : false,
+									"trimSpaces" : true,
+									"dataSourceName" : "InvoiceDetailBV",
+									"dbColumnName" : "",
+									"sticky" : false,
+									"groupFieldType" : {
+										"1. Item Code" : "text",
+										"2. Item Description" : "text"
+									}
+								},
+								"OrderedQty" : {
+									"type" : "inputText",
+									"description" : "Ordered Quantity",
+									"dataSourceName" : "InvoiceDetailBV",
+									"dbColumnName" : "OrderedQty",
+									"onChange" : null,
+									"readOnly" : true,
+									"width" : "s",
+									"sticky" : true,
+									"validation" : [
+										{
+											"type" : "min",
+											"failureMessage" : "Value should be greater than or equal to 0",
+											"valueof" : {
+												"value" : {
+													"($)gt" : "0.001"
+												}
+											}
+										},
+										{
+											"type" : "max",
+											"failureMessage" : "Entered value is greater than OrderedQty Qty",
+											"valueof" : {
+												"percent" : [
+													{
+														"valueof" : {
+															"value" : 100
+														}
+													},
+													{
+														"valueof" : {
+															"type" : "columnName",
+															"fieldId" : "OrderedQty"
+														}
+													}
+												]
+											}
+										}
+									],
+									"truncateTextLength" : null,
+									"mandatory" : false
+								},
+								"grnQty" : {
+									"type" : "inputText",
+									"description" : "grnQty",
+									"dbColumnName" : "grnQty",
+									"dataSourceName" : "InvoiceDetailBV",
+									"readOnly" : true,
+									"hidden" : false
+								},
+								"invoiceQuantity" : {
+									"type" : "inputText",
+									"description" : "invoice Quantity",
+									"dbColumnName" : "invoiceQty",
+									"readOnly" : false,
+									"width" : "s",
+									"hidden" : false,
+									"validation" : [
+										{
+											"type" : "min",
+											"failureMessage" : "Value should be greater than or equal to 0",
+											"valueof" : {
+												"value" : {
+													"($)gt" : "0.001"
+												}
+											}
+										},
+										{
+											"type" : "max",
+											"failureMessage" : "Entered value is greater than OrderedQty Qty",
+											"valueof" : {
+												"percent" : [
+													{
+														"valueof" : {
+															"value" : 100
+														}
+													},
+													{
+														"valueof" : {
+															"type" : "columnName",
+															"fieldId" : "invoiceBalanceQty"
+														}
+													}
+												]
+											}
+										}
+									],
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "lineTotal" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "invoiceQuantity"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "UnitPrice"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										},
+										{
+											"actions" : [
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "invoiceHeaderDetails",
+														"targetField" : [ "totalInvoiceAmount" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "lineTotal"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									],
+									"onLoad" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "lineTotal" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "invoiceQuantity"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "UnitPrice"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										},
+										{
+											"actions" : [
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "invoiceHeaderDetails",
+														"targetField" : [ "totalInvoiceAmount" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "lineTotal"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									],
+									"truncateTextLength" : null
+								},
+								"alreadyInvoicedQty" : {
+									"type" : "inputText",
+									"description" : "Already Invoiced Qty",
+									"dataSourceName" : "InvoiceDetailBV",
+									"dbColumnName" : "alreadyInvoicedQty",
+									"readOnly" : true,
+									"hidden" : false
+								},
+								"balanceQty" : {
+									"type" : "inputText",
+									"description" : "Invoice Balance Qty",
+									"dataSourceName" : "InvoiceDetailBV",
+									"dbColumnName" : "balanceQty",
+									"readOnly" : true,
+									"hidden" : false
+								},
+								"UnitPrice" : {
+									"type" : "number",
+									"description" : "unitPrice",
+									"dbColumnName" : "UnitPrice",
+									"dataSourceName" : "InvoiceDetailBV",
+									"numberFormat" : "1.2-2",
+									"hidden" : false
+								},
+								"lineTotal" : {
+									"type" : "number",
+									"columnName" : "Line Total",
+									"description" : "lineTotal",
+									"numberFormat" : "1.2-2",
+									"dbColumnName" : "lineTotal",
+									"hidden" : false
+								},
+								"GRN NO" : {
+									"type" : "text",
+									"description" : "GRN Number",
+									"dbColumnName" : null,
+									"openMode" : "sidebar",
+									"routerLink" : {
+										"sidebarWidth" : "xl"
+									},
+									"value" : {
+										"routerLink" : "/page/GRNDetails",
+										"text" : "{{GRNNumber}}",
+										"params" : {
+											"GRNNumber" : "{{GRNNumber}}"
+										}
+									}
+								},
+								"Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "deleteRow"
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"allowedWorkflowActions" : [ "WF_invoice_approval" ],
+	"businessComponent" : "invoice1",
+	"businessComponentDesc" : "Invoice",
+	"businessComponentInstance" : "{{inputParams.invoiceNo}}",
+	"changeLogVersion" : "{{payload.currentVersion}}",
+	"checkConditions" : [
+		{
+			"sourceType" : "dbColumn",
+			"sourceDetails" : {
+				"dataSourceName" : "InvoiceDetailBV",
+				"dbColumnName" : "showWorkflowActions"
+			},
+			"operation" : "EQ",
+			"valueOf" : {
+				"value" : "false"
+			},
+			"setValue" : {
+				"showWorkflowActions" : false
+			}
+		}
+	],
+	"showWorkflowActions" : true,
+	"workflowLogPositionBottom" : true
+}

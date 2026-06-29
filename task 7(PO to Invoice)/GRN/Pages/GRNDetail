@@ -1,0 +1,487 @@
+{
+	"_id" : ObjectId("6a0315bbdcab0a78d24012fa"),
+	"pageName" : "GRNDetail",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "GRNDetailBV",
+			"dataSourceDetails" : {
+				"businessView" : "GRNDetailBV",
+				"inputParams" : {
+					"GRNNumber" : "{{params.GRNNumber}}"
+				}
+			}
+		}
+	],
+	"epic" : "GRN-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Title" : "GRNDetails",
+		"Description" : "GRNDetails",
+		"Images" : [ ],
+		"Screen_Name" : "GRNDetails"
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "GRNDetails",
+							"title" : "GRN Details",
+							"description" : "Enter GRN Detail below",
+							"icon" : "Detail-icon",
+							"dataSourceName" : "GRNDetailBV",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "GRN Number",
+														"type" : "inputText",
+														"componentId" : "GRNNumber",
+														"dbColumnName" : "GRNNumber",
+														"dataSourceName" : "GRNDetailBV",
+														"formcontrol" : "GRNNumber",
+														"readOnly" : true,
+														"hidden" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "PO Number",
+														"type" : "inputText",
+														"formcontrol" : "poNumber",
+														"componentId" : "poNumber",
+														"dataSourceName" : "GRNDetailBV",
+														"readOnly" : true,
+														"dbColumnName" : "poNumber",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "PO Date",
+														"type" : "inputDate",
+														"formcontrol" : "poDate",
+														"componentId" : "poDate",
+														"readOnly" : true,
+														"dataSourceName" : "GRNDetailBV",
+														"dbColumnName" : "poDate",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "GRN Date",
+														"type" : "inputDate",
+														"componentId" : "grnDate",
+														"dbColumnName" : "grnDate",
+														"dataSourceName" : "GRNDetailBV",
+														"formcontrol" : "grnDate",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "GRN Status",
+														"type" : "select",
+														"componentId" : "grnStatus",
+														"formcontrol" : "grnStatus",
+														"dbColumnName" : "grnStatus",
+														"dataSourceName" : "GRNDetailBV",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue",
+														"options" : [
+															{
+																"key" : "Draft",
+																"value" : "Draft"
+															},
+															{
+																"key" : "Approved",
+																"value" : "Approved"
+															},
+															{
+																"key" : "Rejected",
+																"value" : "Rejected"
+															},
+															{
+																"key" : "Cancelled",
+																"value" : "Cancelled"
+															}
+														]
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Supplier ID",
+														"type" : "inputString",
+														"componentId" : "supplierId",
+														"dataSourceName" : "GRNDetailBV",
+														"dbColumnName" : "supplierId",
+														"formcontrol" : "supplierId",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Supplier Name",
+														"type" : "inputString",
+														"componentId" : "supplierName",
+														"dbColumnName" : "supplierName",
+														"dataSourceName" : "GRNDetailBV",
+														"formcontrol" : "supplierName",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "GRN Value",
+														"type" : "inputString",
+														"componentId" : "grnValue",
+														"dbColumnName" : "grnValue",
+														"dataSourceName" : "GRNDetailBV",
+														"formcontrol" : "grnValue",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Delivery Remarks",
+														"type" : "inputString",
+														"componentId" : "deliveryRemarks",
+														"dbColumnName" : "deliveryRemarks",
+														"formcontrol" : "deliveryRemarks",
+														"dataSourceName" : "GRNDetailBV",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "table",
+							"title" : "product details",
+							"description" : "Enter product Details below",
+							"componentId" : "POdata",
+							"dataSourceName" : "GRNDetailBV",
+							"hidden" : false,
+							"tableConfig" : {
+								"businessComponent" : "GRN",
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"aggregationFooter" : true,
+								"fullscreenIcon" : true,
+								"enableEntityCreation" : true,
+								"checkbox" : false,
+								"rowActions" : true,
+								"localPagination" : false,
+								"entityCreationDetails" : {
+									"addTableRow" : true
+								}
+							},
+							"tableColumns" : {
+								"SNO" : {
+									"type" : "text",
+									"dataSourceName" : "GRNDetailBV",
+									"dbColumnName" : "SNO"
+								},
+								"POOrderNO / POItem" : {
+									"fields" : [
+										{
+											"dbColumnName" : "POOrderNO",
+											"lable" : "1. POOrderNO",
+											"type" : "text",
+											"css" : {
+												
+											}
+										},
+										{
+											"dbColumnName" : "POItem",
+											"lable" : "2. POItem",
+											"type" : "text",
+											"css" : {
+												
+											}
+										}
+									],
+									"noDisplay" : "No",
+									"type" : "group",
+									"trimLeftZeroes" : true,
+									"trimSpaces" : true,
+									"dbColumnName" : "",
+									"sticky" : true,
+									"groupFieldType" : {
+										"1. PO Order NO" : "text",
+										"2. POItem" : "text"
+									}
+								},
+								"ProductCode / ProductDescription" : {
+									"fields" : [
+										{
+											"dbColumnName" : "ProductCode",
+											"lable" : "1. ProductCode",
+											"type" : "text",
+											"css" : {
+												
+											}
+										},
+										{
+											"dbColumnName" : "ProductDescription",
+											"lable" : "2. ProductDescription",
+											"type" : "text",
+											"css" : {
+												
+											}
+										}
+									],
+									"columnName" : "MaterialNumber/Description",
+									"noDisplay" : "No",
+									"type" : "group",
+									"trimLeftZeroes" : true,
+									"trimSpaces" : true,
+									"dbColumnName" : "",
+									"sticky" : false,
+									"groupFieldType" : {
+										"1. Item Code" : "text",
+										"2. Item Description" : "text"
+									}
+								},
+								"OrderedQuantity" : {
+									"type" : "number",
+									"description" : "OrderedQuantity",
+									"dbColumnName" : "OrderedQty",
+									"numberFormat" : "1.2-2",
+									"hidden" : false
+								},
+								"ReceivedQuantity" : {
+									"type" : "inputText",
+									"description" : "Received Quantity",
+									"dbColumnName" : "ReceivedQuantity",
+									"readOnly" : false,
+									"width" : "s",
+									"hidden" : false,
+									"validation" : [
+										{
+											"type" : "maxDecimalDigits",
+											"valueof" : {
+												"value" : 3
+											}
+										},
+										{
+											"type" : "min",
+											"failureMessage" : "You cant create GRN less than 0.001 qty",
+											"valueof" : {
+												"value" : 0.001
+											}
+										},
+										{
+											"type" : "max",
+											"failureMessage" : "Entered value is greater than Readiness Qty",
+											"valueof" : {
+												"percent" : [
+													{
+														"valueof" : {
+															"value" : 100
+														}
+													},
+													{
+														"valueof" : {
+															"type" : "columnName",
+															"fieldId" : "TotalQty"
+														}
+													}
+												]
+											}
+										}
+									],
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "lineTotal" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "ReceivedQuantity"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "UnitPrice"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										},
+										{
+											"actions" : [
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "GRNDetails",
+														"targetField" : [ "grnValue" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "lineTotal"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									],
+									"onLoad" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "lineTotal" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "ReceivedQuantity"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "UnitPrice"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										},
+										{
+											"actions" : [
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "GRNDetails",
+														"targetField" : [ "grnValue" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "lineTotal"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									],
+									"truncateTextLength" : null
+								},
+								"UnitPrice" : {
+									"type" : "number",
+									"description" : "UnitPrice",
+									"dbColumnName" : "UnitPrice",
+									"numberFormat" : "1.2-2",
+									"hidden" : false
+								},
+								"lineTotal" : {
+									"type" : "number",
+									"columnName" : "Line Total",
+									"description" : "lineTotal",
+									"numberFormat" : "1.2-2",
+									"dbColumnName" : "lineTotal",
+									"hidden" : false
+								},
+								"Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "deleteRow"
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"allowedWorkflowActions" : [ "WF_GRN_Approval" ],
+	"businessComponent" : "GRNApproval",
+	"businessComponentDesc" : "GRN",
+	"businessComponentInstance" : "{{inputParams.GRNNumber}}",
+	"changeLogVersion" : "{{payload.currentVersion}}",
+	"checkConditions" : [
+		{
+			"sourceType" : "dbColumn",
+			"sourceDetails" : {
+				"dataSourceName" : "GRNDetailBV",
+				"dbColumnName" : "showWorkflowActions"
+			},
+			"operation" : "EQ",
+			"valueOf" : {
+				"value" : "false"
+			},
+			"setValue" : {
+				"showWorkflowActions" : false
+			}
+		}
+	],
+	"showWorkflowActions" : true,
+	"workflowLogPositionBottom" : true
+}

@@ -1,0 +1,105 @@
+{
+	"_id" : ObjectId("69fc68ae7f52ee99a24b2674"),
+	"businessView" : "POlistBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"POId" : {
+					"$exists" : true
+				}
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"POId" : "$POId",
+							"poDate" : "$poDate",
+							"currency" : "$currency",
+							"totalOrderedQty" : "$totalOrderedQty",
+							"poType" : "$poType",
+							"POvalue" : "$POvalue",
+							"orderedQty" : "$material_items.OrderedQty",
+							"shopId" : "$shopDetails.shopId",
+							"customer_id" : "$customerDetails.customer_id",
+							"deliveryExpectedDate" : "$deliveryDetails.deliveryExpectedDate",
+							"poStatus" : "$poStatus",
+							"grnStatus" : "$grnStatus",
+							"invoiceStatus" : "$invoiceStatus",
+							"totalGrnValue" : "$totalGrnValue",
+							"totalReceivedQty" : "$totalReceivedQty"
+						}
+					},
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				],
+				"chartData" : [
+					{
+						"$addFields" : {
+							"shopId" : "$shopDetails.shopId",
+							"poStatus" : "$poStatus",
+							"grnStatus" : "$grnStatus",
+							"invoiceStatus" : "$invoiceStatus",
+							"customer_id" : "$customerDetails.customer_id"
+						}
+					},
+					{
+						"($)group" : {
+							"_id" : "${{componentSetting.chartCategory}}",
+							"count" : {
+								"($)sum" : 1
+							}
+						}
+					},
+					{
+						"($)match" : {
+							"_id" : {
+								"($)ne" : null
+							}
+						}
+					},
+					{
+						"($)project" : {
+							"_id" : 0,
+							"x" : "$_id",
+							"y" : "$count"
+						}
+					},
+					{
+						"($)sort" : {
+							"y" : 1
+						}
+					}
+				]
+			}
+		}
+	],
+	"collection" : "PODetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ "POId" ]
+}

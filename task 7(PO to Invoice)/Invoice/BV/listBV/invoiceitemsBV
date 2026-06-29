@@ -1,0 +1,112 @@
+{
+	"_id" : ObjectId("6a153c9ad8df5a7165d250eb"),
+	"businessView" : "invoiceitemBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"invoiceNo" : "{{inputParams.invoiceNo}}"
+			}
+		},
+		{
+			"$unwind" : {
+				"path" : "$invoiceDetails.invoiceDetails",
+				"preserveNullAndEmptyArrays" : true
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"InvoiceItem" : "$InvoiceItem",
+							"POItem" : "$invoiceDetails.invoiceDetails.POItem",
+							"grnItem" : "$invoiceDetails.invoiceDetails.grnItem",
+							"productCode" : "$invoiceDetails.invoiceDetails.productCode",
+							"productName" : "$invoiceDetails.invoiceDetails.productName",
+							"OrderedQty" : "$invoiceDetails.invoiceDetails.OrderedQty",
+							"invoiceQty" : "$invoiceDetails.invoiceDetails.invoiceQty",
+							"balanceQty" : "$invoiceDetails.invoiceDetails.balanceQty",
+							"UnitPrice" : "$invoiceDetails.invoiceDetails.UnitPrice",
+							"grnQty" : "$invoiceDetails.invoiceDetails.grnQty",
+							"GRNNumber" : "$invoiceDetails.invoiceDetails.GRNNumber",
+							"lineTotal" : "$invoiceDetails.invoiceDetails.lineTotal",
+							"amount" : "$invoiceDetails.invoiceDetails.amount",
+							"gst_amount" : "$invoiceDetails.invoiceDetails.gst_amount",
+							"gst" : "$invoiceDetails.invoiceDetails.gst"
+						}
+					},
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				],
+				"chartData" : [
+					{
+						"$addFields" : {
+							
+						}
+					},
+					{
+						"($)group" : {
+							"_id" : "${{componentSetting.chartCategory}}",
+							"count" : {
+								"($)sum" : 1
+							}
+						}
+					},
+					{
+						"($)match" : {
+							"_id" : {
+								"($)ne" : null
+							}
+						}
+					},
+					{
+						"($)project" : {
+							"_id" : 0,
+							"x" : "$_id",
+							"y" : "$count"
+						}
+					},
+					{
+						"($)sort" : {
+							"y" : 1
+						}
+					}
+				]
+			}
+		}
+	],
+	"collection" : "InvoiceDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [
+		"lineTotal",
+		"invoiceStatus",
+		"poClassification",
+		"grnNumber",
+		"POId",
+		"invoiceNo"
+	]
+}

@@ -1,0 +1,174 @@
+{
+	"_id" : ObjectId("6a0e9789a5354e3fe53db4de"),
+	"businessView" : "invoiceHeaderDetailsBV",
+	"collection" : "GRNDetails",
+	"aggregation" : [
+		{
+			"($)match" : {
+				"GRNNumber" : "{{inputParams.GRNNumber}}"
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$lookup" : {
+							"from" : "PODetails",
+							"localField" : "grnDetails.poNumber",
+							"foreignField" : "POId",
+							"as" : "poData"
+						}
+					},
+					{
+						"$unwind" : {
+							"path" : "$poData",
+							"preserveNullAndEmptyArrays" : true
+						}
+					},
+					{
+						"$lookup" : {
+							"from" : "shopMaster",
+							"localField" : "poData.shopDetails.shopId",
+							"foreignField" : "shopId",
+							"as" : "shopData"
+						}
+					},
+					{
+						"$unwind" : {
+							"path" : "$shopData",
+							"preserveNullAndEmptyArrays" : true
+						}
+					},
+					{
+						"$lookup" : {
+							"from" : "GRNDetails",
+							"let" : {
+								"grnNumber" : "$GRNNumber"
+							},
+							"pipeline" : [
+								{
+									"$match" : {
+										"$expr" : {
+											"$eq" : [ "$GRNNumber", "$$grnNumber" ]
+										}
+									}
+								},
+								{
+									"$unwind" : "$grnDetails.POData"
+								},
+								{
+									"$lookup" : {
+										"from" : "InvoiceDetails",
+										"let" : {
+											"grnNumber" : "$GRNNumber",
+											"grnItem" : "$grnDetails.POData.SNO"
+										},
+										"pipeline" : [
+											{
+												"$unwind" : "$invoiceDetails.invoiceDetails"
+											},
+											{
+												"$match" : {
+													"$expr" : {
+														"$and" : [
+															{
+																"$eq" : [ "$invoiceDetails.invoiceDetails.GRNNumber", "$$grnNumber" ]
+															},
+															{
+																"$eq" : [ "$invoiceDetails.invoiceDetails.grnItem", "$$grnItem" ]
+															}
+														]
+													}
+												}
+											}
+										],
+										"as" : "invoiceData"
+									}
+								},
+								{
+									"$addFields" : {
+										"alreadyInvoicedQty" : {
+											"$sum" : "$invoiceData.invoiceDetails.invoiceDetails.invoiceQty"
+										}
+									}
+								},
+								{
+									"$match" : {
+										"$expr" : {
+											"$gt" : [
+												{
+													"$subtract" : [
+														"$grnDetails.POData.ReceivedQuantity",
+														{
+															"$ifNull" : [ "$alreadyInvoicedQty", 0 ]
+														}
+													]
+												},
+												0
+											]
+										}
+									}
+								}
+							],
+							"as" : "pendingInvoiceRows"
+						}
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"grnNumber" : "$GRNNumber",
+							"poNumber" : "$grnDetails.poNumber",
+							"poType" : "$poData.poDetails.poType",
+							"supplierId" : "$grnDetails.supplierId",
+							"supplierName" : "$grnDetails.supplierName",
+							"ownerName" : "$shopData.ownerName",
+							"supplierNo" : "$shopData.contactNumber",
+							"supplierCity" : "$shopData.address.city",
+							"supplierCountry" : "$shopData.address.country",
+							"currency" : "$poData.poDetails.currency",
+							"poDate" : "$poData.poDetails.poDate",
+							"grnDate" : "$grnDetails.grnDate",
+							"showMessage" : {
+								"$cond" : {
+									"if" : {
+										"$eq" : [
+											{
+												"$size" : "$pendingInvoiceRows"
+											},
+											0
+										]
+									},
+									"then" : "true",
+									"else" : "false"
+								}
+							}
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collectionName" : "GRNDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"ruleId" : "",
+	"searchTermFields" : [ "POId" ],
+	"totalCount" : [
+		{
+			"($)count" : "count"
+		}
+	]
+}

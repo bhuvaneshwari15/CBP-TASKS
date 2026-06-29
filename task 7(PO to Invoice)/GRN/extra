@@ -1,0 +1,3 @@
+db.businessComponentMaster.find({"businessComponentMaster" : "GRNApproval"})
+db.workflowConditions.find({"workflowId" : "WF_GRN_Approval"})
+db.ruleSets.find({"ruleSetName" : "grn_approval_validation"})

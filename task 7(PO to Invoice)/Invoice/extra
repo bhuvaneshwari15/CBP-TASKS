@@ -1,0 +1,7 @@
+db.businessComponentMaster.find({"businessComponentMaster" : "invoice1"})
+
+db.InvoiceDetails.find().sort({createdAt:-1})
+
+db.ruleSets.insertOne({"ruleSetName" : "invoice_approval_validation"})   
+db.businessView.find({"businessView" : "updateInvoiceWorkflowStatusBV"})
+db.businessView.find({"businessView" : "updatestatusBV"})

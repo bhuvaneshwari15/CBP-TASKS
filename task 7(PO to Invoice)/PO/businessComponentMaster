@@ -1,0 +1,11 @@
+{
+	"_id" : ObjectId("6a0d37fa8ee4a314e2a27e44"),
+	"businessComponentMaster" : "POApproval",
+	"businessComponentInstanceIdKey" : "POId",
+	"collectionName" : "PODetails",
+	"primaryKey" : [
+		{
+			"key" : "POId"
+		}
+	]
+}

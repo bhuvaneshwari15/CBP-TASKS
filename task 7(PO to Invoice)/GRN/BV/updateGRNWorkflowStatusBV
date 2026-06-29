@@ -1,0 +1,30 @@
+{
+	"_id" : ObjectId("6a0d693e8ee4a314e2a27e46"),
+	"businessView" : "updateGRNWorkflowStatusBV",
+	"createdAt" : "2024-07-05T07:27:18.639Z",
+	"createdBy" : "",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"fieldMapping" : {
+		"collectionName" : "GRNDetails",
+		"sourceSchema" : {
+			
+		},
+		"targetSchema" : {
+			
+		}
+	},
+	"filter" : {
+		
+	},
+	"match" : {
+		"GRNNumber" : "{{payload.Context_Data.GRNNumber}}"
+	},
+	"set" : {
+		"($)set" : {
+			"status" : "{{payload.status}}"
+		}
+	}
+}

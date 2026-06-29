@@ -1,0 +1,121 @@
+{
+	"_id" : ObjectId("6a02ff4edcab0a78d24012f8"),
+	"businessView" : "GRNListBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"GRNNumber" : {
+					"$exists" : true
+				}
+			}
+		},
+		{
+			"$lookup" : {
+				"from" : "PODetails",
+				"localField" : "grnDetails.poNumber",
+				"foreignField" : "POId",
+				"as" : "poData"
+			}
+		},
+		{
+			"$unwind" : {
+				"path" : "$poData",
+				"preserveNullAndEmptyArrays" : true
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					},
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"GRNNumber" : "$GRNNumber",
+							"supplierId" : "$grnDetails.supplierId",
+							"poNumber" : "$grnDetails.poNumber",
+							"poDate" : "$grnDetails.poDate",
+							"supplierName" : "$grnDetails.supplierName",
+							"grnDate" : "$grnDetails.grnDate",
+							"grnStatus" : "$poData.grnStatus",
+							"status" : "$status"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				],
+				"chartData" : [
+					{
+						"$addFields" : {
+							"GRNNumber" : "$GRNNumber",
+							"supplierId" : "$grnDetails.supplierId",
+							"poNumber" : "$grnDetails.poNumber",
+							"poDate" : "$grnDetails.poDate",
+							"supplierName" : "$grnDetails.supplierName",
+							"grnDate" : "$grnDetails.grnDate",
+							"grnStatus" : "$poData.grnStatus"
+						}
+					},
+					{
+						"($)group" : {
+							"_id" : "${{componentSetting.chartCategory}}",
+							"count" : {
+								"($)sum" : 1
+							}
+						}
+					},
+					{
+						"($)match" : {
+							"_id" : {
+								"($)ne" : null
+							}
+						}
+					},
+					{
+						"($)project" : {
+							"_id" : 0,
+							"x" : "$_id",
+							"y" : "$count"
+						}
+					},
+					{
+						"($)sort" : {
+							"y" : 1
+						}
+					}
+				]
+			}
+		}
+	],
+	"collection" : "GRNDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [
+		"GRNNumber",
+		"lineTotal",
+		"invoiceStatus",
+		"poClassification",
+		"grnNumber",
+		"POId"
+	]
+}

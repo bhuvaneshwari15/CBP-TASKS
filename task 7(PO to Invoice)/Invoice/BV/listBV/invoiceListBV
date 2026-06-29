@@ -1,0 +1,92 @@
+{
+	"_id" : ObjectId("6a153c84d8df5a7165d250ea"),
+	"businessView" : "invoicelistBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"invoiceNo" : {
+					"$exists" : true
+				}
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"invoiceNo" : "$invoiceNo",
+							"POId" : "$invoiceDetails.POId",
+							"grnNumber" : "$invoiceDetails.grnNumber",
+							"grnDate" : "$invoiceDetails.grnDate",
+							"invoiceDate" : "$invoiceDetails.invoiceDate",
+							"poClassification" : "$invoiceDetails.poClassification",
+							"invoiceStatus" : "$invoiceDetails.invoiceStatus",
+							"status" : "$status"
+						}
+					},
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				],
+				"chartData" : [
+					{
+						"$addFields" : {
+							"poClassification" : "$invoiceDetails.poClassification",
+							"invoiceStatus" : "$invoiceDetails.invoiceStatus"
+						}
+					},
+					{
+						"($)group" : {
+							"_id" : "${{componentSetting.chartCategory}}",
+							"count" : {
+								"($)sum" : 1
+							}
+						}
+					},
+					{
+						"($)match" : {
+							"_id" : {
+								"($)ne" : null
+							}
+						}
+					},
+					{
+						"($)project" : {
+							"_id" : 0,
+							"x" : "$_id",
+							"y" : "$count"
+						}
+					},
+					{
+						"($)sort" : {
+							"y" : 1
+						}
+					}
+				]
+			}
+		}
+	],
+	"collection" : "InvoiceDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ "invoiceNo" ]
+}

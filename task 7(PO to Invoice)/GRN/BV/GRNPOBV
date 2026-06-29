@@ -1,0 +1,51 @@
+{
+	"_id" : ObjectId("6a0449c36a84c0727968085d"),
+	"businessView" : "GRNPOBV",
+	"ruleId" : "",
+	"aggregation" : [
+		{
+			"$match" : {
+				"POId" : "{{inputParams.POId}}"
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"POId" : "$POId",
+							"poDate" : "$poDetails.poDate",
+							"shopId" : "$shopDetails.shopId",
+							"shopName" : "$shopDetails.shopName",
+							"showMessage" : {
+								"$cond" : {
+									"if" : {
+										"$eq" : [ "$grnStatus", "Fully Delivered" ]
+									},
+									"then" : "true",
+									"else" : "false"
+								}
+							}
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collectionName" : "PODetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"collection" : "PODetails",
+	"searchTermFields" : [ "POId" ]
+}

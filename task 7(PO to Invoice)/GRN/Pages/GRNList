@@ -1,0 +1,477 @@
+{
+	"_id" : ObjectId("6a02fb32dcab0a78d24012f7"),
+	"pageName" : "GRNList",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "GRNListBV",
+			"dataSourceDetails" : {
+				"businessView" : "GRNListBV"
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "GRNListItemBV",
+			"dataSourceDetails" : {
+				"businessView" : "GRNListItemBV"
+			}
+		}
+	],
+	"epic" : "Details-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"Business_Comp_Name" : "GRNList",
+		"Title" : "GRN List",
+		"Description" : "List of GRN Details",
+		"Images" : [ ],
+		"Screen_Name" : "GRNList"
+	},
+	"popups" : {
+		"delete" : {
+			"type" : "inline",
+			"pageName" : "menuDetialsPage",
+			"inlineJson" : {
+				"type" : "form",
+				"dataSource" : {
+					"dataSourceType" : "businessView",
+					"dataSourceName" : "GRNListBV",
+					"dataSourceDetails" : {
+						"businessView" : "GRNListBV"
+					}
+				},
+				"header" : {
+					"heading" : "Delete Confirmation"
+				},
+				"body" : {
+					"title" : "Do you want to proceed ?",
+					"components" : [ ]
+				},
+				"footer" : {
+					"button" : [
+						{
+							"text" : "No",
+							"type" : "button",
+							"action" : "close"
+						},
+						{
+							"text" : "Yes",
+							"type" : "submit",
+							"action" : "submit",
+							"onClick" : [
+								{
+									"actions" : [
+										{
+											"action" : "executePopupAction",
+											"actionDetails" : {
+												"payload" : {
+													
+												}
+											}
+										},
+										{
+											"action" : "refresh"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			"executePopUpAction" : [
+				{
+					"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
+					"THEN" : [ "performActions" ],
+					"enableLogs" : true,
+					"Actions" : [
+						{
+							"id" : "deleteNotificationDocument",
+							"actionName" : "deleteNotificationDocument",
+							"actionType" : "deleteDocument",
+							"actionDetails" : {
+								"database_details" : {
+									"database" : "{{payload.headers.dbName}}",
+									"collection" : "GRNDetails"
+								},
+								"matchCondition" : {
+									"GRNNumber" : "{{payload.selectedRow.GRNNumber.text}}"
+								}
+							}
+						}
+					],
+					"Output" : {
+						"message" : "GRN Deleted Successfully",
+						"refresh" : true
+					}
+				}
+			]
+		}
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "GRNList",
+							"type" : "table",
+							"title" : "GRN List",
+							"description" : "List of GRN",
+							"dataSourceName" : "GRNListBV",
+							"tableConfig" : {
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"fullscreenIcon" : true,
+								"showPagination" : true,
+								"localPagination" : false,
+								"showChart" : true,
+								"checkbox" : true,
+								"chartConfig" : {
+									"chartStyle" : {
+										"grid" : false,
+										"legend" : false,
+										"dataLabels" : true,
+										"distributed" : true,
+										"compact" : true,
+										"yaxis" : true,
+										"closeIcon" : false,
+										"style" : "style3"
+									},
+									"title" : "",
+									"sendCompressedData" : true,
+									"description" : "subtitle",
+									"chartType" : "column",
+									"defaultChartCategory" : "supplierId",
+									"colors" : [
+										"#3391e2",
+										"#68CBE8",
+										"#E5E16D",
+										"#c2d439",
+										"#9AE7C0",
+										"#23c1a4",
+										"#cbcb8f",
+										"#D9DB9A",
+										"#ADC571"
+									],
+									"categorySelection" : {
+										"categories" : {
+											"dataSourceType" : "tableColumn",
+											"dataSourceDetails" : {
+												"categoryColumns" : [ "GRNNumber", "supplierId", "grnStatus" ],
+												"defaultCategoryColumns" : "supplierId"
+											}
+										}
+									},
+									"dataSource" : {
+										"dataSourceType" : "table"
+									}
+								},
+								"headerActions" : [
+									{
+										"text" : "Add GRN",
+										"showLabel" : true,
+										"icon" : "feather icon-plus",
+										"style" : "style5",
+										"onClick" : [
+											{
+												"actions" : [
+													{
+														"action" : "redirect",
+														"actionDetails" : {
+															"routerLink" : "/page/POlist"
+														}
+													}
+												]
+											}
+										]
+									}
+								],
+								"downloadActions" : [
+									{
+										"action" : "excelDownload",
+										"downloadPopupTitle" : "Downloading Excel"
+									},
+									{
+										"action" : "pdfDownload",
+										"downloadPopupTitle" : "Downloading Pdf"
+									}
+								],
+								"DataDownload" : {
+									"downloadColumnName" : [
+										{
+											"label" : "GRN NO",
+											"property" : "GRN NO",
+											"dbColumnName" : "GRNNumber"
+										},
+										{
+											"label" : "Vendor ID",
+											"property" : "Vendor ID",
+											"dbColumnName" : "supplierId"
+										},
+										{
+											"label" : "PO NO",
+											"property" : "PO NO",
+											"dbColumnName" : "poNumber"
+										},
+										{
+											"label" : "PO Date",
+											"property" : "PO Date",
+											"dbColumnName" : "poDate"
+										},
+										{
+											"label" : "Vendor Name",
+											"property" : "Vendor Name",
+											"dbColumnName" : "supplierName"
+										},
+										{
+											"label" : "GRN Date",
+											"property" : "GRN Date",
+											"dbColumnName" : "grnDate"
+										},
+										{
+											"label" : "GRN Status",
+											"property" : "GRN Staus",
+											"dbColumnName" : "grnStatus"
+										}
+									]
+								},
+								"tableFilter" : {
+									"dataSourceType" : "inline",
+									"dataSource" : [
+										{
+											"dataSourceType" : "businessView",
+											"dataSourceName" : "",
+											"dataSourceDetails" : {
+												"businessView" : ""
+											}
+										}
+									],
+									"Filters" : [ ]
+								}
+							},
+							"tableColumns" : {
+								"GRNNumber" : {
+									"type" : "text",
+									"dbColumnName" : null,
+									"openInNewTab" : true,
+									"value" : {
+										"routerLink" : "/page/GRNDetail",
+										"text" : "{{GRNNumber}}",
+										"params" : {
+											"GRNNumber" : "{{GRNNumber}}"
+										}
+									}
+								},
+								"supplierId" : {
+									"type" : "text",
+									"dataSourceName" : "GRNListBV",
+									"dbColumnName" : "supplierId"
+								},
+								"poNumber" : {
+									"type" : "text",
+									"dataSourceName" : "GRNListBV",
+									"dbColumnName" : "poNumber"
+								},
+								"poDate" : {
+									"type" : "text",
+									"dataSourceName" : "GRNListBV",
+									"dbColumnName" : "poDate"
+								},
+								"grnDate" : {
+									"type" : "text",
+									"dataSourceName" : "GRNListBV",
+									"dbColumnName" : "grnDate"
+								},
+								"POData" : {
+									"type" : "embeddedTable",
+									"dataSourceName" : "GRNListItemBV",
+									"componentId" : [ "GRNNumber" ],
+									"counterSize" : "m",
+									"style" : "style0",
+									"tableConfig" : {
+										"enableEntityCreation" : false,
+										"entityCreationDetails" : {
+											"addTableRow" : false
+										}
+									},
+									"tableColumns" : {
+										"SNO" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "SNO"
+										},
+										"POOrderNO" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "POOrderNO"
+										},
+										"POItem" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "POItem"
+										},
+										"ProductCode" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "ProductCode"
+										},
+										"ProductDescription" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "ProductDescription"
+										},
+										"UnitPrice" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "UnitPrice"
+										},
+										"ReceivedQuantity" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "ReceivedQuantity"
+										},
+										"amount" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "amount"
+										},
+										"gst" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "gst"
+										},
+										"gst_amount" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "gst_amount"
+										},
+										"lineTotal" : {
+											"type" : "text",
+											"dataSourceName" : "GRNListItemBV",
+											"dbColumnName" : "lineTotal"
+										}
+									}
+								},
+								"status" : {
+									"type" : "status",
+									"dbColumnName" : "status"
+								},
+								"Message" : {
+									"groupFields" : [ ],
+									"type" : "message",
+									"description" : "Message",
+									"dbColumnName" : "msgSub",
+									"businessComponent" : "GRNApproval",
+									"sticky" : null,
+									"uniqueColumns" : [ "GRNNumber" ],
+									"msgGrpIdPrefix" : "PO Query: PO# ",
+									"workflowActionDisabled" : false,
+									"workflowIconDisabled" : false,
+									"changeLogIconEnabled" : true,
+									"actionIconEnabled" : true
+								},
+								"Create Invoice" : {
+									"type" : "button",
+									"dbColumnName" : null,
+									"componentId" : "createInvoice",
+									"textAlign" : "center",
+									"enabled" : false,
+									"openInNewTab" : true,
+									"onLoad" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"checkCondition" : [
+														{
+															"source" : "status",
+															"sourceType" : "column",
+															"operation" : "EQ",
+															"valueof" : {
+																"text" : "Completed"
+															}
+														}
+													],
+													"actionDetails" : {
+														"targetColumn" : [ "Create Invoice" ],
+														"setProperty" : {
+															"text" : "Create Invoice",
+															"style" : "style13",
+															"enabled" : true
+														}
+													}
+												}
+											]
+										}
+									],
+									"onClick" : [
+										{
+											"actions" : [
+												{
+													"sourceColumn" : "Create Invoice",
+													"style" : "style1",
+													"checkCondition" : {
+														"text" : "Create Invoice",
+														"enabled" : true,
+														"style" : "style13"
+													},
+													"action" : "redirect",
+													"openInNewTab" : true,
+													"actionDetails" : {
+														"routerLink" : "/page/InvoiceCreation",
+														"params" : {
+															"GRNNumber" : "{{GRNNumber}}",
+															"selectedRows" : true,
+															"selectedColumns" : [ "GRNNumber" ]
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"Action" : {
+									"type" : "icon",
+									"icon" : "feather icon-edit",
+									"value" : {
+										"routerLink" : "/page/InvoiceCreation",
+										"params" : {
+											"GRNNumber" : "{{GRNNumber}}"
+										},
+										"enabled" : true,
+										"text" : "Edit"
+									}
+								},
+								"Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"enabled" : true,
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "showPopup",
+												"actionDetails" : {
+													"popupName" : "delete",
+													"tableRefresh" : true
+												}
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid"
+}

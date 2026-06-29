@@ -1,0 +1,144 @@
+{
+	"_id" : ObjectId("6a02e9d5dcab0a78d24012f6"),
+	"businessView" : "GRNCreateBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"POId" : "{{inputParams.POId}}"
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"$unwind" : {
+				"path" : "$material_items",
+				"preserveNullAndEmptyArrays" : true
+			}
+		},
+		{
+			"$lookup" : {
+				"from" : "GRNDetails",
+				"let" : {
+					"poId" : "$POId",
+					"productId" : "$material_items.product_id",
+					"itemNo" : "$material_items.SNO"
+				},
+				"pipeline" : [
+					{
+						"$unwind" : "$grnDetails.POData"
+					},
+					{
+						"$match" : {
+							"$expr" : {
+								"$and" : [
+									{
+										"$eq" : [ "($)grnDetails.poNumber", "($)($)poId" ]
+									},
+									{
+										"$eq" : [ "($)grnDetails.POData.ProductCode", "($)($)productId" ]
+									},
+									{
+										"$eq" : [ "($)grnDetails.POData.POItem", "($)($)itemNo" ]
+									}
+								]
+							}
+						}
+					},
+					{
+						"$group" : {
+							"_id" : null,
+							"totalReceivedQty" : {
+								"$sum" : "$grnDetails.POData.ReceivedQuantity"
+							},
+							"totalOrderedQty" : {
+								"$sum" : "$grnDetails.POData.OrderedQty"
+							},
+							"totalbalanceQty" : {
+								"$sum" : "$grnDetails.POData.balanceQty"
+							}
+						}
+					}
+				],
+				"as" : "grnSummary"
+			}
+		},
+		{
+			"$addFields" : {
+				"receivedQty" : {
+					"$toDouble" : {
+						"$ifNull" : [
+							{
+								"$getField" : {
+									"field" : "totalReceivedQty",
+									"input" : {
+										"$arrayElemAt" : [ "$grnSummary", 0 ]
+									}
+								}
+							},
+							0
+						]
+					}
+				}
+			}
+		},
+		{
+			"$addFields" : {
+				"orderedQty" : {
+					"$toDouble" : "$material_items.OrderedQty"
+				}
+			}
+		},
+		{
+			"$addFields" : {
+				"balanceQty" : {
+					"$subtract" : [ "$orderedQty", "$receivedQty" ]
+				}
+			}
+		},
+		{
+			"$match" : {
+				"$expr" : {
+					"$gt" : [ "$balanceQty", 0 ]
+				}
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"POId" : "$POId",
+							"itemNo" : "$material_items.SNO",
+							"product_id" : "$material_items.product_id",
+							"product_name" : "$material_items.product_name",
+							"unit_price" : "$material_items.unit_price",
+							"orderedQty" : "$material_items.OrderedQty",
+							"receivedQty" : "$receivedQty",
+							"avaliableQty" : "$balanceQty",
+							"balanceQty" : "$balanceQty",
+							"maxReceivableQty" : "$balanceQty",
+							"amount" : "$material_items.amount",
+							"gst_amount" : "$material_items.gst_amount",
+							"gst" : "$material_items.gst",
+							"total" : "$material_items.Total",
+							"grnStatus" : "$grnStatus"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "PODetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"searchTermFields" : [ "POId" ]
+}

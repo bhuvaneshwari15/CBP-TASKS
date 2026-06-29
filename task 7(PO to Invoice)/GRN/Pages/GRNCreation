@@ -1,0 +1,1187 @@
+{
+	"_id" : ObjectId("6a02c1b9ad17f2c25a917e05"),
+	"pageName" : "GRNCreation",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "GRNPOBV",
+			"dataSourceDetails" : {
+				"businessView" : "GRNPOBV"
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "GRNCreateBV",
+			"dataSourceDetails" : {
+				"businessView" : "GRNCreateBV"
+			}
+		}
+	],
+	"epic" : "GRN-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Title" : "GRNCreation",
+		"Description" : "GRNCreation",
+		"Images" : [ ],
+		"Screen_Name" : "GRNCreation"
+	},
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "errorMessage",
+							"type" : "messageSection",
+							"dataSourceName" : "GRNCreateBV",
+							"hidden" : false,
+							"timerConfig" : {
+								"automaticRefresh" : {
+									"interval" : "10000",
+									"defaultValue" : true
+								}
+							},
+							"messages" : [
+								{
+									"type" : "normalMessage",
+									"style" : "style3",
+									"lines" : [
+										{
+											"textArray" : [
+												{
+													"text" : "The GRN cannot be created currently because the Purchase Order (PO) is not yet fully approved, once approved a notification will be sent to you to inform that the GRN can now be uploaded (if any issue, please contact the buyer who issued the PO).",
+													"style" : "style1"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "GRNDetails",
+							"title" : "GRN Details",
+							"description" : "Enter GRN Detail below",
+							"icon" : "Detail-icon",
+							"hidden" : false,
+							"dataSourceName" : "GRNPOBV",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"type" : "text",
+														"description" : "showMessage",
+														"label" : "showMessage",
+														"mandatory" : true,
+														"readOnly" : true,
+														"hidden" : true,
+														"formcontrol" : "showMessage",
+														"dbColumnName" : "showMessage",
+														"dataSourceName" : "GRNPOBV",
+														"style" : "style1",
+														"displayStyle" : "verticalKeyValue",
+														"componentId" : "showMessage",
+														"onLoad" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "GRNDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "false"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "errorMessage",
+																			"setProperty" : {
+																				"hidden" : true
+																			}
+																		}
+																	},
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "GRNDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "true"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "GRNDetails",
+																			"setProperty" : {
+																				"hidden" : true
+																			}
+																		}
+																	},
+																	{
+																		"action" : "changeComponentProperty",
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : "GRNDetails",
+																				"sourceComponentId" : "showMessage",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "true"
+																				}
+																			}
+																		],
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "POdata",
+																			"setProperty" : {
+																				"hidden" : true
+																			}
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"label" : "PO Number",
+														"type" : "inputText",
+														"formcontrol" : "poNumber",
+														"componentId" : "poNumber",
+														"dataSourceName" : "GRNPOBV",
+														"dbColumnName" : "POId",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "PO Date",
+														"type" : "inputDate",
+														"formcontrol" : "poDate",
+														"componentId" : "poDate",
+														"dataSourceName" : "GRNPOBV",
+														"dbColumnName" : "poDate",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "GRN Date",
+														"type" : "inputDate",
+														"componentId" : "grnDate",
+														"dbColumnName" : "grnDate",
+														"formcontrol" : "grnDate",
+														"readOnly" : false,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "GRN Value",
+														"type" : "inputString",
+														"componentId" : "grnValue",
+														"dbColumnName" : "grnValue",
+														"formcontrol" : "grnValue",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Supplier ID",
+														"type" : "inputString",
+														"componentId" : "supplierId",
+														"dataSourceName" : "GRNPOBV",
+														"dbColumnName" : "shopId",
+														"formcontrol" : "supplierId",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Supplier Name",
+														"type" : "inputString",
+														"componentId" : "supplierName",
+														"dbColumnName" : "shopName",
+														"dataSourceName" : "GRNPOBV",
+														"formcontrol" : "supplierName",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Delivery Remarks",
+														"type" : "select",
+														"componentId" : "deliveryRemarks",
+														"dbColumnName" : "deliveryRemarks",
+														"formcontrol" : "deliveryRemarks",
+														"readOnly" : false,
+														"displayStyle" : "verticalKeyValue",
+														"multiple" : false,
+														"width" : "m",
+														"options" : [
+															{
+																"key" : "Delivered-Partially",
+																"value" : "Delivered-Partially"
+															},
+															{
+																"key" : "Delivered-fully",
+																"value" : "Delivered-fully"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "table",
+							"title" : "product details",
+							"description" : "Enter product Details below",
+							"componentId" : "POdata",
+							"dataSourceName" : "GRNCreateBV",
+							"hidden" : false,
+							"tableConfig" : {
+								"businessComponent" : "GRN",
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"aggregationFooter" : true,
+								"fullscreenIcon" : true,
+								"enableEntityCreation" : true,
+								"checkbox" : false,
+								"rowActions" : true,
+								"localPagination" : false,
+								"entityCreationDetails" : {
+									"addTableRow" : true
+								}
+							},
+							"tableColumns" : {
+								"SNO" : {
+									"mandatory" : false,
+									"type" : "uiRowIndex",
+									"dbColumnName" : "uiRowIndex",
+									"sticky" : true,
+									"hidden" : true
+								},
+								"POOrderNO / POItem" : {
+									"fields" : [
+										{
+											"dbColumnName" : "POId",
+											"lable" : "1. POOrderNO",
+											"type" : "text",
+											"css" : {
+												
+											}
+										},
+										{
+											"dbColumnName" : "itemNo",
+											"lable" : "2. POItem",
+											"type" : "text",
+											"css" : {
+												
+											}
+										}
+									],
+									"noDisplay" : "No",
+									"type" : "group",
+									"trimSpaces" : true,
+									"dbColumnName" : "PO_OrderNo_Item",
+									"sticky" : true,
+									"groupFieldType" : {
+										"1. PO Order NO" : "text",
+										"2. POItem" : "text"
+									}
+								},
+								"ProductCode / ProductDescription" : {
+									"fields" : [
+										{
+											"dbColumnName" : "product_id",
+											"lable" : "1. ProductCode",
+											"type" : "text",
+											"css" : {
+												
+											}
+										},
+										{
+											"dbColumnName" : "product_name",
+											"lable" : "2. ProductDescription",
+											"type" : "text",
+											"css" : {
+												
+											}
+										}
+									],
+									"columnName" : "MaterialNumber/Description",
+									"noDisplay" : "No",
+									"type" : "group",
+									"trimLeftZeroes" : true,
+									"trimSpaces" : true,
+									"dbColumnName" : "POCode_Name",
+									"sticky" : false,
+									"groupFieldType" : {
+										"1. Item Code" : "text",
+										"2. Item Description" : "text"
+									}
+								},
+								"OrderedQty" : {
+									"type" : "inputText",
+									"description" : "Ordered Quantity",
+									"dbColumnName" : "orderedQty",
+									"dataSourceName" : "GRNCreateBV",
+									"onChange" : null,
+									"readOnly" : true,
+									"width" : "s",
+									"sticky" : true,
+									"validation" : [
+										{
+											"type" : "min",
+											"failureMessage" : "Value should be greater than or equal to 0",
+											"valueof" : {
+												"value" : {
+													"($)gt" : "0.001"
+												}
+											}
+										},
+										{
+											"type" : "max",
+											"failureMessage" : "Entered value is greater than OrderedQty Qty",
+											"valueof" : {
+												"percent" : [
+													{
+														"valueof" : {
+															"value" : 100
+														}
+													},
+													{
+														"valueof" : {
+															"type" : "columnName",
+															"fieldId" : "OrderedQty"
+														}
+													}
+												]
+											}
+										}
+									],
+									"truncateTextLength" : null,
+									"mandatory" : false
+								},
+								"ReceivedQuantity" : {
+									"type" : "inputText",
+									"description" : "Received Quantity",
+									"dbColumnName" : "readinessQty",
+									"readOnly" : false,
+									"width" : "s",
+									"hidden" : false,
+									"validation" : [
+										{
+											"type" : "maxDecimalDigits",
+											"valueof" : {
+												"value" : 3
+											}
+										},
+										{
+											"type" : "min",
+											"failureMessage" : "You cant create GRN less than 0.001 qty",
+											"valueof" : {
+												"value" : 0.001
+											}
+										},
+										{
+											"type" : "max",
+											"failureMessage" : "Entered value is greater than Ordered Qty",
+											"valueof" : {
+												"percent" : [
+													{
+														"valueof" : {
+															"value" : 100
+														}
+													},
+													{
+														"valueof" : {
+															"type" : "columnName",
+															"fieldId" : "balanceQty"
+														}
+													}
+												]
+											}
+										}
+									],
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "amount" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "ReceivedQuantity"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "UnitPrice"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "gst_amount" ],
+														"setValue" : {
+															"percent" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "lineTotal" ],
+														"setValue" : {
+															"addition" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										},
+										{
+											"actions" : [
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "GRNDetails",
+														"targetField" : [ "grnValue" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "lineTotal"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									],
+									"onLoad" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "lineTotal" ],
+														"setValue" : {
+															"addition" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "GRNDetails",
+														"targetField" : [ "grnValue" ],
+														"setValue" : {
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "lineTotal"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									],
+									"truncateTextLength" : null
+								},
+								"balanceQty" : {
+									"type" : "inputText",
+									"description" : "balanceQty",
+									"dbColumnName" : "balanceQty",
+									"readOnly" : true,
+									"hidden" : false
+								},
+								"UnitPrice" : {
+									"type" : "number",
+									"description" : "unit_price",
+									"dbColumnName" : "unit_price",
+									"numberFormat" : "1.2-2",
+									"hidden" : false
+								},
+								"amount" : {
+									"type" : "inputText",
+									"componentId" : "amount",
+									"dbColumnName" : "amount",
+									"readOnly" : true
+								},
+								"gst" : {
+									"type" : "inputText",
+									"componentId" : "gst",
+									"dbColumnName" : "gst",
+									"readOnly" : true
+								},
+								"gst_amount" : {
+									"type" : "inputText",
+									"componentId" : "gst_amount",
+									"dbColumnName" : "gst_amount",
+									"readOnly" : true
+								},
+								"lineTotal" : {
+									"type" : "number",
+									"columnName" : "Line Total",
+									"description" : "lineTotal",
+									"numberFormat" : "1.2-2",
+									"dbColumnName" : "lineTotal",
+									"hidden" : false
+								},
+								"Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "deleteRow"
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"executePageActions" : [
+		{
+			"ID" : 1,
+			"Rule" : "pageAction",
+			"WHEN" : "'{{payload.pageActionPerformed}}' == 'submit'",
+			"THEN" : [ "performAction" ],
+			"Actions" : [
+				{
+					"id" : "MapProductItems",
+					"actionName" : "MapProductItems",
+					"actionType" : "mapFields",
+					"actionDetails" : {
+						"sourceSchema" : "{{payload.selectedRows.POdata.selectedRows}}",
+						"targetSchema" : {
+							"SNO" : {
+								"type" : "int",
+								"relatedField" : "['SNO'].text"
+							},
+							"POOrderNO" : {
+								"type" : "string",
+								"relatedField" : "['POOrderNO / POItem']['fields']['1. POOrderNO']",
+								"default" : null
+							},
+							"POItem" : {
+								"type" : "string",
+								"relatedField" : "['POOrderNO / POItem']['fields']['2. POItem']",
+								"default" : null
+							},
+							"ProductCode" : {
+								"type" : "string",
+								"relatedField" : "['ProductCode / ProductDescription']['fields']['1. ProductCode']",
+								"default" : null
+							},
+							"ProductDescription" : {
+								"type" : "string",
+								"relatedField" : "['ProductCode / ProductDescription']['fields']['2. ProductDescription']",
+								"default" : null
+							},
+							"TotalQty" : {
+								"type" : "int",
+								"relatedField" : "['TotalQty'].text"
+							},
+							"UnitPrice" : {
+								"type" : "int",
+								"relatedField" : "['UnitPrice'].text"
+							},
+							"qty" : {
+								"type" : "int",
+								"relatedField" : "['qty'].text"
+							},
+							"OrderedQty" : {
+								"type" : "int",
+								"relatedField" : "['OrderedQty'].text"
+							},
+							"ReceivedQuantity" : {
+								"type" : "int",
+								"relatedField" : "['ReceivedQuantity'].text"
+							},
+							"balanceQty" : {
+								"type" : "int",
+								"relatedField" : "['balanceQty'].text"
+							},
+							"amount" : {
+								"type" : "int",
+								"relatedField" : "['amount'].text"
+							},
+							"gst" : {
+								"type" : "int",
+								"relatedField" : "['gst'].text"
+							},
+							"gst_amount" : {
+								"type" : "int",
+								"relatedField" : "['gst_amount'].text"
+							},
+							"lineTotal" : {
+								"type" : "int",
+								"relatedField" : "['lineTotal'].text"
+							}
+						}
+					}
+				},
+				{
+					"id" : "GRNInsert",
+					"actionName" : "GRNInsert",
+					"actionType" : "insertData",
+					"eventLog" : {
+						"enabled" : true,
+						"title" : "New GRN Created",
+						"description" : "GRN Created",
+						"businessComponent" : "GRNApproval",
+						"businessComponentInstance" : "{{actionsResponse.GRNInsert.GRNNumber}}",
+						"userId" : "{{payload.headers.userId}}",
+						"userName" : "xyz",
+						"longDescription" : "",
+						"event" : "create",
+						"eventDetails" : {
+							
+						}
+					},
+					"actionDetails" : {
+						"database_details" : {
+							"database" : "{{payload.headers.dbName}}",
+							"collection" : "GRNDetails"
+						},
+						"primaryKey" : {
+							"fieldName" : "GRNNumber",
+							"prefix" : ""
+						},
+						"payload" : {
+							"grnDetails" : {
+								"poNumber" : "{{payload.section_GRNDetails.poNumber}}",
+								"poDate" : "{{payload.section_GRNDetails.poDate}}",
+								"grnDate" : "{{payload.section_GRNDetails.grnDate}}",
+								"supplierId" : "{{payload.section_GRNDetails.supplierId}}",
+								"supplierName" : "{{payload.section_GRNDetails.supplierName}}",
+								"grnValue" : "{{payload.section_GRNDetails.grnValue}}",
+								"deliveryRemarks" : "{{payload.section_GRNDetails.deliveryRemarks}}",
+								"POData" : "{{actionsResponse.MapProductItems}}",
+								"grnStatus" : "Created"
+							},
+							"status" : "Pending for L1 Approval"
+						}
+					}
+				},
+				{
+					"id" : "recalculatePOSummary",
+					"actionName" : "recalculatePOSummary",
+					"actionType" : "getDataFromDB",
+					"actionDetails" : {
+						"database_details" : {
+							"database" : "{{payload.headers.dbName}}",
+							"collection" : "PODetails"
+						},
+						"filter" : {
+							
+						},
+						"aggregation" : [
+							{
+								"($)match" : {
+									"POId" : "{{payload.section_GRNDetails.poNumber}}"
+								}
+							},
+							{
+								"($)lookup" : {
+									"from" : "GRNDetails",
+									"let" : {
+										"poNumber" : "($)POId"
+									},
+									"pipeline" : [
+										{
+											"($)unwind" : "($)grnDetails.POData"
+										},
+										{
+											"($)match" : {
+												"($)expr" : {
+													"($)and" : [
+														{
+															"($)eq" : [ "($)grnDetails.poNumber", "($)($)poNumber" ]
+														}
+													]
+												}
+											}
+										},
+										{
+											"($)group" : {
+												"_id" : "($)grnDetails.poNumber",
+												"totalReceivedQty" : {
+													"($)sum" : "($)grnDetails.POData.ReceivedQuantity"
+												},
+												"totalGrnValue" : {
+													"($)sum" : "($)grnDetails.POData.lineTotal"
+												}
+											}
+										}
+									],
+									"as" : "grnInfo"
+								}
+							},
+							{
+								"($)addFields" : {
+									"totalOrderedQty" : {
+										"($)sum" : "($)material_items.OrderedQty"
+									}
+								}
+							},
+							{
+								"($)addFields" : {
+									"totalReceivedQty" : {
+										"($)ifNull" : [
+											{
+												"($)arrayElemAt" : [ "($)grnInfo.totalReceivedQty", 0 ]
+											},
+											0
+										]
+									}
+								}
+							},
+							{
+								"($)addFields" : {
+									"totalGrnValue" : {
+										"($)ifNull" : [
+											{
+												"($)arrayElemAt" : [ "($)grnInfo.totalGrnValue", 0 ]
+											},
+											0
+										]
+									}
+								}
+							},
+							{
+								"($)addFields" : {
+									"grnStatus" : {
+										"($)cond" : {
+											"if" : {
+												"($)eq" : [ "($)totalReceivedQty", 0 ]
+											},
+											"then" : "Pending for GRN Creation",
+											"else" : {
+												"($)cond" : {
+													"if" : {
+														"($)eq" : [ "($)totalReceivedQty", "($)totalOrderedQty" ]
+													},
+													"then" : "Fully Delivered",
+													"else" : "Partially Delivered"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"($)addFields" : {
+									"additionalDeliveredValue" : {
+										"($)ifNull" : [
+											{
+												"($)arrayElemAt" : [ "($)grnInfo.totalGrnValue", 0 ]
+											},
+											0
+										]
+									}
+								}
+							},
+							{
+								"($)addFields" : {
+									"deliveredValue" : {
+										"($)add" : [
+											{
+												"($)ifNull" : [ "($)deliveredValue", 0 ]
+											},
+											"($)additionalDeliveredValue"
+										]
+									},
+									"sumOfInvoicedValue" : {
+										"($)add" : [
+											{
+												"($)ifNull" : [ "($)sumOfInvoicedValue", 0 ]
+											},
+											"($)additionalInvoicedValue"
+										]
+									},
+									"esValue" : {
+										"($)add" : [
+											{
+												"($)ifNull" : [ "($)esValue", 0 ]
+											},
+											"($)additionalEntrysheetValue"
+										]
+									}
+								}
+							},
+							{
+								"($)addFields" : {
+									"poStatus" : {
+										"($)cond" : {
+											"if" : {
+												"($)eq" : [ "($)grnStatus", "Fully Delivered" ]
+											},
+											"then" : "Closed",
+											"else" : "Acknowledged"
+										}
+									}
+								}
+							},
+							{
+								"($)facet" : {
+									"paginatedResults" : [
+										{
+											"($)project" : {
+												"poStatus" : "($)poStatus",
+												"grnStatus" : "($)grnStatus",
+												"totalReceivedQty" : "($)totalReceivedQty",
+												"totalOrderedQty" : "($)totalOrderedQty",
+												"POId" : "($)POId",
+												"deliveryRemarks" : "($)deliveryRemarks",
+												"totalGrnValue" : "($)totalGrnValue"
+											}
+										}
+									],
+									"totalCount" : [
+										{
+											"($)count" : "count"
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"id" : "UpdatePOGRNStatusAndValue",
+					"actionName" : "updatePOGRNStatusAndValue",
+					"actionType" : "updateDataWithSchema",
+					"actionDetails" : {
+						"database_details" : {
+							"database" : "{{payload.headers.dbName}}"
+						},
+						"schemaName" : "purchaseOrderSchema",
+						"match" : {
+							"POId" : "{{actionsResponse.recalculatePOSummary[0].paginatedResults[0].POId}}"
+						},
+						"set" : {
+							"totalGrnValue" : "{{actionsResponse.recalculatePOSummary[0].paginatedResults[0].totalGrnValue}}",
+							"grnStatus" : "{{actionsResponse.recalculatePOSummary[0].paginatedResults[0].grnStatus}}",
+							"poStatus" : "{{actionsResponse.recalculatePOSummary[0].paginatedResults[0].poStatus}}",
+							"totalOrderedQty" : "{{actionsResponse.recalculatePOSummary[0].paginatedResults[0].totalOrderedQty}}",
+							"totalReceivedQty" : "{{actionsResponse.recalculatePOSummary[0].paginatedResults[0].totalReceivedQty}}"
+						},
+						"option" : {
+							"upsert" : false
+						}
+					}
+				},
+				{
+					"id" : "sendEmailNotification",
+					"actionName" : "sendEmailNotification",
+					"actionType" : "executeApi",
+					"async" : true,
+					"actionOnFailureStop" : false,
+					"eventLog" : {
+						"enabled" : true,
+						"title" : "New GRN Created",
+						"description" : "GRN Created",
+						"businessComponent" : "GRNApproval",
+						"businessComponentInstance" : "{{actionsResponse.GRNInsert.GRNNumber}}",
+						"userId" : "{{payload.headers.userId}}",
+						"userName" : "xyz",
+						"longDescription" : "",
+						"event" : "create",
+						"eventDetails" : {
+							
+						}
+					},
+					"actionDetails" : {
+						"apiDetails" : {
+							"URL" : "/notification_engine/insert-queue",
+							"Method" : "Post"
+						},
+						"Body" : {
+							"businessComponentId" : "GRNApproval",
+							"businessComponentInstance" : "{{actionsResponse.GRNInsert.GRNNumber}}",
+							"sourceType" : "page",
+							"notificationType" : "Creation of GRN",
+							"notificationDescription" : "Creation of GRN",
+							"data" : {
+								"emailId" : [ "bhuvaneshwari.m@supplychainhub.com" ],
+								"userIds" : [ "VEND3434" ],
+								"ccEmailId" : [ "bhuvaneshwari.m@supplychainhub.com" ],
+								"subject" : "Your GRN is created ",
+								"tenant" : 100,
+								"templateUrl" : "https://esaaenprodschapppublic.blob.core.windows.net/schsupplier/templates/po-collaboration/dev/esa-po-collab-template.html",
+								"templateValue" : {
+									"title" : "GRN created",
+									"userName" : "Sir/Mam",
+									"emailBody1" : "Here your GRN {{actionsResponse.GRNInsert.GRNNumber}}",
+									"tableHeader" : "GRN-Details",
+									"tableColumnName1" : "poNumber",
+									"tableColumnValue1" : "{{payload.section_GRNDetails.poNumber}}",
+									"tableColumnName2" : "grnValue",
+									"tableColumnValue2" : "{{payload.section_GRNDetails.grnValue}}",
+									"tableColumnName3" : "supplierId",
+									"tableColumnValue3" : "{{payload.section_GRNDetails.supplierId}}",
+									"footer1" : "regards",
+									"footer2" : "GRN",
+									"footer3" : "Team"
+								},
+								"articleIds" : [ ]
+							}
+						}
+					},
+					"nextAction" : "publishEvent"
+				},
+				{
+					"id" : "publishEvent",
+					"actionName" : "publishEvent",
+					"actionType" : "executeApi",
+					"actionOnFailureStop" : false,
+					"async" : false,
+					"eventLog" : {
+						"enabled" : true,
+						"title" : "New GRN Created",
+						"description" : "GRN Created",
+						"businessComponent" : "GRNApproval",
+						"businessComponentInstance" : "{{actionsResponse.GRNInsert.GRNNumber}}",
+						"userId" : "{{payload.headers.userId}}",
+						"userName" : "xyz",
+						"longDescription" : "",
+						"event" : "create",
+						"eventDetails" : {
+							
+						}
+					},
+					"actionDetails" : {
+						"apiDetails" : {
+							"URL" : "/api/publishEvent",
+							"Method" : "Post"
+						},
+						"Body" : {
+							"Action" : "Create",
+							"Tenant" : "{{payload.headers.tenant}}",
+							"Message" : null,
+							"Remarks" : "",
+							"Event_Id" : "GRN_Approve",
+							"Initiator" : "{{payload.headers.userId}}",
+							"User_Agent" : "{{payload.headers.userId}}",
+							"Workflow_Id" : "WF_GRN_Approval",
+							"Context_Data" : {
+								"POId" : "{{actionsResponse.POInsert.POId}}",
+								"GRNNumber" : "{{actionsResponse.GRNInsert.GRNNumber}}",
+								"grnValue" : "{{actionsResponse.GRNInsert.grnValue}}",
+								"tenant" : "{{payload.headers.tenant}}",
+								"User" : "{{payload.headers.userId}}",
+								"approver1" : "MANAGER",
+								"approver2" : "SCHITADMIN",
+								"approver3" : "SCHSUPPORT",
+								"approver4" : "SCHADMIN",
+								"approver5" : "SCHBATCH",
+								"WF_BASE_URL" : "{{payload.baseUrl}}"
+							},
+							"Trigger_Date" : "{{timeStamp YYYY-MM-DD}}",
+							"Work_Item_Id" : null,
+							"Business_Comp_Id" : "GRNApproval",
+							"Business_Comp_Instance_Id" : "{{actionsResponse.GRNInsert.GRNNumber}}"
+						}
+					},
+					"nextAction" : "RequestComplete"
+				},
+				{
+					"id" : "RequestComplete",
+					"actionName" : "RequestComplete",
+					"actionType" : "completed",
+					"actionDetails" : {
+						
+					}
+				}
+			],
+			"Output" : {
+				"message" : "{{actionsResponse.GRNInsert.GRNNumber}} GRN Created Successfully",
+				"routerLink" : "/page/GRNList",
+				"redirect" : {
+					"routerLink" : "/page/GRNList"
+				}
+			}
+		}
+	],
+	"pageActions" : [
+		{
+			"text" : "Create GRN",
+			"type" : "submit",
+			"showLabel" : true,
+			"componentId" : "createGRN",
+			"hidden" : true,
+			"style" : "style2",
+			"disableFormValidation" : false,
+			"checkConditions" : [
+				{
+					"sourceType" : "dbColumn",
+					"sourceDetails" : {
+						"dataSourceName" : "GRNPOBV",
+						"dbColumnName" : "showMessage"
+					},
+					"operation" : "EQ",
+					"valueOf" : {
+						"value" : "false"
+					},
+					"setValue" : {
+						"hidden" : false
+					}
+				}
+			],
+			"onClick" : [
+				{
+					"actions" : [
+						{
+							"checkConditions" : [
+								{
+									"source" : "countOfTableRows",
+									"failureMessage" : "No items for GRN creation, Please add items",
+									"params" : [
+										{
+											"componentId" : "POdata"
+										}
+									],
+									"sourceType" : "function",
+									"operation" : "GT",
+									"valueof" : {
+										"value" : 0
+									}
+								}
+							],
+							"action" : "executePageAction",
+							"actionPerformed" : "submit"
+						}
+					]
+				}
+			]
+		}
+	],
+	"checkConditions" : [
+		{
+			"sourceType" : "dbColumn",
+			"sourceDetails" : {
+				"dataSourceName" : "GRNPOBV",
+				"dbColumnName" : "showMessage"
+			},
+			"operation" : "EQ",
+			"valueOf" : {
+				"value" : "true"
+			},
+			"setValue" : {
+				"showPageBanner" : false
+			}
+		}
+	]
+}

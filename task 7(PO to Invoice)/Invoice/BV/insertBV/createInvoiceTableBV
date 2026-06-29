@@ -1,0 +1,168 @@
+{
+	"_id" : ObjectId("6a0eb367a5354e3fe53db4df"),
+	"businessView" : "CreateInvoiceTableBV",
+	"aggregation" : [
+		{
+			"($)match" : {
+				"GRNNumber" : "{{inputParams.GRNNumber}}"
+			}
+		},
+		{
+			"$unwind" : "$grnDetails.POData"
+		},
+		{
+			"$lookup" : {
+				"from" : "PODetails",
+				"let" : {
+					"poNumber" : "$grnDetails.POData.POOrderNO",
+					"productCode" : "$grnDetails.POData.ProductCode"
+				},
+				"pipeline" : [
+					{
+						"$match" : {
+							"$expr" : {
+								"$eq" : [ "$POId", "$$poNumber" ]
+							}
+						}
+					},
+					{
+						"$unwind" : "$material_items"
+					},
+					{
+						"$match" : {
+							"$expr" : {
+								"$eq" : [ "$material_items.product_id", "$$productCode" ]
+							}
+						}
+					}
+				],
+				"as" : "poData"
+			}
+		},
+		{
+			"$unwind" : "$poData"
+		},
+		{
+			"$lookup" : {
+				"from" : "InvoiceDetails",
+				"let" : {
+					"grnNumber" : "$GRNNumber",
+					"grnItem" : "$grnDetails.POData.SNO"
+				},
+				"pipeline" : [
+					{
+						"$unwind" : "$invoiceDetails.invoiceDetails"
+					},
+					{
+						"$match" : {
+							"$expr" : {
+								"$and" : [
+									{
+										"$eq" : [ "$invoiceDetails.invoiceDetails.GRNNumber", "$$grnNumber" ]
+									},
+									{
+										"$eq" : [ "$invoiceDetails.invoiceDetails.grnItem", "$$grnItem" ]
+									},
+									{
+										"$not" : {
+											"$in" : [
+												"$invoiceStatus",
+												[ "Cancelled", "Rejected", "Removed" ]
+											]
+										}
+									}
+								]
+							}
+						}
+					}
+				],
+				"as" : "invoiceData"
+			}
+		},
+		{
+			"$match" : {
+				"$expr" : {
+					"$gt" : [
+						{
+							"$subtract" : [
+								"$grnDetails.POData.ReceivedQuantity",
+								{
+									"$ifNull" : [
+										{
+											"$sum" : "$invoiceData.invoiceDetails.invoiceDetails.invoiceQty"
+										},
+										0
+									]
+								}
+							]
+						},
+						0
+					]
+				}
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$addFields" : {
+							"alreadyInvoicedQty" : {
+								"$sum" : "$invoiceData.invoiceDetails.invoiceDetails.invoiceQty"
+							}
+						}
+					},
+					{
+						"$addFields" : {
+							"invoiceBalanceQty" : {
+								"$subtract" : [
+									"$grnDetails.POData.ReceivedQuantity",
+									{
+										"$ifNull" : [ "$alreadyInvoicedQty", 0 ]
+									}
+								]
+							}
+						}
+					},
+					{
+						"($)project" : {
+							"_id" : 0,
+							"GRNNumber" : 1,
+							"POId" : "$poData.POId",
+							"grnItem" : "$grnDetails.POData.SNO",
+							"POItem" : "$grnDetails.POData.POItem",
+							"productCode" : "$grnDetails.POData.ProductCode",
+							"productItem" : "$grnDetails.POData.POItem",
+							"productName" : "$grnDetails.POData.ProductDescription",
+							"orderedQty" : "$poData.material_items.OrderedQty",
+							"grnQty" : "$grnDetails.POData.ReceivedQuantity",
+							"balanceQty" : {
+								"$subtract" : [ "$poData.material_items.OrderedQty", "$grnDetails.POData.ReceivedQuantity" ]
+							},
+							"unitPrice" : "$poData.material_items.unit_price",
+							"lineTotal" : "$grnDetails.POData.lineTotal",
+							"amount" : "$poData.material_items.amount",
+							"gst" : "$grnDetails.POData.gst",
+							"gst_amount" : "$grnDetails.POData.gst_amount",
+							"alreadyInvoicedQty" : 1,
+							"invoiceStatus" : "$invoiceStatus",
+							"invoiceBalanceQty" : 1,
+							"invoiceAmount" : {
+								"$multiply" : [ "$invoiceBalanceQty", "$poData.material_items.unit_price" ]
+							}
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "GRNDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	}
+}

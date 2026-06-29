@@ -1,0 +1,473 @@
+{
+	"_id" : ObjectId("6a1534afd8df5a7165d250e8"),
+	"pageName" : "Invoicelist",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "invoicelistBV",
+			"dataSourceDetails" : {
+				"businessView" : "invoicelistBV"
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "invoiceitemBV",
+			"dataSourceDetails" : {
+				"businessView" : "invoiceitemBV"
+			}
+		}
+	],
+	"epic" : "Details-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"Business_Comp_Name" : "InvoiceList",
+		"Title" : "GRN List",
+		"Description" : "List of Invoice Details",
+		"Images" : [ ],
+		"Screen_Name" : "InvoiceList"
+	},
+	"popups" : {
+		"delete" : {
+			"type" : "inline",
+			"pageName" : "menuDetialsPage",
+			"inlineJson" : {
+				"type" : "form",
+				"dataSource" : {
+					"dataSourceType" : "businessView",
+					"dataSourceName" : "invoicelistBV",
+					"dataSourceDetails" : {
+						"businessView" : "invoicelistBV"
+					}
+				},
+				"header" : {
+					"heading" : "Delete Confirmation"
+				},
+				"body" : {
+					"title" : "Do you want to proceed ?",
+					"components" : [ ]
+				},
+				"footer" : {
+					"button" : [
+						{
+							"text" : "No",
+							"type" : "button",
+							"action" : "close"
+						},
+						{
+							"text" : "Yes",
+							"type" : "submit",
+							"action" : "submit",
+							"onClick" : [
+								{
+									"actions" : [
+										{
+											"action" : "executePopupAction",
+											"actionDetails" : {
+												"payload" : {
+													
+												}
+											}
+										},
+										{
+											"action" : "refresh"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			"executePopUpAction" : [
+				{
+					"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
+					"THEN" : [ "performActions" ],
+					"enableLogs" : true,
+					"Actions" : [
+						{
+							"id" : "deleteNotificationDocument",
+							"actionName" : "deleteNotificationDocument",
+							"actionType" : "deleteDocument",
+							"actionDetails" : {
+								"database_details" : {
+									"database" : "{{payload.headers.dbName}}",
+									"collection" : "InvoiceDetails"
+								},
+								"matchCondition" : {
+									"invoiceNo" : "{{payload.selectedRow.invoiceNo.text}}"
+								}
+							}
+						}
+					],
+					"Output" : {
+						"message" : "GRN Deleted Successfully",
+						"refresh" : true
+					}
+				}
+			]
+		}
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "InvoiceList",
+							"type" : "table",
+							"title" : "Invoice List",
+							"description" : "List of Invoice",
+							"dataSourceName" : "invoicelistBV",
+							"tableConfig" : {
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"fullscreenIcon" : true,
+								"showPagination" : true,
+								"localPagination" : false,
+								"showChart" : true,
+								"checkbox" : true,
+								"chartConfig" : {
+									"chartStyle" : {
+										"grid" : false,
+										"legend" : false,
+										"dataLabels" : true,
+										"distributed" : true,
+										"compact" : true,
+										"yaxis" : true,
+										"closeIcon" : false,
+										"style" : "style3"
+									},
+									"title" : "",
+									"sendCompressedData" : true,
+									"description" : "subtitle",
+									"chartType" : "column",
+									"defaultChartCategory" : "poClassification",
+									"colors" : [
+										"#3391e2",
+										"#68CBE8",
+										"#E5E16D",
+										"#c2d439",
+										"#9AE7C0",
+										"#23c1a4",
+										"#cbcb8f",
+										"#D9DB9A",
+										"#ADC571"
+									],
+									"categorySelection" : {
+										"categories" : {
+											"dataSourceType" : "tableColumn",
+											"dataSourceDetails" : {
+												"categoryColumns" : [ "poClassification", "invoiceNo", "invoiceStatus" ],
+												"defaultCategoryColumns" : "poClassification"
+											}
+										}
+									},
+									"dataSource" : {
+										"dataSourceType" : "table"
+									}
+								},
+								"headerActions" : [
+									{
+										"text" : "Add Invoice",
+										"showLabel" : true,
+										"icon" : "feather icon-plus",
+										"style" : "style5",
+										"onClick" : [
+											{
+												"actions" : [
+													{
+														"action" : "redirect",
+														"actionDetails" : {
+															"routerLink" : "/page/GRNList"
+														}
+													}
+												]
+											}
+										]
+									}
+								],
+								"downloadActions" : [
+									{
+										"action" : "excelDownload",
+										"downloadPopupTitle" : "Downloading Excel"
+									},
+									{
+										"action" : "pdfDownload",
+										"downloadPopupTitle" : "Downloading Pdf"
+									}
+								],
+								"DataDownload" : {
+									"downloadColumnName" : [
+										{
+											"label" : "PO ID",
+											"property" : "PO ID",
+											"dbColumnName" : "POId"
+										},
+										{
+											"label" : "GRN NO",
+											"property" : "GRN NO",
+											"dbColumnName" : "grnNumber"
+										},
+										{
+											"label" : "Invoice No",
+											"property" : "Invoice No",
+											"dbColumnName" : "invoiceNo"
+										},
+										{
+											"label" : "PO Type",
+											"property" : "PO Type",
+											"dbColumnName" : "poClassification"
+										},
+										{
+											"label" : "Invoice Date",
+											"property" : "InvoiceDate",
+											"dbColumnName" : "invoiceDate"
+										},
+										{
+											"label" : "Grn Date",
+											"property" : "grnDate",
+											"dbColumnName" : "grnDate"
+										}
+									]
+								},
+								"tableFilter" : {
+									"dataSourceType" : "inline",
+									"dataSource" : [
+										{
+											"dataSourceType" : "businessView",
+											"dataSourceName" : "invoicefilter",
+											"dataSourceDetails" : {
+												"businessView" : "invoicefilter"
+											}
+										}
+									],
+									"Filters" : [
+										{
+											"description" : "POId",
+											"dbColumnName" : "POId",
+											"placeholder" : "POId",
+											"dataSourceName" : "invoicefilter",
+											"filterType" : "checkBox"
+										},
+										{
+											"description" : "grnNumber",
+											"dbColumnName" : "grnNumber",
+											"placeholder" : "grnNumber",
+											"dataSourceName" : "invoicefilter",
+											"filterType" : "search"
+										},
+										{
+											"description" : "poClassification",
+											"dataSourceName" : "invoicefilter",
+											"dbColumnName" : "poClassification",
+											"placeholder" : "poClassification",
+											"filterType" : "checkBox"
+										},
+										{
+											"description" : "Total Amount",
+											"dataSourceName" : "invoicefilter",
+											"dbColumnName" : "lineTotal",
+											"placeholder" : "lineTotalt",
+											"filterType" : "numberRange"
+										},
+										{
+											"description" : "invoiceStatus",
+											"dataSourceName" : "invoicefilter",
+											"dbColumnName" : "invoiceStatus",
+											"placeholder" : "invoiceStatus",
+											"filterType" : "checkBox"
+										}
+									]
+								}
+							},
+							"tableColumns" : {
+								"invoiceNo" : {
+									"type" : "text",
+									"dbColumnName" : null,
+									"openInNewTab" : true,
+									"value" : {
+										"routerLink" : "/page/Invoicedetail",
+										"text" : "{{invoiceNo}}",
+										"params" : {
+											"invoiceNo" : "{{invoiceNo}}"
+										}
+									}
+								},
+								"POId" : {
+									"type" : "text",
+									"dataSourceName" : "invoicelistBV",
+									"dbColumnName" : "POId"
+								},
+								"grnNumber" : {
+									"type" : "text",
+									"dataSourceName" : "invoicelistBV",
+									"dbColumnName" : "grnNumber"
+								},
+								"grnDate" : {
+									"type" : "text",
+									"dataSourceName" : "invoicelistBV",
+									"dbColumnName" : "grnDate"
+								},
+								"poClassification" : {
+									"type" : "text",
+									"dataSourceName" : "invoicelistBV",
+									"dbColumnName" : "poClassification"
+								},
+								"invoiceDate" : {
+									"type" : "text",
+									"dataSourceName" : "invoicelistBV",
+									"dbColumnName" : "invoiceDate"
+								},
+								"invoiceDetails" : {
+									"type" : "embeddedTable",
+									"dataSourceName" : "invoiceitemBV",
+									"componentId" : [ "invoiceNo" ],
+									"counterSize" : "m",
+									"style" : "style0",
+									"tableConfig" : {
+										"enableEntityCreation" : false,
+										"entityCreationDetails" : {
+											"addTableRow" : false
+										}
+									},
+									"tableColumns" : {
+										"InvoiceItem" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "InvoiceItem"
+										},
+										"POItem" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "POItem"
+										},
+										"grnItem" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "grnItem"
+										},
+										"productCode" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "productCode"
+										},
+										"productName" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "productName"
+										},
+										"OrderedQty" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "OrderedQty"
+										},
+										"invoiceQty" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "invoiceQty"
+										},
+										"balanceQty" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "balanceQty"
+										},
+										"UnitPrice" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "UnitPrice"
+										},
+										"grnQty" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "grnQty"
+										},
+										"amount" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "amount"
+										},
+										"gst_amount" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "gst_amount"
+										},
+										"gst" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "gst"
+										},
+										"GRNNumber" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "GRNNumber"
+										},
+										"lineTotal" : {
+											"type" : "text",
+											"dataSourceName" : "invoiceitemBV",
+											"dbColumnName" : "lineTotal"
+										}
+									}
+								},
+								"Message" : {
+									"groupFields" : [ ],
+									"type" : "message",
+									"description" : "Message",
+									"dbColumnName" : "msgSub",
+									"businessComponent" : "invoice1",
+									"sticky" : null,
+									"uniqueColumns" : [ "invoiceNo" ],
+									"msgGrpIdPrefix" : "PO Query: PO# ",
+									"workflowActionDisabled" : false,
+									"workflowIconDisabled" : false,
+									"changeLogIconEnabled" : true,
+									"actionIconEnabled" : true
+								},
+								"status" : {
+									"type" : "status",
+									"dbColumnName" : "status"
+								},
+								"Action" : {
+									"type" : "icon",
+									"icon" : "feather icon-edit",
+									"value" : {
+										"routerLink" : "/page/",
+										"params" : {
+											"invoiceNo" : "{{invoiceNo}}"
+										},
+										"enabled" : true,
+										"text" : "Edit"
+									}
+								},
+								"Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"enabled" : true,
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "showPopup",
+												"actionDetails" : {
+													"popupName" : "delete",
+													"tableRefresh" : true
+												}
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid"
+}

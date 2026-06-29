@@ -1,0 +1,64 @@
+{
+	"_id" : ObjectId("69fc81b27f52ee99a24b2676"),
+	"businessView" : "POItemBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"POId" : "{{inputParams.POId}}"
+			}
+		},
+		{
+			"$unwind" : {
+				"path" : "$material_items",
+				"preserveNullAndEmptyArrays" : false
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"($)sort" : {
+							"{{componentSetting.matSortActive}}" : "{{componentSetting.matSortDirection}}"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"itemNo" : "$material_items.SNO",
+							"product_id" : "$material_items.product_id",
+							"product_name" : "$material_items.product_name",
+							"unit_price" : "$material_items.unit_price",
+							"avaliableQty" : "$material_items.avaliableQty",
+							"balanceQty" : "$material_items.balanceQty",
+							"OrderedQty" : "$material_items.OrderedQty",
+							"amount" : "$material_items.amount",
+							"gst" : "$material_items.gst",
+							"gst_amount" : "$material_items.gst_amount",
+							"total" : "$material_items.Total"
+						}
+					},
+					{
+						"($)match" : "{{componentSetting.rowFilter}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "PODetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : -1
+	},
+	"searchTermFields" : [ "POId" ]
+}

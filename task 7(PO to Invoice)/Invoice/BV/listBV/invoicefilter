@@ -1,0 +1,62 @@
+{
+	"_id" : ObjectId("6a154963d8df5a7165d250ec"),
+	"businessView" : "invoicefilter",
+	"aggregation" : [
+		{
+			"$match" : {
+				
+			}
+		},
+		{
+			"$facet" : {
+				"paginatedResults" : [
+					{
+						"$group" : {
+							"_id" : null,
+							"POId" : {
+								"$addToSet" : "$invoiceDetails.POId"
+							},
+							"grnNumber" : {
+								"$addToSet" : "$invoiceDetails.grnNumber"
+							},
+							"grnDate" : {
+								"$addToSet" : "$invoiceDetails.grnDate"
+							},
+							"poClassification" : {
+								"$addToSet" : "$invoiceDetails.poClassification"
+							},
+							"invoiceStatus" : {
+								"$addToSet" : "$invoiceDetails.invoiceStatus"
+							},
+							"lineTotal" : {
+								"$addToSet" : "$invoiceDetails.invoiceDetails.lineTotal"
+							}
+						}
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"POId" : "$POId",
+							"grnNumber" : "$grnNumber",
+							"poClassification" : "$poClassification",
+							"invoiceStatus" : "$invoiceStatus",
+							"lineTotal" : "$lineTotal"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"$count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "InvoiceDetails",
+	"defaultSortSetting" : {
+		"sortField" : "createdAt",
+		"sortDirection" : -1
+	},
+	"ruleId" : "",
+	"searchTermFields" : [ "lineTotal", "invoiceStatus", "poClassification", "grnNumber", "POId" ]
+}

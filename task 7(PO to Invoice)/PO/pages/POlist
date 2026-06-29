@@ -1,0 +1,419 @@
+{
+	"_id" : ObjectId("69fc7cb97f52ee99a24b2675"),
+	"pageName" : "POlist",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "POlistBV",
+			"dataSourceDetails" : {
+				"businessView" : "POlistBV"
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "POItemBV",
+			"dataSourceDetails" : {
+				"businessView" : "POItemBV"
+			}
+		}
+	],
+	"epic" : "Details-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"Business_Comp_Name" : "InvoiceList",
+		"Title" : "Invoice List",
+		"Description" : "List of Invoice Details",
+		"Images" : [ ],
+		"Screen_Name" : "InvoiceList"
+	},
+	"popups" : {
+		"delete" : {
+			"type" : "inline",
+			"pageName" : "menuDetialsPage",
+			"inlineJson" : {
+				"type" : "form",
+				"dataSource" : {
+					"dataSourceType" : "businessView",
+					"dataSourceName" : "POlistBV",
+					"dataSourceDetails" : {
+						"businessView" : "POlistBV"
+					}
+				},
+				"header" : {
+					"heading" : "Delete Confirmation"
+				},
+				"body" : {
+					"title" : "Do you want to proceed ?",
+					"components" : [ ]
+				},
+				"footer" : {
+					"button" : [
+						{
+							"text" : "No",
+							"type" : "button",
+							"action" : "close"
+						},
+						{
+							"text" : "Yes",
+							"type" : "submit",
+							"action" : "submit",
+							"onClick" : [
+								{
+									"actions" : [
+										{
+											"action" : "executePopupAction",
+											"actionDetails" : {
+												"payload" : {
+													
+												}
+											}
+										},
+										{
+											"action" : "refresh"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			"executePopUpAction" : [
+				{
+					"WHEN" : "'{{payload.popupActionPerformed}}' == 'submit'",
+					"THEN" : [ "performActions" ],
+					"enableLogs" : true,
+					"Actions" : [
+						{
+							"id" : "deleteNotificationDocument",
+							"actionName" : "deleteNotificationDocument",
+							"actionType" : "deleteDocument",
+							"actionDetails" : {
+								"database_details" : {
+									"database" : "{{payload.headers.dbName}}",
+									"collection" : "PODetails"
+								},
+								"matchCondition" : {
+									"POId" : "{{payload.selectedRow.POId.text}}"
+								}
+							}
+						}
+					],
+					"Output" : {
+						"message" : "PO Deleted Successfully",
+						"refresh" : true
+					}
+				}
+			]
+		}
+	},
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"componentId" : "POList",
+							"type" : "table",
+							"title" : "PO List",
+							"description" : "List of PO",
+							"dataSourceName" : "POlistBV",
+							"tableConfig" : {
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"fullscreenIcon" : true,
+								"showPagination" : true,
+								"localPagination" : false,
+								"showChart" : true,
+								"checkbox" : true,
+								"chartConfig" : {
+									"chartStyle" : {
+										"grid" : false,
+										"legend" : false,
+										"dataLabels" : true,
+										"distributed" : true,
+										"compact" : true,
+										"yaxis" : true,
+										"closeIcon" : false,
+										"style" : "style3"
+									},
+									"title" : "",
+									"sendCompressedData" : true,
+									"description" : "subtitle",
+									"chartType" : "column",
+									"defaultChartCategory" : "shopId",
+									"colors" : [
+										"#3391e2",
+										"#68CBE8",
+										"#E5E16D",
+										"#c2d439",
+										"#9AE7C0",
+										"#23c1a4",
+										"#cbcb8f",
+										"#D9DB9A",
+										"#ADC571"
+									],
+									"categorySelection" : {
+										"categories" : {
+											"dataSourceType" : "tableColumn",
+											"dataSourceDetails" : {
+												"categoryColumns" : [ "shopId", "customer_id", "poStatus", "grnStatus", "invoiceStatus" ],
+												"defaultCategoryColumns" : "shopId"
+											}
+										}
+									},
+									"dataSource" : {
+										"dataSourceType" : "table"
+									}
+								},
+								"headerActions" : [
+									{
+										"text" : "Add PO",
+										"showLabel" : true,
+										"icon" : "feather icon-plus",
+										"style" : "style5",
+										"onClick" : [
+											{
+												"actions" : [
+													{
+														"action" : "redirect",
+														"actionDetails" : {
+															"routerLink" : "/page/POCreation"
+														}
+													}
+												]
+											}
+										]
+									}
+								],
+								"downloadActions" : [
+									{
+										"action" : "excelDownload",
+										"downloadPopupTitle" : "Downloading Excel"
+									},
+									{
+										"action" : "pdfDownload",
+										"downloadPopupTitle" : "Downloading Pdf"
+									}
+								],
+								"DataDownload" : {
+									"downloadColumnName" : [
+										{
+											"label" : "PO ID",
+											"property" : "PO ID",
+											"dbColumnName" : "POId"
+										},
+										{
+											"label" : "Shop ID",
+											"property" : "Shop ID",
+											"dbColumnName" : "shopId"
+										},
+										{
+											"label" : "customer_id",
+											"property" : "customer_id",
+											"dbColumnName" : "customer_id"
+										}
+									]
+								},
+								"tableFilter" : {
+									"dataSourceType" : "inline",
+									"dataSource" : [
+										{
+											"dataSourceType" : "businessView",
+											"dataSourceName" : "",
+											"dataSourceDetails" : {
+												"businessView" : ""
+											}
+										}
+									],
+									"Filters" : [
+										{
+											"description" : "Shop ID",
+											"dbColumnName" : "shopId",
+											"placeholder" : "Shop ID",
+											"dataSourceName" : "",
+											"filterType" : "checkBox"
+										}
+									]
+								}
+							},
+							"tableColumns" : {
+								"POId" : {
+									"type" : "text",
+									"dbColumnName" : null,
+									"openInNewTab" : true,
+									"value" : {
+										"routerLink" : "/page/POdetailPage",
+										"text" : "{{POId}}",
+										"params" : {
+											"POId" : "{{POId}}"
+										}
+									}
+								},
+								"shop_Id" : {
+									"type" : "text",
+									"dataSourceName" : "POlistBV",
+									"dbColumnName" : "shopId"
+								},
+								"customer_Id" : {
+									"type" : "text",
+									"dataSourceName" : "POlistBV",
+									"dbColumnName" : "customer_id"
+								},
+								"material_items" : {
+									"type" : "embeddedTable",
+									"dataSourceName" : "POItemBV",
+									"componentId" : [ "POId" ],
+									"counterSize" : "m",
+									"style" : "style0",
+									"tableConfig" : {
+										"enableEntityCreation" : false,
+										"entityCreationDetails" : {
+											"addTableRow" : false
+										}
+									},
+									"tableColumns" : {
+										"product_id" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "product_id"
+										},
+										"product_name" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "product_name"
+										},
+										"unit_price" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "unit_price"
+										},
+										"OrderedQty" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "OrderedQty"
+										},
+										"amount" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "amount"
+										},
+										"gst" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "gst"
+										},
+										"gst_amount" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "gst_amount"
+										},
+										"total" : {
+											"type" : "text",
+											"dataSourceName" : "POItemBV",
+											"dbColumnName" : "total"
+										}
+									}
+								},
+								"Message" : {
+									"groupFields" : [ ],
+									"type" : "message",
+									"description" : "Message",
+									"dbColumnName" : "msgSub",
+									"businessComponent" : "POApproval",
+									"sticky" : null,
+									"uniqueColumns" : [ "POId" ],
+									"msgGrpIdPrefix" : "PO Query: PO# ",
+									"workflowActionDisabled" : true,
+									"workflowIconDisabled" : false,
+									"changeLogIconEnabled" : true,
+									"actionIconEnabled" : true
+								},
+								"Total Ordered QTY" : {
+									"type" : "text",
+									"dataSourceName" : "POlistBV",
+									"dbColumnName" : "totalOrderedQty"
+								},
+								"Total Recieved QTY" : {
+									"type" : "text",
+									"dataSourceName" : "POlistBV",
+									"dbColumnName" : "totalReceivedQty"
+								},
+								"Total GRN Value" : {
+									"type" : "text",
+									"dataSourceName" : "POlistBV",
+									"dbColumnName" : "totalGrnValue"
+								},
+								"PO Status" : {
+									"type" : "status",
+									"dbColumnName" : "poStatus"
+								},
+								"GRN Status" : {
+									"type" : "status",
+									"dbColumnName" : "grnStatus"
+								},
+								"Invoice Status" : {
+									"type" : "status",
+									"dbColumnName" : "invoiceStatus"
+								},
+								"Create GRN" : {
+									"type" : "text",
+									"dbColumnName" : null,
+									"textAlign" : "center",
+									"openInNewTab" : true,
+									"value" : {
+										"routerLink" : "/page/GRNCreation",
+										"text" : "Create GRN",
+										"params" : {
+											"POId" : "{{POId}}",
+											"selectedRows" : true,
+											"selectedColumns" : [ "PO Date" ]
+										}
+									},
+									"text" : "Create GRN"
+								},
+								"Action" : {
+									"type" : "icon",
+									"icon" : "feather icon-edit",
+									"value" : {
+										"routerLink" : "/page/",
+										"params" : {
+											"POId" : "{{POId}}"
+										},
+										"enabled" : true,
+										"text" : "Edit"
+									}
+								},
+								"Delete" : {
+									"type" : "menu",
+									"dbColumnName" : "menu",
+									"enabled" : true,
+									"menuDetails" : {
+										"menuIcon" : "feather icon-more-vertical",
+										"menuItems" : [
+											{
+												"text" : "Delete",
+												"icon" : "feather icon-trash-2",
+												"action" : "showPopup",
+												"actionDetails" : {
+													"popupName" : "delete",
+													"tableRefresh" : true
+												}
+											}
+										]
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid"
+}

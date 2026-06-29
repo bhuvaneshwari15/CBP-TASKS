@@ -1,0 +1,1366 @@
+{
+	"_id" : ObjectId("69fd70ab82477927477f590b"),
+	"pageName" : "POdetailPage",
+	"createdBy" : "PGLADMIN",
+	"dataSource" : [
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "PODetailBV",
+			"dataSourceDetails" : {
+				"businessView" : "PODetailBV",
+				"inputParams" : {
+					"POId" : "{{params.POId}}"
+				}
+			}
+		},
+		{
+			"dataSourceType" : "businessView",
+			"dataSourceName" : "",
+			"dataSourceDetails" : {
+				"businessView" : "",
+				"inputParams" : {
+					
+				}
+			}
+		}
+	],
+	"epic" : "PO-Onboarding",
+	"fileDestination" : "azure",
+	"pageBanner" : {
+		"pageBannerButtons" : [ ],
+		"Business_Comp_Name" : "PODetails",
+		"Title" : "PODetails",
+		"Description" : "PODetails",
+		"Images" : [ ],
+		"Screen_Name" : "PODetails"
+	},
+	"showPageBanner" : true,
+	"tenant" : "100",
+	"version" : "Grid",
+	"rows" : [
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "PODetails",
+							"dataSourceName" : "PODetailBV",
+							"title" : "PO Details",
+							"description" : "Enter PO Detail below",
+							"icon" : "Detail-icon",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "PO Number",
+														"type" : "inputText",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"formcontrol" : "POId",
+														"componentId" : "POId",
+														"dbColumnName" : "POId",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "PO Date",
+														"type" : "inputDate",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"formcontrol" : "poDate",
+														"componentId" : "poDate",
+														"dbColumnName" : "poDate",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Currency",
+														"type" : "radioButton",
+														"dataSourceName" : "PODetailBV",
+														"formcontrol" : "currency",
+														"componentId" : "currency",
+														"readOnly" : true,
+														"editable" : false,
+														"dbColumnName" : "currency",
+														"closeOnSelect" : true,
+														"radioButtons" : [
+															{
+																"label" : "INR",
+																"value" : "INR"
+															},
+															{
+																"label" : "EUR",
+																"value" : "EUR"
+															},
+															{
+																"label" : "USD",
+																"value" : "USD"
+															}
+														]
+													},
+													{
+														"label" : "PO Type",
+														"type" : "select",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "poType",
+														"formcontrol" : "poType",
+														"dbColumnName" : "poType",
+														"displayStyle" : "verticalKeyValue",
+														"options" : [
+															{
+																"key" : "Material",
+																"value" : "Material"
+															},
+															{
+																"key" : "Service",
+																"value" : "Service"
+															}
+														]
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Amount",
+														"type" : "inputString",
+														"componentId" : "amount",
+														"dataSourceName" : "PODetailBV",
+														"dbColumnName" : "amount",
+														"formcontrol" : "amount",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "GST-Amount",
+														"type" : "inputString",
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "gst_amount",
+														"dbColumnName" : "gst_amount",
+														"formcontrol" : "gst_amount",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Total",
+														"type" : "inputString",
+														"componentId" : "total",
+														"dataSourceName" : "PODetailBV",
+														"dbColumnName" : "total",
+														"formcontrol" : "total",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "section",
+							"componentId" : "ShopDetails",
+							"title" : "Shop Details",
+							"description" : "Enter Shop Detail below",
+							"dataSourceName" : "PODetailBV",
+							"icon" : "Detail-icon",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Shop Id",
+														"type" : "selectWithBusinessView",
+														"formcontrol" : "shopId",
+														"componentId" : "shopId",
+														"mandatory" : false,
+														"option" : true,
+														"readOnly" : true,
+														"onChangeGetData" : true,
+														"dataSourceName" : "PODetailBV",
+														"dbColumnName" : "shopId",
+														"filter" : true,
+														"hidden" : false,
+														"closeOnSelect" : true,
+														"style" : "style6",
+														"sendAllFieldsInSelectedValueAsObject" : false,
+														"dataSource" : {
+															"method" : "POST",
+															"body" : {
+																"businessView" : "shopDetailBV"
+															},
+															"url" : "/lowcode-service/executeBVData",
+															"optionArrayKey" : "data",
+															"dropDownKey" : "shopId",
+															"dropDownValue" : "shopId"
+														},
+														"onChange" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "setComponentValue",
+																		"actionDetails" : {
+																			"targetComponent" : [
+																				"section_ShopDetails.shopName",
+																				"section_ShopDetails.ownerName",
+																				"section_ShopDetails.gstNumber",
+																				"section_ShopDetails.contactNumber",
+																				"section_ShopDetails.address",
+																				"section_ShopDetails.emailId"
+																			],
+																			"url" : "/lowcode-service/executeBVData",
+																			"method" : "POST"
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"label" : "Shop Name",
+														"type" : "inputString",
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "shopName",
+														"formcontrol" : "shopName",
+														"dbColumnName" : "shopName",
+														"readOnly" : true,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Owner Name",
+														"type" : "inputString",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "ownerName",
+														"dbColumnName" : "ownerName",
+														"formcontrol" : "ownerName",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "GST Number",
+														"type" : "inputString",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "gstNumber",
+														"dbColumnName" : "gstNumber",
+														"formcontrol" : "gstNumber",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "contact Number",
+														"type" : "inputPhoneNumber",
+														"dataSourceName" : "PODetailBV",
+														"readOnly" : true,
+														"dbColumnName" : "contactNumber",
+														"componentId" : "contactNumber",
+														"formcontrol" : "contactNumber",
+														"mandatory" : false,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Address",
+														"type" : "inputText",
+														"dataSourceName" : "PODetailBV",
+														"readOnly" : true,
+														"componentId" : "address",
+														"dbColumnName" : "address",
+														"formcontrol" : "address",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Email-Id",
+														"type" : "inputString",
+														"dataSourceName" : "PODetailBV",
+														"readOnly" : true,
+														"componentId" : "emailId",
+														"dbColumnName" : "emailId",
+														"formcontrol" : "emailId",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"type" : "section",
+							"componentId" : "CustomerDetails",
+							"title" : "Customer Details",
+							"dataSourceName" : "PODetailBV",
+							"description" : "Enter Customer Details",
+							"icon" : "Detail-icon",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Customer Id",
+														"type" : "selectWithBusinessView",
+														"formcontrol" : "customer_id",
+														"componentId" : "customer_id",
+														"dbColumnName" : "customer_id",
+														"mandatory" : false,
+														"readOnly" : true,
+														"option" : true,
+														"onChangeGetData" : true,
+														"dataSourceName" : "PODetailBV",
+														"filter" : true,
+														"hidden" : false,
+														"closeOnSelect" : true,
+														"style" : "style6",
+														"sendAllFieldsInSelectedValueAsObject" : false,
+														"dataSource" : {
+															"method" : "POST",
+															"body" : {
+																"businessView" : "buyerMasterBV"
+															},
+															"url" : "/lowcode-service/executeBVData",
+															"optionArrayKey" : "data",
+															"dropDownKey" : "customer_id",
+															"dropDownValue" : "customer_id"
+														},
+														"onChange" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "setComponentValue",
+																		"actionDetails" : {
+																			"targetComponent" : [ "section_CustomerDetails.customer_name", "section_CustomerDetails.contact_number", "section_CustomerDetails.address", "section_CustomerDetails.gst_number" ],
+																			"url" : "/lowcode-service/executeBVData",
+																			"method" : "POST"
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"label" : "Customer Name",
+														"type" : "inputString",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "customer_name",
+														"dbColumnName" : "customer_name",
+														"formcontrol" : "customer_name",
+														"mandatory" : false,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Contact Number",
+														"type" : "inputPhoneNumber",
+														"dataSourceName" : "PODetailBV",
+														"readOnly" : true,
+														"componentId" : "contact_number",
+														"dbColumnName" : "contact_number",
+														"formcontrol" : "contact_number",
+														"mandatory" : false,
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Email-Id",
+														"type" : "inputString",
+														"componentId" : "email_id",
+														"dbColumnName" : "email_id",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"formcontrol" : "email_id",
+														"mandatory" : false,
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Address",
+														"type" : "inputText",
+														"componentId" : "address",
+														"dataSourceName" : "PODetailBV",
+														"readOnly" : true,
+														"dbColumnName" : "customer_address",
+														"formcontrol" : "address",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "GST-Number",
+														"type" : "inputText",
+														"componentId" : "gst_number",
+														"readOnly" : true,
+														"dbColumnName" : "gst_number",
+														"dataSourceName" : "PODetailBV",
+														"formcontrol" : "gst_number",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"type" : "section",
+							"componentId" : "DeliveryDetails",
+							"title" : "Delivery Details",
+							"description" : "Enter Delivery Details",
+							"dataSourceName" : "PODetailBV",
+							"icon" : "Detail-icon",
+							"headerComponents" : [ ],
+							"sectionBody" : {
+								"style" : "style1",
+								"verticalSpacing" : "fixed",
+								"rows" : [
+									{
+										"columns" : [
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Expected Date",
+														"type" : "inputDate",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"formcontrol" : "deliveryExpectedDate",
+														"componentId" : "deliveryExpectedDate",
+														"dbColumnName" : "deliveryExpectedDate",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Delivery Line",
+														"type" : "inputString",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "deliveryLine",
+														"dbColumnName" : "deliveryLine",
+														"formcontrol" : "deliveryLine",
+														"displayStyle" : "verticalKeyValue"
+													},
+													{
+														"label" : "Shipping Method",
+														"type" : "select",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "shippingMethod",
+														"dbColumnName" : "shippingMethod",
+														"formcontrol" : "shippingMethod",
+														"displayStyle" : "verticalKeyValue",
+														"options" : [
+															{
+																"key" : "Road",
+																"value" : "Road"
+															},
+															{
+																"key" : "Train",
+																"value" : "Train"
+															},
+															{
+																"key" : "Ship",
+																"value" : "Ship"
+															},
+															{
+																"key" : "Plane",
+																"value" : "Plane"
+															}
+														]
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Country",
+														"type" : "select",
+														"readOnly" : true,
+														"placeholder" : "Country",
+														"dbColumnName" : "country",
+														"dataSourceName" : "PODetailBV",
+														"formcontrol" : "country",
+														"componentId" : "country",
+														"mandatory" : false,
+														"option" : true,
+														"filter" : true,
+														"onChangeGetData" : true,
+														"closeOnSelect" : true,
+														"style" : "style1",
+														"displayStyle" : "verticalKeyValue",
+														"sendValueAsObject" : true,
+														"sendAllFieldsInSelectedValueAsObject" : false,
+														"dataSource" : {
+															"method" : "POST",
+															"body" : {
+																"businessView" : "countryBV"
+															},
+															"url" : "/lowcode-service/executeBVData",
+															"optionArrayKey" : "data",
+															"dropDownKey" : "description",
+															"dropDownValue" : "code"
+														},
+														"onChange" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "setComponentValue",
+																		"actionDetails" : {
+																			"targetComponent" : [ "section_1.state" ],
+																			"url" : "/lowcode-service/executeBVData",
+																			"method" : "POST"
+																		}
+																	},
+																	{
+																		"action" : "loadFieldDataSource",
+																		"actionDetails" : {
+																			"targetSection" : [ "section_1" ],
+																			"targetFormControl" : [ "state", "contactNumber" ],
+																			"setTargetDataSourceParameters" : {
+																				"payload" : {
+																					"country" : "{{currentFieldValue}}"
+																				}
+																			}
+																		}
+																	},
+																	{
+																		"action" : "changeComponentProperty",
+																		"actionDetails" : {
+																			"targetSectionComponentId" : "SupplierSection",
+																			"targetComponentId" : "ContactNumber",
+																			"setProperty" : {
+																				"countryCode" : {
+																					"valueof" : {
+																						"type" : "currentComponent"
+																					}
+																				}
+																			}
+																		}
+																	},
+																	{
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : 1,
+																				"sourceComponentId" : "country",
+																				"operation" : "NE",
+																				"valueof" : {
+																					"value" : "AE"
+																				}
+																			}
+																		],
+																		"action" : "changeComponentProperty",
+																		"actionDetails" : {
+																			"targetSectionComponentId" : 2,
+																			"targetComponentId" : [ "ICVCert", "ICVcertificate", "ICVwaivercertificate" ],
+																			"setProperty" : {
+																				"hidden" : true,
+																				"mandatory" : false
+																			}
+																		}
+																	},
+																	{
+																		"checkCondition" : [
+																			{
+																				"sourceType" : "sectionComponent",
+																				"sourceSectionComponentId" : 1,
+																				"sourceComponentId" : "country",
+																				"operation" : "EQ",
+																				"valueof" : {
+																					"value" : "AE"
+																				}
+																			}
+																		],
+																		"action" : "changeComponentProperty",
+																		"actionDetails" : {
+																			"targetSectionComponentId" : 2,
+																			"targetComponentId" : [ "ICVCert" ],
+																			"setProperty" : {
+																				"hidden" : false,
+																				"mandatory" : false
+																			}
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"label" : "State / Emirate / Province (Region)",
+														"type" : "select",
+														"placeholder" : "State",
+														"dbColumnName" : "state",
+														"formcontrol" : "state",
+														"readOnly" : true,
+														"componentId" : "state",
+														"dataSourceName" : "PODetailBV",
+														"mandatory" : false,
+														"displayStyle" : "verticalKeyValue",
+														"option" : true,
+														"filter" : true,
+														"closeOnSelect" : true,
+														"onChangeGetData" : true,
+														"style" : "style1",
+														"sendValueAsObject" : true,
+														"sendAllFieldsInSelectedValueAsObject" : false,
+														"dataSource" : {
+															"method" : "POST",
+															"params" : {
+																
+															},
+															"body" : {
+																"businessView" : "stateCodeBV",
+																"country" : "AE"
+															},
+															"url" : "/lowcode-service/executeBVData",
+															"optionArrayKey" : "data",
+															"dropDownKey" : "state_name",
+															"sendAllFieldsInSelectedValueAsObject" : false,
+															"dropDownValue" : "state_code"
+														},
+														"color" : "#f00",
+														"onChange" : [
+															{
+																"actions" : [
+																	{
+																		"action" : "loadFieldDataSource",
+																		"actionDetails" : {
+																			"targetSection" : [ "section_1" ],
+																			"targetFormControl" : [ "city" ],
+																			"setTargetDataSourceParameters" : {
+																				"payload" : {
+																					"country" : "{{section_1.country}}",
+																					"state" : "{{currentFieldValue}}"
+																				}
+																			}
+																		}
+																	}
+																]
+															}
+														]
+													},
+													{
+														"label" : "City",
+														"type" : "select",
+														"placeholder" : "City",
+														"mandatory" : false,
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"option" : true,
+														"onChangeGetData" : true,
+														"filter" : true,
+														"style" : "style1",
+														"sendValueAsObject" : true,
+														"sendAllFieldsInSelectedValueAsObject" : false,
+														"dbColumnName" : "city",
+														"dataSource" : {
+															"method" : "POST",
+															"params" : {
+																
+															},
+															"body" : {
+																"businessView" : "cityCodeBV"
+															},
+															"url" : "/lowcode-service/executeBVData",
+															"optionArrayKey" : "data",
+															"dropDownKey" : "city_name",
+															"sendAllFieldsInSelectedValueAsObject" : false,
+															"dropDownValue" : "city_code"
+														},
+														"color" : "#f00",
+														"formcontrol" : "city",
+														"componentId" : "city",
+														"closeOnSelect" : true
+													}
+												]
+											},
+											{
+												"width" : "33%",
+												"components" : [
+													{
+														"label" : "Delivery terms",
+														"type" : "select",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "deliveryTerms",
+														"dbColumnName" : "deliveryTerms",
+														"formcontrol" : "deliveryTerms",
+														"displayStyle" : "verticalKeyValue",
+														"options" : [
+															{
+																"key" : "FOB",
+																"value" : "FOB"
+															},
+															{
+																"key" : "CIF",
+																"value" : "CIF"
+															},
+															{
+																"key" : "EXW",
+																"value" : "EXW"
+															},
+															{
+																"key" : "DDP",
+																"value" : "DDP"
+															}
+														]
+													},
+													{
+														"label" : "Zip Code",
+														"type" : "inputText",
+														"readOnly" : true,
+														"dataSourceName" : "PODetailBV",
+														"componentId" : "deliveryPostalCode",
+														"dbColumnName" : "deliveryPostalCode",
+														"formcontrol" : "deliveryPostalCode",
+														"displayStyle" : "verticalKeyValue"
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "table",
+							"title" : "product details",
+							"description" : "Enter product Details below",
+							"componentId" : "material_items",
+							"dataSourceName" : "PODetailBV",
+							"hidden" : false,
+							"tableConfig" : {
+								"businessComponent" : "SCRAB_WEIGH",
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"aggregationFooter" : true,
+								"fullscreenIcon" : true,
+								"enableEntityCreation" : true,
+								"checkbox" : false,
+								"rowActions" : true,
+								"localPagination" : false,
+								"entityCreationDetails" : {
+									"addTableRow" : true
+								}
+							},
+							"tableColumns" : {
+								"product_id" : {
+									"type" : "selectWithBusinessView",
+									"componentId" : "product_id",
+									"dbColumnName" : "product_id",
+									"mandatory" : false,
+									"readOnly" : true,
+									"dataSourceName" : "PODetailBV",
+									"disableSelectedValueInTable" : true,
+									"dataSourceType" : "businessView",
+									"dataSourceDetails" : {
+										"businessViewName" : "ProductMasterBV",
+										"dataKey" : "productId",
+										"dataValue" : "productId"
+									},
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "product_name" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "productName"
+															}
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "unit_price" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "price"
+															}
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "gst" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "gst"
+															}
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"product_name" : {
+									"type" : "inputString",
+									"dataSourceName" : "PODetailBV",
+									"componentId" : "product_name",
+									"dbColumnName" : "product_name",
+									"readOnly" : true
+								},
+								"unit_price" : {
+									"type" : "inputString",
+									"dataSourceName" : "PODetailBV",
+									"componentId" : "unit_price",
+									"dbColumnName" : "unit_price",
+									"readOnly" : true
+								},
+								"OrderedQty" : {
+									"type" : "inputText",
+									"componentId" : "qty",
+									"dataSourceName" : "PODetailBV",
+									"readOnly" : true,
+									"dbColumnName" : "OrderedQty",
+									"validation" : [
+										{
+											"type" : "min",
+											"failureMessage" : "Value should be greater than or equal to 0.001",
+											"valueof" : {
+												"value" : 0.001
+											}
+										}
+									],
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "amount" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "unit_price"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "qty"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "gst_amount" ],
+														"setValue" : {
+															"percent" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "Total" ],
+														"setValue" : {
+															"addition" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "PODetails",
+														"targetField" : [ "amount" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "PODetails",
+														"targetField" : [ "gst_amount" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "PODetails",
+														"targetField" : [ "Total" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "Total"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"amount" : {
+									"type" : "inputText",
+									"componentId" : "amount",
+									"dataSourceName" : "PODetailBV",
+									"dbColumnName" : "amount",
+									"readOnly" : true
+								},
+								"gst" : {
+									"type" : "inputText",
+									"componentId" : "gst",
+									"dataSourceName" : "PODetailBV",
+									"dbColumnName" : "gst",
+									"readOnly" : true
+								},
+								"gst_amount" : {
+									"type" : "inputText",
+									"dataSourceName" : "PODetailBV",
+									"componentId" : "gst_amount",
+									"dbColumnName" : "gst_amount",
+									"readOnly" : true
+								},
+								"Total" : {
+									"type" : "inputText",
+									"componentId" : "Total",
+									"dbColumnName" : "total",
+									"dataSourceName" : "PODetailBV",
+									"readOnly" : true
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"columns" : [
+				{
+					"components" : [
+						{
+							"type" : "table",
+							"title" : "service details",
+							"description" : "Enter service Details below",
+							"componentId" : "service_items",
+							"dataSourceName" : "",
+							"hidden" : false,
+							"tableConfig" : {
+								"businessComponent" : "SCRAB_WEIGH",
+								"layoutIcon" : false,
+								"downloadIcon" : true,
+								"columnFilterIcon" : true,
+								"rowFilterIcon" : true,
+								"aggregationFooter" : true,
+								"fullscreenIcon" : true,
+								"enableEntityCreation" : true,
+								"checkbox" : false,
+								"rowActions" : true,
+								"localPagination" : false,
+								"entityCreationDetails" : {
+									"addTableRow" : true
+								}
+							},
+							"tableColumns" : {
+								"service_code" : {
+									"type" : "selectWithBusinessView",
+									"componentId" : "service_code",
+									"dataSourceName" : "",
+									"disableSelectedValueInTable" : true,
+									"dbColumnName" : "service_code",
+									"dataSourceType" : "businessView",
+									"dataSourceDetails" : {
+										"businessViewName" : "serviceMasterBV",
+										"dataKey" : "service_code",
+										"dataValue" : "service_code"
+									},
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "serviceDescription" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "service_description"
+															}
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "price" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "service_cost"
+															}
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "gst" ],
+														"setValue" : {
+															"valueof" : {
+																"type" : "currentColumnNameKey",
+																"currentColumnNameKey" : "gst"
+															}
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"serviceDescription" : {
+									"type" : "inputString",
+									"componentId" : "serviceDescription",
+									"dataSourceName" : "",
+									"dbColumnName" : "serviceDescription"
+								},
+								"price" : {
+									"type" : "inputString",
+									"componentId" : "price",
+									"dataSourceName" : "",
+									"dbColumnName" : "price"
+								},
+								"qty" : {
+									"type" : "inputText",
+									"componentId" : "qty",
+									"readOnly" : false,
+									"dataSourceName" : "",
+									"dbColumnName" : "qty",
+									"validation" : [
+										{
+											"type" : "min",
+											"failureMessage" : "Value should be greater than or equal to 0.001",
+											"valueof" : {
+												"value" : 0.001
+											}
+										}
+									],
+									"onChange" : [
+										{
+											"actions" : [
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "amount" ],
+														"setValue" : {
+															"multiply" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "price"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "qty"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "gst_amount" ],
+														"setValue" : {
+															"percent" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "changeFieldValue",
+													"actionDetails" : {
+														"targetColumn" : [ "Total" ],
+														"setValue" : {
+															"addition" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																},
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "PODetails",
+														"targetField" : [ "amount" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "PODetails",
+														"targetField" : [ "gst_amount" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "gst_amount"
+																	}
+																}
+															]
+														}
+													}
+												},
+												{
+													"action" : "updateSection",
+													"actionDetails" : {
+														"targetSectionId" : "PODetails",
+														"targetField" : [ "Total" ],
+														"setValue" : {
+															"validation" : [
+																{
+																	"type" : "maxDecimalDigits",
+																	"valueof" : {
+																		"value" : 2
+																	}
+																}
+															],
+															"sumOfRows" : [
+																{
+																	"valueof" : {
+																		"type" : "columnName",
+																		"fieldId" : "Total"
+																	}
+																}
+															]
+														}
+													}
+												}
+											]
+										}
+									]
+								},
+								"amount" : {
+									"type" : "inputText",
+									"componentId" : "amount",
+									"dataSourceName" : "",
+									"dbColumnName" : "amount",
+									"readOnly" : true
+								},
+								"gst" : {
+									"type" : "inputText",
+									"componentId" : "gst",
+									"dataSourceName" : "",
+									"dbColumnName" : "gst",
+									"readOnly" : true
+								},
+								"gst_amount" : {
+									"type" : "inputText",
+									"componentId" : "gst_amount",
+									"dataSourceName" : "",
+									"dbColumnName" : "gst_amount",
+									"readOnly" : true
+								},
+								"Total" : {
+									"type" : "inputText",
+									"componentId" : "Total",
+									"dataSourceName" : "",
+									"dbColumnName" : "Total",
+									"readOnly" : true
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

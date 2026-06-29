@@ -1,0 +1,64 @@
+{
+	"_id" : ObjectId("6a0ef26ba5354e3fe53db4e0"),
+	"businessView" : "invoiceBankDetailBV",
+	"aggregation" : [
+		{
+			"($)match" : {
+				"GRNNumber" : "{{inputParams.GRNNumber}}"
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$lookup" : {
+							"from" : "shopMaster",
+							"localField" : "grnDetails.supplierId",
+							"foreignField" : "shopId",
+							"as" : "shopData"
+						}
+					},
+					{
+						"$unwind" : "$shopData"
+					},
+					{
+						"$project" : {
+							"_id" : 0,
+							"GRNNumber" : 1,
+							"supplierId" : "$grnDetails.supplierId",
+							"supplierName" : "$grnDetails.supplierName",
+							"bankName" : "$shopData.bankDetails.bankName",
+							"accountNumber" : "$shopData.bankDetails.accountNumber",
+							"ifscCode" : "$shopData.bankDetails.ifscCode",
+							"branchName" : "$shopData.bankDetails.branchName",
+							"accountHolderName" : "$shopData.bankDetails.accountHolderName",
+							"accountType" : "$shopData.bankDetails.accountType"
+						}
+					},
+					{
+						"($)skip" : "{{componentSetting.page}}"
+					},
+					{
+						"($)limit" : "{{componentSetting.limit}}"
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "GRNDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"ruleId" : "",
+	"totalCount" : [
+		{
+			"($)count" : "count"
+		}
+	]
+}

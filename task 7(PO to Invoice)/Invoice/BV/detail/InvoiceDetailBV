@@ -1,0 +1,72 @@
+{
+	"_id" : ObjectId("6a16dbaa12604849170191c7"),
+	"businessView" : "InvoiceDetailBV",
+	"aggregation" : [
+		{
+			"$match" : {
+				"invoiceNo" : "{{inputParams.invoiceNo}}"
+			}
+		},
+		{
+			"($)match" : "{{searchTerm}}"
+		},
+		{
+			"$unwind" : {
+				"path" : "$invoiceDetails.invoiceDetails",
+				"preserveNullAndEmptyArrays" : false
+			}
+		},
+		{
+			"($)facet" : {
+				"paginatedResults" : [
+					{
+						"$project" : {
+							"_id" : 0,
+							"InvoiceItem" : "$invoiceDetails.invoiceDetails.InvoiceItem",
+							"POItem" : "$invoiceDetails.invoiceDetails.POItem",
+							"grnItem" : "$invoiceDetails.invoiceDetails.grnItem",
+							"productCode" : "$invoiceDetails.invoiceDetails.productCode",
+							"productName" : "$invoiceDetails.invoiceDetails.productName",
+							"OrderedQty" : "$invoiceDetails.invoiceDetails.OrderedQty",
+							"invoiceQty" : "$invoiceDetails.invoiceDetails.invoiceQty",
+							"balanceQty" : "$invoiceDetails.invoiceDetails.balanceQty",
+							"UnitPrice" : "$invoiceDetails.invoiceDetails.UnitPrice",
+							"grnQty" : "$invoiceDetails.invoiceDetails.grnQty",
+							"GRNNumber" : "$invoiceDetails.invoiceDetails.GRNNumber",
+							"lineTotal" : "$invoiceDetails.invoiceDetails.lineTotal",
+							"bankName" : "$invoiceDetails.bankName",
+							"accountNumber" : "$invoiceDetails.accountNumber",
+							"branchName" : "$invoiceDetails.branchName",
+							"ifscCode" : "$invoiceDetails.ifscCode",
+							"accountHolderName" : "$invoiceDetails.accountHolderName",
+							"accountType" : "$invoiceDetails.accountType",
+							"supplierNo" : "$invoiceDetails.supplierNo",
+							"POId" : "$invoiceDetails.POId",
+							"supplierCity" : "$invoiceDetails.supplierCity",
+							"supplierCountry" : "$invoiceDetails.supplierCountry",
+							"ownerName" : "$invoiceDetails.ownerName",
+							"contactNumber" : "$invoiceDetails.contactNumber",
+							"poClassification" : "$invoiceDetails.poClassification",
+							"grnNumber" : "$invoiceDetails.grnNumber",
+							"grnDate" : "$invoiceDetails.grnDate",
+							"currency" : "$invoiceDetails.currency",
+							"notes" : "$invoiceDetails.notes",
+							"invoiceDate" : "$invoiceDetails.invoiceDate"
+						}
+					}
+				],
+				"totalCount" : [
+					{
+						"($)count" : "count"
+					}
+				]
+			}
+		}
+	],
+	"collection" : "InvoiceDetails",
+	"defaultSortSetting" : {
+		"sortField" : "_id",
+		"sortDirection" : 1
+	},
+	"searchTermFields" : [ "invoiceNo" ]
+}
