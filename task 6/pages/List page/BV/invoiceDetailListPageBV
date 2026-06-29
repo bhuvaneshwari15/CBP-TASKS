@@ -126,42 +126,7 @@
 		"customerDetails.address",
 		"customerDetails.contact_number"
 	],
-	"chartData" : [
-		{
-			"$addFields" : {
-				"location" : "$customerDetails.address",
-				"customer_id" : "$customerDetails.customer_id",
-				"customer_name" : "$customerDetails.customer_name"
-			}
-		},
-		{
-			"($)group" : {
-				"_id" : "${{componentSetting.chartCategory}}",
-				"count" : {
-					"($)sum" : 1
-				}
-			}
-		},
-		{
-			"($)match" : {
-				"_id" : {
-					"($)ne" : null
-				}
-			}
-		},
-		{
-			"($)project" : {
-				"_id" : 0,
-				"x" : "$_id",
-				"y" : "$count"
-			}
-		},
-		{
-			"($)sort" : {
-				"y" : 1
-			}
-		}
-	],
+
 	"totalCount" : [
 		{
 			"$count" : "count"
